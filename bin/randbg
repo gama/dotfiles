@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source "${HOME}/.xsession.env"
+dir="${HOME}/lib/pics/wallpapers"
+files=($(\ls -1 "${dir}"))
+gconftool-2 --type string --set /desktop/gnome/background/picture_filename "${dir}/${files[ $(( $RANDOM % ${#files[@]} )) ]}"

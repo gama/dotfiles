@@ -1,0 +1,24 @@
+#!/bin/bash
+
+[ "${1}" == "DONTDISPLAY" ] && DONTDISPLAY='true' && shift
+
+ARTIST="$(echo ${1} | sed -e 's/^ +//' -e 's/ +$//')"
+SONG="$(echo ${2} | sed -e 's/^ +//' -e 's/ +$//')"
+ISO_ARTIST="$(echo ${1} | iconv -f "UTF-8" -t "ISO-8859-1" | sed 's/\ /%20/g')"
+ISO_SONG="$(echo ${2} | iconv -f "UTF-8" -t "ISO-8859-1" | sed 's/\ /%20/g')"
+
+CACHE_FILE="${HOME}/.lyrics/${ARTIST}-${SONG}.txt"
+if [[ ! -f ${CACHE_FILE} ]]; then
+	tmpfile=$(mktemp /tmp/.lyrics-fetcher.XXXXXX)
+	elinks -dump 1 -dump-width 9999 -dump-color-mode -1 -no-numbering -no-references "http://letras.terra.com.br/winamp.php?musica=${ISO_SONG}&artista=${ISO_ARTIST}" > "${tmpfile}"
+	if [[ -z $(grep "Música não encontrada" "${tmpfile}") ]]; then
+		cat "${tmpfile}" | sed -e '1,5d' -e 's/^ \+/  /' | head -n -20 > "${CACHE_FILE}"
+	else
+		elinks -dump -dump-width 9999 -dump-color-mode -1 -no-references -no-numbering "http://lyricwiki.org/${ISO_ARTIST}:${ISO_SONG}" > "${tmpfile}"
+		if [[ -z $(grep "There is currently no text in this page" "${tmpfile}") ]]; then
+			cat "${tmpfile}" | sed -e 's/^ \+/  /' | perl -ne 'BEGIN{$p=0};if (m/  phone Send/){$p=!$p;}print $_ if ($p);' | tail -n +2 > "${CACHE_FILE}"
+		fi
+	fi
+	rm -f "${tmpfile}"
+fi
+[[ -z "${DONTDISPLAY}" && -f "${CACHE_FILE}" ]] && LESS="-c -R -X -g -i" less "${CACHE_FILE}"

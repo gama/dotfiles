@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+# multi-line grep
+# taken from http://www.commandlinefu.com/commands/view/5087/multi-line-grep
+
+$/ = nil
+pattern = ARGV.shift
+if gets =~ /(#{pattern})/sm
+	puts "#{pattern}:#{$.}:#{$1}"
+	exit 0
+end
+exit 1

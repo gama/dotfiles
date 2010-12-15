@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+sizes = Hash.new
+IO.foreach(ARGV.shift) do |filename|
+    filename.chomp!
+    next unless File.exists? filename
+
+    size = File.size(filename)
+
+    path = filename
+    while (parent = File.dirname(path)) != path
+        sizes[parent] = 0 unless sizes.has_key? parent
+        sizes[parent] += size
+        path = parent
+    end
+end
+
+sizes.keys.sort.each do |path|
+    printf "%7.2fM %s\n",  sizes[path]/1024/1024, path
+end

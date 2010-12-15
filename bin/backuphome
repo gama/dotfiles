@@ -1,0 +1,84 @@
+#!/bin/bash
+
+backup_dir="${HOME}/tmp/bkps";
+date=$(date +%Y-%m-%d);
+backup_file="${backup_dir}/home.${date}.tar.lzma"
+
+patterns_file=$(mktemp /tmp/backup.exclude.patterns.XXXXXX)
+cat > $patterns_file <<EOF
+*backup*
+*~
+*.bkp
+*.class
+*.jar
+*.o
+*.a
+*.lo
+*.la
+*.gch
+*.mp3
+*.MP3
+*.ogg
+*.wma
+*.jpg
+*.jpeg
+*.png
+*.ppm
+*.bmp
+*.tif
+*.tiff
+*.ogv
+*.flv
+*.wmv
+*.mp4
+*.avi
+*.mpg
+*.mpeg
+*UTest$
+*UTest.cpp$
+*/CVS/*
+*/.svn/*
+*/.bzr/*
+*/.git/*
+*/.libs/*
+*/.deps/*
+*/CMakeFiles/*
+*/log/*
+*/[cC]ache/*
+*/favicon_cache/*
+*/Trash/*
+*/sauron/*
+*/images/*
+*/image/*
+*/distfiles/*
+*/imgs/*
+*/img/*
+*/tmp/*
+./lib/*
+./fun/*
+./local/*
+./music/*
+*/public/vids/*
+./.mozilla/*
+./.cache/*
+./.config/xmms2/*
+./.gem/*
+./.wine*
+./.ies4linux/*
+./.thumbnails
+./.Trash/*
+./.evolution/*
+./.dc++/*
+./.bogofilter/*
+./.gvfs/*
+./.config/chromium/Safe Browsing Bloom
+./.config/chromium/*/Thumbnails
+./.config/chromium/*/History Index*
+EOF
+
+cd ${HOME}
+find . -mount -type f -size +50M >> $patterns_file
+find . -mount -type f -executable -a -size +1M >> $patterns_file
+nice -n 19 tar -v -c -f - -X $patterns_file --exclude-tag-all=.skipbkp . | nice -n 19 lzma --best -c >| "${backup_file}"
+rm $patterns_file
+cp -f ${backup_file} /shared/home/gama/tmp/home-backup.tar.lzma

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PIDFILE="${HOME}/.cache/conkylyrics.pid"
+if [ -f "${PIDFILE}" ]; then
+	read PID < "${PIDFILE}"
+	kill ${PID}
+	rm -f "${PIDFILE}"
+	exit 0
+fi
+
+eval "STATUS=( $(nyxmms2 status -f \$\{duration\}\ \$\{playtime\}\ \"\$\{title\}\"\ \"\$\{artist\}\") )"
+DURATION=${STATUS[0]}
+PLAYTIME=${STATUS[1]}
+TITLE="${STATUS[2]}"
+ARTIST="${STATUS[3]}"
+REMAINING=$(( ( (${DURATION:0:2} - ${PLAYTIME:0:2}) * 60 ) + ( ${DURATION:3:4} - ${PLAYTIME:3:4} ) ))
+
+lyrics-fetcher DONTDISPLAY "${ARTIST}" "${TITLE}"
+LYRICS_FILE="${HOME}/.lyrics/${ARTIST}-${TITLE}.txt"
+
+conky -c "${HOME}/.conkylyricsrc" -t "$(cat "${LYRICS_FILE}")" &
+echo $! >| "${PIDFILE}"

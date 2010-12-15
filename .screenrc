@@ -1,0 +1,79 @@
+activity "Activity on window %"
+altscreen on
+autodetach on
+autonuke off
+caption always "%{= KW}%L=%-Lw%45L>%?%F%{= KY}%?%n*%f %t%?%F%{-}%?%+Lw%-0="
+crlf off
+defscrollback 1000
+defutf8 on
+hardstatus off
+#sorendition "= rW"
+multiuser off
+shell -$SHELL
+startup_message off
+vbell on
+maptimeout 50
+
+bindkey ò screen 1
+bindkey þ screen 1
+bindkey ¹ select 9
+bindkey ¸ select 8
+bindkey · select 7
+bindkey ¶ select 6
+bindkey µ select 5
+bindkey ´ select 4
+bindkey ³ select 3
+bindkey ² select 2
+bindkey ± select 1
+bindkey È prev
+bindkey Ì next
+
+bindkey r screen 1
+bindkey 1 select 1
+bindkey 2 select 2
+bindkey 3 select 3
+bindkey 4 select 4
+bindkey 5 select 5
+bindkey 6 select 6
+bindkey 7 select 7
+bindkey 8 select 8
+bindkey 9 select 9
+bindkey H prev           # alt-H
+bindkey L next           # alt-J
+bindkey . copy           # alt-.
+bindkey , paste .        # alt-,
+bindkey -m [5~ stuff ^b  # ctrl-pageup
+bindkey -m [6~ stuff ^f  # ctrl-pagedown
+bindkey -m k stuff 1^u   # alt-k
+bindkey -m j stuff 1^d   # alt-j
+
+#bindkey ¯ exec bash -c "[[ $(pgrep -c mocp) > '1' ]] && exec screen -X select 10 || exec screen -X screen 10 mocp" # alt-/
+#bindkey  exec bash -c 'exec screen -X screen 1 lyrics-fetcher "$(mocp -Q %artist)" "$(mocp -Q %song)"' 	# ctrl-alt-/
+bindkey ¯ screen 1 nyxmms2
+bindkey  exec bash -c 'exec screen -X screen 1 lyrics-fetcher "$(nyxmms2 status -f \$\{artist\})" "$(nyxmms2 status -f \$\{title\})"' 	# ctrl-alt-/
+
+#bindkey ë copy             # alt-l
+bindkey ¬ copy             # alt-.
+bindkey ® paste .          # alt-,
+bindkey -m [5~ stuff ^b  # ctrl-pageup
+bindkey -m [6~ stuff ^f  # ctrl-pagedown
+bindkey -m ë stuff 1^u     # alt-j
+bindkey -m ê stuff 1^d     # alt-k
+
+bind c screen 1
+screen 1
+
+#termcapinfo xterm  'Co#:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo xterm* 'Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo xterm* 'OL=100'
+termcapinfo xterm* 'VR=\E[?5h:VN=\E[?5l'
+termcapinfo xterm* 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+termcapinfo xterm* 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+termcapinfo xterm* 'vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l'
+termcapinfo xterm* 'XC=K%,%\E(B,[\304,\\\\\326,]\334,{\344,|\366,}\374,~\337'
+termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007'
+#termcapinfo xterm* 'ti@:te@'
+termcapinfo xterm* 'ti@:te=\E[2J'
+
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'

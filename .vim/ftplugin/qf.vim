@@ -1,0 +1,2 @@
+set nobuflisted
+set wrap
