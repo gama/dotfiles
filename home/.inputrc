@@ -1,0 +1,61 @@
+set input-meta on
+set output-meta on
+set convert-meta off
+set bell-style none
+set match-hidden-files off
+set completion-ignore-case on
+set completion-map-case on
+set editing-mode vi
+set keyseq-timeout 0
+set isearch-terminators "\C-j "
+# set editing-mode emacs
+
+set keymap vi-command
+"\C-a": beginning-of-line
+"\C-?": backward-delete-char
+"\C-e": end-of-line
+"\C-h": backward-delete-char
+"\C-k": kill-line
+"\C-l": clear-screen
+"\C-n": history-search-backward
+"\C-p": history-search-forward
+"\C-o": re-read-init-file
+"\C-t": transpose-chars
+"\C-u": unix-line-discard
+"\C-v": quoted-insert
+"\C-w": unix-word-rubout
+"\C-y": yank
+"\t": complete
+"\C-d": self-insert
+"ù": yank-last-arg
+"ð": reverse-search-history
+"î": forward-search-history
+"y": yank-last-arg
+"p": reverse-search-history
+"n": forward-search-history
+"l": clear-screen
+
+set keymap vi-insert
+"\C-a": beginning-of-line
+"\C-?": backward-delete-char
+"\C-e": end-of-line
+"\C-h": backward-delete-char
+"\C-k": kill-line
+"\C-l": clear-screen
+"\C-n": history-search-backward
+"\C-p": history-search-forward
+"\C-o": re-read-init-file
+"\C-t": transpose-chars
+"\C-u": unix-line-discard
+"\C-v": quoted-insert
+"\C-w": unix-word-rubout
+"\C-y": yank
+"\t": complete
+"\C-d": self-insert
+"ù": yank-last-arg
+"ð": reverse-search-history
+"î": forward-search-history
+"y": yank-last-arg
+"p": reverse-search-history
+"o": forward-search-history
+"l": clear-screen
