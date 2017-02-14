@@ -1,0 +1,39 @@
+set hlsearch
+set scrolloff=3
+set ignorecase smartcase
+set showmode
+set history=1000
+
+nnoremap <space><space> :action ShowIntentionActions<cr>
+nnoremap <space>q :q<cr>
+nnoremap <space>o :action GotoFile<cr>
+nnoremap <space>O :action GotoClass<cr>
+nnoremap <space>a :action GotoAction<cr>
+nnoremap <space>b :action GotoDeclaration<cr>
+nnoremap <space>B :action GotoImplementation<cr>
+nnoremap <space>u :action FindUsages<cr>
+nnoremap <space>e :action RecentFiles<cr>
+nnoremap <space>j :action RunClass<cr>
+nnoremap <space>d :action DebugClass<cr>
+nnoremap <space>z :action HideAllWindows<cr>
+nnoremap <space>h :nohlsearch<cr>
+nnoremap <space>rn :action RenameElement<cr>
+nnoremap <space>rf :action Refactorings.QuickListPopupAction<cr>
+vnoremap <space>rf :action Refactorings.QuickListPopupAction<cr>
+nnoremap <space>rc :action Generate<cr>
+
+
+nnoremap <A-S-h> :action PreviousTab<cr>
+nnoremap <A-S-l> :action NextTab<cr>
+nnoremap <A-p>   :action PreviousTab<cr>
+nnoremap <A-n>   :action NextTab<cr>
+nnoremap <A-j>   :action 1<C-d>
+nnoremap <A-k>   :action 1<C-u>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+vnoremap * y/<C-R>"<CR>
+vnoremap # y?<C-R>"<CR>
