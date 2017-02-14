@@ -7,9 +7,8 @@ set completion-ignore-case on
 set completion-map-case on
 set editing-mode vi
 set keyseq-timeout 0
-set isearch-terminators "\C-j "
-# set editing-mode emacs
-
+# set isearch-terminators "\C-j "
+ 
 set keymap vi-command
 "\C-a": beginning-of-line
 "\C-?": backward-delete-char
@@ -34,6 +33,7 @@ set keymap vi-command
 "p": reverse-search-history
 "n": forward-search-history
 "l": clear-screen
+" ": " "
 
 set keymap vi-insert
 "\C-a": beginning-of-line
@@ -59,3 +59,4 @@ set keymap vi-insert
 "p": reverse-search-history
 "o": forward-search-history
 "l": clear-screen
+" ": " "

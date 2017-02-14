@@ -34,6 +34,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias grep='grep --color=auto --binary-files=without-match --directories=skip'
 alias make='nice -n 19 make'
+alias vim=nvim
 
 # functions
 psg() {
