@@ -11,19 +11,19 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'AndrewRadev/vim-eco'
-"Plugin 'vim-ruby/vim-ruby'
+Plugin 'petRUShka/vim-opencl'
+" Plugin 'kchmck/vim-coffee-script'
+" Plugin 'AndrewRadev/vim-eco'
+" Plugin 'vim-ruby/vim-ruby'
 call vundle#end()
 filetype plugin indent on
-set runtimepath-=~/.vim/bundle/vim-ruby
-set runtimepath-=~/.vim/bundle/vim-ruby/after
 
-
+" set runtimepath-=~/.vim/bundle/vim-ruby
+" set runtimepath-=~/.vim/bundle/vim-ruby/after
 
 """ Global Settings
 set autoindent
@@ -46,7 +46,6 @@ set formatlistpat=^\\s*[0-9-\\*]\\+[\\.:]\\?\\s\\+
 "set formatlistpat=^\\s*[\\d\\-\\*]\\+[:\\.)}\\t\ ]\\s\\+
 set helpheight=0
 set hidden
-"set highlight=8r,db,es,hs,mb,Mr,nu,rs,sr,tb,vr,ws
 set history=1000
 set hlsearch
 set noicon
@@ -56,7 +55,6 @@ set noinsertmode
 set iskeyword=@,48-57,_,192-255,-
 set nojoinspaces
 set laststatus=2
-" set lazyredraw
 set magic
 "set matchpairs+=<:>
 set mouse=""
@@ -148,8 +146,6 @@ nnoremap <C-p> <C-W>p
 
 " misc
 nnoremap <silent> <Leader>cd :cd %:p:h<CR>
-" nnoremap <silent> <Leader>E :Explore<CR>
-" nnoremap <silent> <Leader>s :Sexplore<CR>
 nnoremap <silent> <Leader>e :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>s :NERDTreeFind<CR>
 nnoremap <silent> <Leader>d :bd!<CR>
@@ -201,14 +197,15 @@ let g:multi_cursor_quit_key='<Esc>'
 " complete
 inoremap <C-a>j <C-n>
 inoremap <C-a>k <C-p>
-inoremap <C-a><Space> <C-n>
 
+nnoremap <C-a><Space> <Space>
+inoremap <C-a><Space> <Space>
+vnoremap <C-a><Space> <Space>
 
 """""""""" Abbreviations """"""""""
 cabbrev bx silent w\|bunload
 cabbrev do diffoff \| set nowrap
 cabbrev te <C-R>=getcmdpos() == 1 && getcmdtype()==':' ? "tabedit" : "te"<CR>
-
 
 """""""""" Variables """"""""""
 " airline plugin
