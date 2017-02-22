@@ -1,7 +1,7 @@
 # .bashrc
 
 # environment variables
-export LS_OPTIONS='-F -I CVS -I .svn -I \*.lo -I \*.o -I \*.la -I CMakeFiles -I cmake_install.cmake -I CMakeCache.txt --color=auto'
+export LS_OPTIONS='-F -I CVS -I .svn -I \*.lo -I \*.o -I \*.la -I CMakeFiles -I cmake_install.cmake -I CMakeCache.txt -I \*.pyc --color=auto'
 export LS_COLORS='di=01;34:ex=00;32:ln=00;36:mi=01;41'
 export GREP_COLOR='01;32'
 export LESSCHARSET='utf-8'
@@ -35,6 +35,7 @@ alias .....='cd ../../../..'
 alias grep='grep --color=auto --binary-files=without-match --directories=skip'
 alias make='nice -n 19 make'
 alias vim=nvim
+alias lynx='lynx -vikeys'
 
 # functions
 psg() {
@@ -53,6 +54,9 @@ bhga() {
 }
 vims() {
     vim -S "${HOME}/.vim/sessions/$1";
+}
+rmd() {
+    pandoc -s -f markdown -t html "${1}" | lynx -stdin
 }
 findg() {
     cmd="find . -name '$1' -exec grep -H -n '$2' {} \;";

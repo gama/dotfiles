@@ -16,14 +16,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'petRUShka/vim-opencl'
-" Plugin 'kchmck/vim-coffee-script'
-" Plugin 'AndrewRadev/vim-eco'
-" Plugin 'vim-ruby/vim-ruby'
+Plugin 'pangloss/vim-javascript'
+Plugin 'elzr/vim-json'
+Plugin 'python-mode/python-mode'
+Plugin 'vim-syntastic/syntastic'
 call vundle#end()
 filetype plugin indent on
-
-" set runtimepath-=~/.vim/bundle/vim-ruby
-" set runtimepath-=~/.vim/bundle/vim-ruby/after
 
 """ Global Settings
 set autoindent
@@ -280,6 +278,7 @@ let g:ctrlp_prompt_mappings = {
 
 " NERDTree
 let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeIgnore = ['\.(pyc|class|o|lo)$']
 
 """""""""" Autocommands """"""""""
 command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")

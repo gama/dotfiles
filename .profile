@@ -9,6 +9,7 @@ add_to_path() {
 	esac
 }
 add_to_path "${HOME}/bin"
+add_to_path "${HOME}/.local/bin"
 
 # shell-independent environment variables
 export PAGER='less'
