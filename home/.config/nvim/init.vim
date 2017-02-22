@@ -1,1 +1,1 @@
-/home/gama/.vimrc
+../../.vimrc
