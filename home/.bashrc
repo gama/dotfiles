@@ -55,8 +55,15 @@ bhga() {
 vims() {
     vim -S "${HOME}/.vim/sessions/$1";
 }
-rmd() {
+mdterm() {
     pandoc -s -f markdown -t html "${1}" | lynx -stdin
+}
+mdbrowser() {
+    tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
+    pandoc -s -f markdown -t html "${1}" >| "${tmpfile}"
+    xdg-open "file://${tmpfile}"
+    sleep 5
+    rm -f "${tmpfile}"
 }
 findg() {
     cmd="find . -name '$1' -exec grep -H -n '$2' {} \;";
