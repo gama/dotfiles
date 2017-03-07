@@ -1,5 +1,5 @@
 """"""""""" Vundle initialization """"""""""""
-" set nocompatible
+set nocompatible
 set runtimepath+=~/.config/nvim/bundle/Vundle.vim
 filetype off
 call vundle#begin()
@@ -20,6 +20,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'elzr/vim-json'
 Plugin 'python-mode/python-mode'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'janko-m/vim-test'
 call vundle#end()
 filetype plugin indent on
 
