@@ -279,7 +279,7 @@ let g:ctrlp_prompt_mappings = {
 
 " NERDTree
 let g:NERDTreeQuitOnOpen = 1
-let g:NERDTreeIgnore = ['\.(pyc|class|o|lo)$']
+let g:NERDTreeIgnore = ['\.o$', '\.lo$', '\.class$', '\.pyc$']
 
 """""""""" Autocommands """"""""""
 command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")
