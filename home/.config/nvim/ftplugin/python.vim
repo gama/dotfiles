@@ -7,6 +7,7 @@ let g:pymode_lint_options_pep8 = { 'max_line_length': g:pymode_options_max_line_
 let g:pymode_run_bind = ',r'
 let g:pymode_breakpoint_bind = ',b'
 let g:pymode_rope = 0
+let g:test#python#runner = 'pytest'
 
 setlocal formatprg=autopep8\ --max-line-length=9999\ -
 setlocal foldlevel=9999

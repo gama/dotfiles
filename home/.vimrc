@@ -281,6 +281,17 @@ let g:ctrlp_prompt_mappings = {
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeIgnore = ['\.o$', '\.lo$', '\.class$', '\.pyc$']
 
+
+" vim-test
+function! TmuxStrategy(cmd)
+    call jobstart('tmux send-keys -t+ "'.a:cmd.'" Enter')
+endfunction
+let g:test#custom_strategies = {'tmux': function('TmuxStrategy')}
+let g:test#strategy = 'tmux'
+nnoremap mt :TestNearest<CR>
+nnoremap mT :TestFile<CR>
+
+
 """""""""" Autocommands """"""""""
 command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")
 autocmd BufNewFile,BufReadPost *.tpl setfiletype html
