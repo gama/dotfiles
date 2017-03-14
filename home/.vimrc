@@ -237,7 +237,7 @@ endif
 let g:ctrlp_map = ''
 " let g:ctrlp_match_window_bottom = 0
 " let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|vendor)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|vendor)|(\.(swp|ico|git|svn|pyc|class))$'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:30'
 let g:ctrlp_root_markers = ['pom.xml']
 let g:ctrlp_prompt_mappings = {
