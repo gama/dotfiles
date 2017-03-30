@@ -85,7 +85,7 @@ if has("nvim")
     set viminfo=f0,'50,\"100,:500,n~/.cache/nvim/viminfo
 else
     set esckeys
-    set viminfo=f0,'50,\"100,:500,n~/.viminfo
+    set viminfo=f0,'50,\"100,:500,n~/.origviminfo
 endif
 set visualbell
 set whichwrap=<,>
