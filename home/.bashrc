@@ -13,6 +13,7 @@ export HISTSIZE=5000
 export HISTFILESIZE=999999
 export HISTCONTROL=ignorespace:ignoredups
 export TZ=:/etc/localtime
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-${HOME}/.config}/npm/config"
 
 # aliases
 alias cp='cp -i'
@@ -113,6 +114,7 @@ add_to_path() {
 
 # set $PATH
 add_to_path "${HOME}/bin"
+add_to_path "${HOME}/.cache/npm/bin"
 
 if [ -n "$PS1" ]; then
     # colored manpages
