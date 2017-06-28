@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# set -o xtrace
+
+[[ -z "$@" ]] && {
+echo -e "Usage: $(basename $0) DATE1 [DATE2 [DATE3 ... ]]\n(where DATEX follows the format YYYY-MM-DD)\n"
+    exit 1
+}
+
+USERNAME="gustavo.gama@gmail.com"
+PASSWORD="5tilared"
+CLOCKID="3351218"
+COOKIEJAR="${HOME}/.cache/opentimeclock.cookie.jar"
+
+# today=$(date +%Y-%m-%d)
+# date="${1:-${today}}"
+morning_arrival_hour="9"
+morning_arrival_minutes=$(($RANDOM % 30))
+lunch_leave_hour="12"
+lunch_leave_minutes=$(($RANDOM % 30))
+lunch_arrival_hour="13"
+lunch_arrival_minutes=$(($RANDOM % 30))
+evening_leave_hour="18"
+evening_leave_minutes=$(($RANDOM % 30))
+
+curl -D - 'https://www.opentimeclock.com/back/sLogin.php'          -X POST --cookie-jar "${COOKIEJAR}" --data "user=${USERNAME}" --data "password=${PASSWORD}" --data "clockId=${CLOCKID}"
+for date in "$@"; do
+    echo -n "${date} "
+    curl -D - 'https://www.opentimeclock.com/back/eAddEditPending.php'         --cookie     "${COOKIEJAR}" --data 'pendingId=-1' --data "inDateTime=${date}+${morning_arrival_hour}%3A${morning_arrival_minutes}%3A00" --data "outDateTime=${date}+${lunch_leave_hour}%3A${lunch_leave_minutes}%3A00" # employeeNote=&jobCode=&shiftReport=&managerComment='
+    curl -D - 'https://www.opentimeclock.com/back/eAddEditPending.php'         --cookie     "${COOKIEJAR}" --data 'pendingId=-1' --data "inDateTime=${date}+${lunch_arrival_hour}%3A$lunch_arrival_minutes}%3A00" --data "outDateTime=${date}+${evening_leave_hour}%3A${evening_leave_minutes}%3A00" # employeeNote=&jobCode=&shiftReport=&managerComment='
+    echo
+done
