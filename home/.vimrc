@@ -6,11 +6,12 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdTree'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
+Plugin 'janko-m/vim-test'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
@@ -19,9 +20,6 @@ Plugin 'petRUShka/vim-opencl'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'elzr/vim-json'
-Plugin 'python-mode/python-mode'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'janko-m/vim-test'
 call vundle#end()
 filetype plugin indent on
 
@@ -38,12 +36,10 @@ set completeopt=menuone,menu,longest
 "set cursorline
 set nodigraph
 set noerrorbells
-set esckeys
 set expandtab
-set fillchars=stl:\ ,stlnc:\ ,vert:│,fold:-,diff:-
+set fillchars=stl:\ ,stlnc:\ ,vert:\│,fold:-,diff:-
 set formatoptions=tcqn
 set formatlistpat=^\\s*[0-9-\\*]\\+[\\.:]\\?\\s\\+
-"set formatlistpat=^\\s*[\\d\\-\\*]\\+[:\\.)}\\t\ ]\\s\\+
 set helpheight=0
 set hidden
 set history=1000
@@ -82,12 +78,14 @@ set t_vb=
 set timeout
 set timeoutlen=300
 set title
+set titlestring=%t%m\ -\ VIM
 set ttimeout
 set ttimeoutlen=-1
 if has("nvim")
-    set viminfo=f0,'50,\"100,:500,n~/.viminfo
+    set viminfo=f0,'50,\"100,:500,n~/.cache/nvim/viminfo
 else
-    set viminfo=f0,'50,\"100,:500,n~/.origviminfo
+    set esckeys
+    set viminfo=f0,'50,\"100,:500,n~/.viminfo
 endif
 set visualbell
 set whichwrap=<,>
@@ -137,7 +135,6 @@ vnoremap <Leader>G y:Ggrep! "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 nnoremap <Leader>G :Ggrep! "\b<C-R><C-W>\b" .<CR><CR>:copen<CR>
 
 " window movements
-nnoremap <Leader>w <C-W>w
 nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
@@ -159,6 +156,7 @@ nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <C-a>e    :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>p :CtrlPCurFile<CR>
 nnoremap <silent> <Leader>o :CtrlP<CR>
+nnoremap <silent> QQ        :qa!<CR>
 
 " tab navigation
 nnoremap <silent> <Leader>1 1gt
@@ -193,6 +191,38 @@ let g:multi_cursor_next_key='n'
 let g:multi_cursor_prev_key='p'
 let g:multi_cursor_skip_key='x'
 let g:multi_cursor_quit_key='<Esc>'
+
+" pymode
+let g:pymode_python='python'
+let g:pymode_options_max_line_length=999
+let g:pymode_lint_options_pep8={ 'max_line_length': g:pymode_options_max_line_length }
+let g:pymode_folding=0
+let g:pymode_lint_on_write=1
+let g:pymode_lint_checkers=['pyflakes', 'pep8']
+let g:pymode_breakpoint_cmd='import ipdb; ipdb.set_trace()  # noqa; FIXME: remove breakpoing'
+let g:pymode_doc_bind='K'
+let g:pymode_run_bind=',ru'
+let g:pymode_breakpoint_bind=',rb'
+let g:pymode_rope=0
+let g:pymode_rope_autoimport=0
+let g:pymode_rope_autoimport_bind=',ra'
+let g:pymode_rope_completion_bind='<C-n>'
+let g:pymode_rope_goto_definition_bind='<C-a>b'
+let g:pymode_rope_show_doc_bind=',d'
+let g:pymode_rope_find_it_bind=',f'
+let g:pymode_rope_organize_imports_bind=',ro'
+let g:pymode_rope_rename_bind=',rn'
+let g:pymode_rope_rename_module_bind=',r1r'
+let g:pymode_rope_module_to_package_bind=',r1p'
+let g:pymode_rope_extract_method_bind=',rm'
+let g:pymode_rope_extract_variable_bind=',rv'
+let g:pymode_rope_inline_bind=',ri'
+let g:pymode_rope_move_bind=',rl'
+let g:pymode_rope_generate_function_bind=',rf'
+let g:pymode_rope_generate_class_bind=',rc'
+let g:pymode_rope_generate_package_bind=',rp'
+let g:pymode_rope_change_signature_bind=',rs'
+let g:pymode_rope_use_function_bind=',ru'
 
 " complete
 inoremap <C-a>j <C-n>
@@ -238,7 +268,7 @@ endif
 let g:ctrlp_map = ''
 " let g:ctrlp_match_window_bottom = 0
 " let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|vendor)|(\.(swp|ico|git|svn|pyc|class))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|vendor|venv|virtualenv|env)|(\.(swp|ico|git|svn|pyc|class))$'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:30'
 let g:ctrlp_root_markers = ['pom.xml']
 let g:ctrlp_prompt_mappings = {
@@ -285,34 +315,23 @@ let g:NERDTreeIgnore = ['\.o$', '\.lo$', '\.class$', '\.pyc$']
 
 " vim-test
 function! TmuxStrategy(cmd)
-    call jobstart('tmux send-keys -t+ "'.a:cmd.'" Enter')
+    call jobstart('tmux send-keys -t+ "l'.a:cmd.' -s -v" Enter')
 endfunction
 let g:test#custom_strategies = {'tmux': function('TmuxStrategy')}
 let g:test#strategy = 'tmux'
+let g:test#python#runner = 'pytest'
 nnoremap mt :TestNearest<CR>
 nnoremap mT :TestFile<CR>
+nnoremap ml :TestLast<CR>
 
 
 """""""""" Autocommands """"""""""
 command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")
-autocmd BufNewFile,BufReadPost *.tpl setfiletype html
-autocmd BufNewFile,BufReadPost *.cxxtest setfiletype cpp
-autocmd BufNewFile,BufReadPost *.vala setfiletype vala | set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-autocmd BufNewFile,BufReadPost *.vapi setfiletype vala | set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
-autocmd BufNewFile,BufReadPost *.mxml setfiletype mxml
-autocmd BufNewFile,BufReadPost *.citrus setfiletype citrus
-autocmd BufNewFile,BufReadPost *.as setfiletype actionscript
-autocmd BufNewFile,BufReadPost *.nfo setfiletype nfo
-autocmd BufNewFile,BufReadPost *.vb setfiletype vb
 autocmd BufNewFile,BufReadPost *.ejs setfiletype ejs
 autocmd BufNewFile,BufReadPost /etc/nginx/*,/etc/nginx/conf.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
-autocmd BufNewFile,BufReadPost vimperator-* set tw=72
-autocmd BufNewFile,BufReadPost mail.google.com.*txt set tw=72
 autocmd BufNewFile,BufReadPost .git/COMMIT_EDITMSG set tw=72
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 autocmd FileType * if (expand("<amatch>") != 'html') || (getfsize(expand("<afile>")) < 10240) | runtime macros/matchit.vim | end
-autocmd VimEnter,WinEnter,BufWinLeave * call SetTitlestring()
-autocmd BufReadPre *.java,*.xml,*.properties if filereadable(FindInParentDirs("pom.xml", "<afile>")) | call eclim#init() | end
 autocmd GUIEnter * set guifont=Monospace\ 14
 autocmd BufReadPost quickfix nnoremap <buffer> o <CR><C-W><C-W>
 
@@ -327,56 +346,6 @@ elseif (has('gui'))
 else
     colorscheme default
 endif
-
-
-""""""""" Functions """"""""""
-function! FindInParentDirs(param, vim_file_spec)
-    let dir = expand(a:vim_file_spec . ':p:h')
-    while (!filereadable(dir."/".a:param)) && (!isdirectory(dir."/".a:param)) && (dir != "/")
-        let dir = fnamemodify(dir, ':h')
-    endwhile
-    let fname = dir."/".a:param
-    return (filereadable(fname) ? fname : "")
-endfunction
-
-function! CanMove(edge_direction)
-    " echomsg '[debug:CanMove] winnr(): . ' . winnr() . ', edge_direction: ' . a:edge_direction
-    let prev_winnr = winnr()
-    silent! execute 'wincmd ' . a:edge_direction
-    let curr_winnr = winnr()
-    if prev_winnr == curr_winnr
-        return 0
-    else
-        wincmd p
-        return 1
-    endif
-endfunction
-
-function! EdgeSymbol()
-    " echomsg '[debug:EdgeSymbol] winnr(): ' . winnr()
-    let top    = CanMove("k")
-    let bottom = CanMove("j")
-    let left   = CanMove("h")
-    let right  = CanMove("l")
-    let symbol = " "
-    if (top)    | let symbol = symbol . "↑" | endif
-    if (bottom) | let symbol = symbol . "↓" | endif
-    if (left)   | let symbol = symbol . "←" | endif
-    if (right)  | let symbol = symbol . "→" | endif
-    return symbol
-endfunction
-
-function! SetTitlestring()
-    let &titlestring = $USER . "@" . $HOST . ":[VIM] %t" . substitute(EdgeSymbol(), "^\\s\\+$", "", "")
-endfunction
-
-function! EchoJumps(prefix)
-    redir => output
-    silent! jumps
-    redir end
-    echomsg a:prefix . ' jumps: '
-    echomsg output
-endfunction
 
 function! Bgrep(param)
     silent argdo try
