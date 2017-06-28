@@ -59,15 +59,25 @@ bhga() {
 vims() {
     vim -S "${HOME}/.vim/sessions/$1";
 }
+mdstdout() {
+    pandoc -s -f markdown -t html5 --css "file://$HOME/tmp/github-markdown.css" "${1}"  | sed -e 's/^<body>$/<body class="markdown-body" style="margin: 0 auto; max-width: 50em">/'
+}
 mdterm() {
-    pandoc -s -f markdown -t html "${1}" | lynx -stdin
+    tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
+    mdstdout "${1}" >| "${tmpfile}"
+    elinks "file://${tmpfile}"
+    sleep 1
+    rm -f "${tmpfile}"
 }
 mdbrowser() {
     tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
-    pandoc -s -f markdown -t html "${1}" >| "${tmpfile}"
+    mdstdout "${1}" >| "${tmpfile}"
     xdg-open "file://${tmpfile}"
-    sleep 5
+    sleep 2
     rm -f "${tmpfile}"
+}
+mdman() {
+    pandoc -s -f markdown -t man "${1}" | groff -T utf8 -man | less
 }
 findg() {
     cmd="find . -name '$1' -exec grep -H -n '$2' {} \;";
