@@ -12,6 +12,7 @@ export GLOBIGNORE='.o:.lo:.bak:.bkp:~:.class:CVS:.svn'
 export HISTSIZE=5000
 export HISTFILESIZE=999999
 export HISTCONTROL=ignorespace:ignoredups
+export TZ=:/etc/localtime
 
 # aliases
 alias cp='cp -i'
