@@ -3,21 +3,30 @@
 	branch = auto
 	status = always
 	interactive = auto
+
 [alias]
 	st = status
 	sb = show-branch
+	sbm = show-branch HEAD origin/master
 	ll = log -p --stat
 	l  = log --oneline
 	wc = whatchanged -p --abbrev-commit --pretty=medium
 	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	flog = log --graph --all --decorate --stat --date=iso
+	serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/ --enable=receive-pack
+	wdiff = diff --word-diff
+	cdiff = diff --ignore-all-space
+	overview = git log --all --since='2 weeks' --oneline --no-merges
 
 [core]
 	autocrlf = input
 	whitespace = -blank-at-eof,blank-at-eol,space-before-tab,tabwidth=4,tab-in-indent
+	quotepath = false
 
 [diff]
 	tool = vimdiff2
 	# command = vimdiff
+
 [push]
 	default = simple
