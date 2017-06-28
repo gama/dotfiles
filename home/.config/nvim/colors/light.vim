@@ -23,7 +23,7 @@ let g:colors_name = "light"
 
 hi Normal     guifg=#444444
 hi Identifier ctermfg=0
-hi Visual     ctermfg=255
+hi Visual     ctermbg=254 ctermfg=None
 hi Comment    ctermfg=247
 hi NonText    gui=None
 hi MoreMsg    gui=None
@@ -49,7 +49,8 @@ hi StatusLineNC cterm=NONE ctermbg=254 ctermfg=246 gui=NONE guibg=#222 guifg=#cc
 hi StatusLineBufTabsCurrent cterm=NONE ctermfg=20 ctermbg=252 gui=NONE guifg=Yellow
 hi VertSplit cterm=NONE
 hi MatchParen ctermbg=253
-hi CursorLine cterm=NONE ctermbg=254
+hi CursorLine cterm=NONE ctermbg=231
 hi Folded ctermfg=NONE ctermbg=253
 hi LineNr ctermbg=255 ctermfg=169
+hi SignColumn ctermbg=255 ctermfg=1
 " vim: sw=2
