@@ -126,6 +126,7 @@ add_to_path() {
 
 # set $PATH
 add_to_path "${HOME}/bin"
+add_to_path "${HOME}/.local/bin"
 add_to_path "${HOME}/.cache/npm/bin"
 
 if [ -n "$PS1" ]; then
