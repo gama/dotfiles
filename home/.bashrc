@@ -43,9 +43,9 @@ alias senv='source env.sh'
 
 # functions
 psg() {
-    first_letter=${1:0:1}
-    rest=${1:1}
-    ps auxwww | grep -E ^USER.\*$\|\[$first_letter\]$rest
+	first_letter=${1:0:1}
+	rest=${1:1}
+	ps auxwww | grep -E ^USER.\*$\|\[$first_letter\]$rest
 }
 psgc() {
 	psg $@ | cut -c -$COLUMNS
@@ -57,71 +57,65 @@ bhga() {
 	grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history"*)
 }
 vims() {
-    vim -S "${HOME}/.vim/sessions/$1";
+	vim -S "${HOME}/.vim/sessions/$1";
 }
 mdstdout() {
-    pandoc -s -f markdown -t html5 --css "file://$HOME/tmp/github-markdown.css" "${1}"  | sed -e 's/^<body>$/<body class="markdown-body" style="margin: 0 auto; max-width: 50em">/'
+	pandoc -s -f markdown -t html5 --css "file://$HOME/tmp/github-markdown.css" "${1}" | sed -e 's/^<body>$/<body class="markdown-body" style="margin: 0 auto; max-width: 50em">/'
 }
 mdterm() {
-    tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
-    mdstdout "${1}" >| "${tmpfile}"
-    elinks "file://${tmpfile}"
-    sleep 1
-    rm -f "${tmpfile}"
+	tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
+	mdstdout "${1}" >| "${tmpfile}"
+	elinks "file://${tmpfile}"
+	sleep 1
+	rm -f "${tmpfile}"
 }
 mdbrowser() {
-    tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
-    mdstdout "${1}" >| "${tmpfile}"
-    xdg-open "file://${tmpfile}"
-    sleep 2
-    rm -f "${tmpfile}"
+	tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
+	mdstdout "${1}" >| "${tmpfile}"
+	xdg-open "file://${tmpfile}"
+	sleep 2
+	rm -f "${tmpfile}"
 }
 mdman() {
-    pandoc -s -f markdown -t man "${1}" | groff -T utf8 -man | less
+	pandoc -s -f markdown -t man "${1}" | groff -T utf8 -man | less
 }
 findg() {
-    cmd="find . -name '$1' -exec grep -H -n '$2' {} \;";
-    eval $cmd;
+	cmd="find . -name '$1' -exec grep -H -n '$2' {} \;";
+	eval $cmd;
 }
 # find in parent dirs
 findp() {
-    d="${PWD}"
-    while [[ ! -f "${d}/${1}" && "${d}" != "/" ]]; do
-        d=$(dirname "${d}")
-    done
-    echo "${d}/${1}"
+	d="${PWD}"
+	while [[ ! -f "${d}/${1}" && "${d}" != "/" ]]; do
+		d=$(dirname "${d}")
+	done
+	echo "${d}/${1}"
 }
 trash() {
-    gvfs-trash "$@"
+	gvfs-trash "$@"
 }
 bci() {
-    perl -e 'print(eval(shift(@ARGV)), "\n");' "$1"
+	perl -e 'print(eval(shift(@ARGV)), "\n");' "$1"
 }
 downcase() {
-    for n in $1; do mv $n `echo $n | tr '[:upper:]' '[:lower:]'`; done
+	for n in $1; do mv $n `echo $n | tr '[:upper:]' '[:lower:]'`; done
 }
 upcase() {
-    for n in $1; do mv $n `echo $n | tr '[:lower:]' '[:upper:]'`; done
+	for n in $1; do mv $n `echo $n | tr '[:lower:]' '[:upper:]'`; done
 }
 wtitle() {
-    echo -e -n "\033]0;$1\007"
+	echo -e -n "\033]0;$1\007"
 }
 detach() {
-    "$@" </dev/null >${HOME}/.detach.log 2>&1 &
+	"$@" </dev/null >${HOME}/.detach.log 2>&1 &
 }
 n() {
-    nice -n 19 "$@"
+	nice -n 19 "$@"
 }
 lbkp() {
-    if [ -f "${1}" ]; then
-        mv "${1}" "${1}~"
-    fi
-}
-add_to_path() {
-	case ":$PATH:" in
-		*":$1:"*) ;;
-		*)        PATH="$1:$PATH";;
-	esac
+	if [ -f "${1}" ]; then
+		mv "${1}" "${1}~"
+	fi
 }
 
 # set $PATH
@@ -130,53 +124,53 @@ add_to_path "${HOME}/.local/bin"
 add_to_path "${HOME}/.cache/npm/bin"
 
 if [ -n "$PS1" ]; then
-    # colored manpages
-    export LESS_TERMCAP_mb=$'\E[5m'    # start blink
-    export LESS_TERMCAP_md=$'\E[1m'    # start bold
-    export LESS_TERMCAP_mr=$'\E[3m'    # start reverse
-    export LESS_TERMCAP_so=$'\E[1;43m' # start standout
-    export LESS_TERMCAP_us=$'\E[34m'   # start underline
-    export LESS_TERMCAP_me=$'\E[0m'    # end   all modes
-    export LESS_TERMCAP_se=$'\E[0m'    # end   standout
-    export LESS_TERMCAP_ue=$'\E[0m'    # end   underline
+	# colored manpages
+	export LESS_TERMCAP_mb=$'\E[5m'    # start blink
+	export LESS_TERMCAP_md=$'\E[1m'    # start bold
+	export LESS_TERMCAP_mr=$'\E[3m'    # start reverse
+	export LESS_TERMCAP_so=$'\E[1;43m' # start standout
+	export LESS_TERMCAP_us=$'\E[34m'   # start underline
+	export LESS_TERMCAP_me=$'\E[0m'    # end   all modes
+	export LESS_TERMCAP_se=$'\E[0m'    # end   standout
+	export LESS_TERMCAP_ue=$'\E[0m'    # end   underline
 
-    # modifiers
-    set -C
-    shopt -s histappend 
-    shopt -s globstar
-    # shopt -s nullglob
-    # shopt -s failglob
+	# modifiers
+	set -C
+	shopt -s histappend
+	shopt -s globstar
+	# shopt -s nullglob
+	# shopt -s failglob
 
-    # format prompt
-    case "$TERM" in
-        xterm*)
-            export PS1='\[\e[0;1m\][\u@\h]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
-            export PROMPT_COMMAND='history -a; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
-            ;;
-        screen*)
-            wtitle() {
-                printf '\033k'"$@"'\033\\'
-            }
-            panetitle() {
-                printf '\033]2;'"$@"'\033\\'
-            }
-            export PS1='\[\e[0;1m\][\u@\h]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
-            # export PROMPT_COMMAND='history -a; DIR=$([ "$PWD" == "$HOME" ] && echo \~ || basename "$PWD"); echo -n -e "\ek${USER}@${HOST}:${DIR}\e\\\\"; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
-            export PROMPT_COMMAND='history -a; DIR=$([ "$PWD" == "$HOME" ] && echo \~ || basename "$PWD"); panetitle "${USER}@${HOST}:${DIR}"; wtitle "${USER} @ ${HOST} : ${PWD}"'
-            ;;
-        *)
-            export PS1='[\u@\h]:\W» '
-            export PROMPT_COMMAND='history -a'
-            ;;
-    esac
+	# format prompt
+	case "$TERM" in
+		xterm*)
+			export PS1='\[\e[0;1m\][\u@\h]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
+			export PROMPT_COMMAND='history -a; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
+			;;
+		screen*)
+			wtitle() {
+				printf '\033k'"$@"'\033\\'
+			}
+			panetitle() {
+				printf '\033]2;'"$@"'\033\\'
+			}
+			export PS1='\[\e[0;1m\][\u@\h]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
+			# export PROMPT_COMMAND='history -a; DIR=$([ "$PWD" == "$HOME" ] && echo \~ || basename "$PWD"); echo -n -e "\ek${USER}@${HOST}:${DIR}\e\\\\"; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
+			export PROMPT_COMMAND='history -a; DIR=$([ "$PWD" == "$HOME" ] && echo \~ || basename "$PWD"); panetitle "${USER}@${HOST}:${DIR}"; wtitle "${USER} @ ${HOST} : ${PWD}"'
+			;;
+		*)
+			export PS1='[\u@\h]:\W» '
+			export PROMPT_COMMAND='history -a'
+			;;
+	esac
 
-    # load homeshick
-    for file in "$HOME/.homesick/repos/homeshick/homeshick.sh" "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"; do
-        [ -f "$file" ] && source "$file";
-    done
+	# load homeshick
+	for file in "$HOME/.homesick/repos/homeshick/homeshick.sh" "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"; do
+		[ -f "$file" ] && source "$file";
+	done
 
-    # display "message of the day" if the session is iteractive
-    [ -n "$PS1" ] && [ -f ${HOME}/.motd ] && cat ${HOME}/.motd
+	# display "message of the day" if the session is iteractive
+	[ -n "$PS1" ] && [ -f ${HOME}/.motd ] && cat ${HOME}/.motd
 fi
 
 # load per host settings
