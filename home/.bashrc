@@ -51,10 +51,10 @@ psgc() {
 	psg $@ | cut -c -$COLUMNS
 }
 bhg() {
-	grep -h "${1}" $(\ls -tr "${HOME}/.bash_history"*) | tail
+	grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history"*) | tail
 }
 bhga() {
-	grep -h "${1}" $(\ls -tr "${HOME}/.bash_history"*)
+	grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history"*)
 }
 vims() {
     vim -S "${HOME}/.vim/sessions/$1";
