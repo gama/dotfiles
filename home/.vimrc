@@ -329,6 +329,10 @@ nnoremap mt :TestNearest<CR>
 nnoremap mT :TestFile<CR>
 nnoremap ml :TestLast<CR>
 
+" tabular
+vnoremap t= :Tabularize /=/<CR>
+vnoremap t: :Tabularize /.*:/<CR>
+
 " IndentGuide
 let g:indentLine_char            = '│'
 let g:indentLine_color_term      = 254
