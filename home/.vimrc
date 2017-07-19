@@ -73,7 +73,7 @@ set softtabstop=4
 set suffixes=.bak,.swp,~,CVS,.o,.class,.pyc,.lo,.la
 set nostartofline
 set tabstop=4
-set tags=./.tags,./tags
+set tags='tags,.tags,.git/tags'
 set textwidth=999999
 set t_vb=
 set timeout
@@ -156,6 +156,7 @@ nnoremap <silent> <Leader>z :only<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <C-a>e    :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>p :CtrlPCurFile<CR>
+nnoremap <silent> <Leader>] :CtrlPTag<CR>
 nnoremap <silent> <Leader>o :CtrlP<CR>
 nnoremap <silent> QQ        :qa!<CR>
 
@@ -174,6 +175,9 @@ nnoremap <silent> <Leader>t :tabnew<CR>
 " buffer navigation
 nnoremap <C-a>n :bnext<CR>
 nnoremap <C-a>p :bprev<CR>
+nnoremap <C-a>] <C-]>
+nnoremap <C-a>[ <C-T>
+vnoremap <C-a>] <C-]>
 
 " grepping
 nnoremap gr :grep <cword> *<CR>
