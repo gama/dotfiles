@@ -15,6 +15,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+Plugin 'Yggdroot/indentLine'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'petRUShka/vim-opencl'
 Plugin 'pangloss/vim-javascript'
@@ -323,6 +324,13 @@ let g:test#python#runner = 'pytest'
 nnoremap mt :TestNearest<CR>
 nnoremap mT :TestFile<CR>
 nnoremap ml :TestLast<CR>
+
+" IndentGuide
+let g:indentLine_char            = '│'
+let g:indentLine_color_term      = 254
+let g:indentLine_color_gui       = '#A4E57E'
+let g:indentLine_color_tty_light = 7
+let g:indentLine_color_dark      = 1
 
 
 """""""""" Autocommands """"""""""
