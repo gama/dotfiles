@@ -69,6 +69,7 @@ set showcmd
 set showmatch
 set showmode
 set smarttab
+set splitright
 set softtabstop=4
 set suffixes=.bak,.swp,~,CVS,.o,.class,.pyc,.lo,.la
 set nostartofline
