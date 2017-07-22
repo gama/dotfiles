@@ -7,7 +7,8 @@
 [alias]
 	st = status
 	sb = show-branch
-	sbm = show-branch HEAD origin/master
+	sbc = show-branch --current
+	sbm = show-branch --current origin/master
 	ll = log -p --stat
 	l  = log --oneline
 	wc = whatchanged -p --abbrev-commit --pretty=medium
