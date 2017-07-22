@@ -1,5 +1,9 @@
 #!/bin/bash
 
-dir="/usr/share/backgrounds"
-IFS=$'\n' files=($(\ls -1 "${dir}"))
-gsettings set org.gnome.desktop.background picture-uri file://"${dir}/${files[ $(( $RANDOM % ${#files[@]} )) ]}"
+LISTFILE="${HOME}/.cache/wallpapers.html"
+IMGFILE="${HOME}/.cache/wallpaper.jpg"
+TMPFILE=$(mktemp)
+AGE=$(perl -e 'print int -M $ARGV[0]' "${LISTFILE}")
+[ $AGE -gt 1 ] && curl -o "${LISTFILE}" "https://www.reddit.com/r/EarthPorn/new/"
+IMGURL=$(cat "${LISTFILE}" | perl -0777 -ne 'my @urls = /data-url="([^"]+)"/g; print join("\n", @urls);' | grep '.jpg$' | shuf -n 1)
+curl -o "${TMPFILE}" "${IMGURL}" && mv "${TMPFILE}" "${IMGFILE}"
