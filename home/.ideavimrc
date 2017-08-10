@@ -6,6 +6,7 @@ set history=1000
 
 nnoremap <space><space> :action ShowIntentionActions<cr>
 nnoremap <space>q :q<cr>
+nnoremap <space>w :w<cr>
 nnoremap <space>o :action GotoFile<cr>
 nnoremap <space>O :action GotoClass<cr>
 nnoremap <space>a :action GotoAction<cr>
@@ -27,8 +28,8 @@ nnoremap <A-S-h> :action PreviousTab<cr>
 nnoremap <A-S-l> :action NextTab<cr>
 nnoremap <A-p>   :action PreviousTab<cr>
 nnoremap <A-n>   :action NextTab<cr>
-nnoremap <A-j>   :action 1<C-d>
-nnoremap <A-k>   :action 1<C-u>
+nnoremap <A-j>   1<C-d>
+nnoremap <A-k>   1<C-u>
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
