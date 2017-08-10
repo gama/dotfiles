@@ -39,7 +39,6 @@ alias grep='grep --color=auto --binary-files=without-match --directories=skip'
 alias make='nice -n 19 make'
 alias lynx='lynx -vikeys'
 alias vim=nvim
-alias vimpager='vim -u NONE --noplugin -c "source $VIMRUNTIME/macros/less.vim"'
 alias jj='jq -C -S .'
 alias jjp='jq -C -S . | less'
 alias njp='nj | vimpager -c "setfiletype json" -'
@@ -120,6 +119,13 @@ n() {
 lbkp() {
 	if [ -f "${1}" ]; then
 		mv "${1}" "${1}~"
+	fi
+}
+vimpager() {
+	if [ $# = 0 ]; then
+		vim -u NONE --noplugin -c 'runtime! macros/less.vim' "$@" -
+	else
+		vim -u NONE --noplugin -c 'runtime! macros/less.vim' "$@"
 	fi
 }
 
