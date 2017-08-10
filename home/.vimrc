@@ -176,9 +176,9 @@ nnoremap <silent> <Leader>t :tabnew<CR>
 " buffer navigation
 nnoremap <C-a>n :bnext<CR>
 nnoremap <C-a>p :bprev<CR>
-nnoremap <C-a>] <C-]>
+nnoremap <C-a>] g<C-]>
 nnoremap <C-a>[ <C-T>
-vnoremap <C-a>] <C-]>
+vnoremap <C-a>] g<C-]>
 
 " grepping
 nnoremap gr :grep <cword> *<CR>
@@ -197,6 +197,17 @@ let g:multi_cursor_next_key='n'
 let g:multi_cursor_prev_key='p'
 let g:multi_cursor_skip_key='x'
 let g:multi_cursor_quit_key='<Esc>'
+
+" syntastic
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_jump = 1
+let g:syntastic_enable_balloons = 1
+let g:syntastic_check_on_open = 0
+nnoremap mm :SyntasticCheck<CR>
+nnoremap mn :lnext<CR>
+nnoremap mp :lprev<CR>
+nnoremap mc :lclose<CR>
+
 
 " pymode
 let g:pymode_python='python'
