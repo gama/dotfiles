@@ -7,7 +7,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'godlygeek/tabular'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdTree'
 Plugin 'janko-m/vim-test'
@@ -17,6 +16,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'Yggdroot/indentLine'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'petRUShka/vim-opencl'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
@@ -351,6 +351,9 @@ let g:indentLine_color_term      = 254
 let g:indentLine_color_gui       = '#A4E57E'
 let g:indentLine_color_tty_light = 7
 let g:indentLine_color_dark      = 1
+
+" jedi
+let g:jedi#goto_definitions_command = '<Leader>D'
 
 
 """""""""" Autocommands """"""""""
