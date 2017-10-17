@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+tmux has-session -t default 2> /dev/null             && \
+exec xterm -e 'tmux -2 attach-session -t default -d' || \
+exec xterm -e 'tmux -2 new-session -s default'
