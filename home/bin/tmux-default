@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+export TERM=xterm-256color
+tmux -q has-session -t default && {
+	tmux detach-client -s default
+	exec tmux attach-session -t default
+} || {
+	exec tmux new-session -s default
+}
