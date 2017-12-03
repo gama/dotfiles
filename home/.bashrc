@@ -54,6 +54,9 @@ psg() {
 psgc() {
 	psg $@ | cut -c -$COLUMNS
 }
+envg() {
+	env | grep -i "$@"
+}
 bhg() {
 	grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history"*) | tail
 }
