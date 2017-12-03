@@ -4,6 +4,7 @@ import sys
 import re
 import json
 import inspect
+import argparse
 from collections import OrderedDict as odict
 
 
@@ -218,6 +219,12 @@ def neatify(obj, **opts):  # noqa
 
 
 if __name__ == '__main__':
-    with open(sys.argv[1], 'r') if len(sys.argv) > 1 else sys.stdin as file:
+    parser = argparse.ArgumentParser(description='Neat JSON formatter', formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=27))
+    parser.add_argument('-w', '--width',       type=int,             default=160,  help='wrap lines at WIDTH chars')
+    parser.add_argument('-a', '--not-aligned', action='store_false', default=True, help='do NOT align colons')
+    parser.add_argument('file', nargs='?',                           default=None, help='JSON file name')
+    args = parser.parse_args()
+
+    with open(args.file, 'r') if args.file else sys.stdin as file:
         content = json.load(file, object_pairs_hook=odict)
-        print neatify(content, wrap=160, aligned=True, after_comma=True, after_colon=1)
+        print neatify(content, wrap=args.width, aligned=args.not_aligned, after_comma=True, after_colon=1)
