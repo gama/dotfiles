@@ -331,12 +331,16 @@ let g:NERDTreeIgnore = ['\.o$', '\.lo$', '\.class$', '\.pyc$']
 
 
 " vim-test
-function! TmuxStrategy(cmd)
-    call jobstart('tmux send-keys -t+ "l'.a:cmd.' -s -v" Enter')
+function! TmuxWindowStrategy(cmd)
+    call jobstart('tmux send-keys -t! "l'.a:cmd.' -s -v" Enter')
+    call jobstart('tmux select-window -t!')
 endfunction
-let g:test#custom_strategies = {'tmux': function('TmuxStrategy')}
-let g:test#strategy = 'tmux'
-let g:test#python#runner = 'pytest'
+function! TmuxPaneStrategy(cmd)
+    call jobstart('tmux send-keys -t.! "l'.a:cmd.' -s -v" Enter')
+endfunction
+let g:test#custom_strategies = {'tmux_window': function('TmuxWindowStrategy'), 'tmux_pane': function('TmuxPaneStrategy')}
+let g:test#strategy          = 'tmux_pane'
+let g:test#python#runner     = 'pytest'
 nnoremap mt :TestNearest<CR>
 nnoremap mT :TestFile<CR>
 nnoremap ml :TestLast<CR>
@@ -351,10 +355,6 @@ let g:indentLine_color_term      = 254
 let g:indentLine_color_gui       = '#A4E57E'
 let g:indentLine_color_tty_light = 7
 let g:indentLine_color_dark      = 1
-
-" jedi
-let g:jedi#goto_definitions_command = '<Leader>D'
-
 
 """""""""" Autocommands """"""""""
 command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")
