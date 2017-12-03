@@ -186,6 +186,9 @@ nnoremap Gr :grep <cword> %:p:h/*<CR>
 nnoremap gR :grep '\b<cword>\b' *<CR>
 nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
 
+" netrw
+let g:netrw_silent=1
+
 " comments
 nnoremap <C-a>/ :Commentary<CR>j
 vnoremap <C-a>/ :Commentary<CR>
@@ -207,7 +210,6 @@ nnoremap mm :SyntasticCheck<CR>
 nnoremap mn :lnext<CR>
 nnoremap mp :lprev<CR>
 nnoremap mc :lclose<CR>
-
 
 " pymode
 let g:pymode_python='python'
