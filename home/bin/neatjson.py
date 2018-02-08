@@ -120,7 +120,7 @@ def neatify(obj, **opts):  # noqa
                 if False and o.is_integer() and "e" not in str(o):
                     memo[mi] = build(int(o), indent)
                 elif 'decimals' in opts and isinstance(opts['decimals'], int):
-                    memo[mi] = "{}{:.{}f}".format(indent, opts['decimals'], o)
+                    memo[mi] = "{{}}{{:.{}f}}".format(opts['decimals']).format(indent, o)
                 else:
                     memo[mi] = "{}{}".format(indent, repr(o))
             elif isinstance(o, list):
@@ -147,7 +147,7 @@ def neatify(obj, **opts):  # noqa
                     pass
             elif isinstance(o, dict):
                 if not o:
-                    memo[mi] = "{}{}".format(indent, o)
+                    memo[mi] = "{}{}".format(indent, {})
                 else:
                     sort = chain((opts, 'sorted'), (opts, 'sort'))
                     if sort is True:
@@ -227,4 +227,4 @@ if __name__ == '__main__':
 
     with open(args.file, 'r') if args.file else sys.stdin as file:
         content = json.load(file, object_pairs_hook=odict)
-        print neatify(content, wrap=args.width, aligned=args.not_aligned, after_comma=True, after_colon=1)
+        print neatify(content, wrap=args.width, aligned=args.not_aligned, after_comma=True, after_colon=1, decimals=6)
