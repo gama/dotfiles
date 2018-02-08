@@ -135,6 +135,7 @@ vimpager() {
 }
 
 # set $PATH
+source "${HOME}/.bash/utils"
 add_to_path "${HOME}/bin"
 add_to_path "${HOME}/.local/bin"
 add_to_path "${HOME}/.cache/npm/bin"
