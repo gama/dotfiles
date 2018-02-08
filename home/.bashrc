@@ -13,8 +13,10 @@ export HISTSIZE=5000
 export HISTFILESIZE=999999
 export HISTCONTROL=ignorespace:ignoredups
 export TZ=:/etc/localtime
-export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-${HOME}/.config}/npm/config"
-export NODE_PATH="$(npm root -g)"
+which npm > /dev/null && {
+	export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-${HOME}/.config}/npm/config"
+	export NODE_PATH="$(npm root -g)"
+}
 
 # aliases
 alias cp='cp -i'
