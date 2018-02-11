@@ -43,7 +43,6 @@ alias lynx='lynx -vikeys'
 alias vim=nvim
 alias jj='jq -C -S .'
 alias jjp='jq -C -S . | less'
-alias njp='nj | vimpager -c "setfiletype json" -'
 alias activenv='source venv/bin/activate'
 alias senv='source env.sh'
 
@@ -132,6 +131,9 @@ vimpager() {
 	else
 		vim -u NONE --noplugin -c 'runtime! macros/less.vim' "$@"
 	fi
+}
+njp() {
+	nj "$@" | vimpager -c "setfiletype json" -
 }
 
 # set $PATH
