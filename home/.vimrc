@@ -5,8 +5,9 @@ filetype off
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
+Plugin 'bling/vim-bufferline'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'godlygeek/tabular'
+Plugin 'junegunn/vim-easy-align'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdTree'
 Plugin 'janko-m/vim-test'
@@ -21,6 +22,7 @@ Plugin 'petRUShka/vim-opencl'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'elzr/vim-json'
+Plugin 'vim-python/python-syntax'
 call vundle#end()
 filetype plugin indent on
 
@@ -136,12 +138,18 @@ vnoremap <Leader>G y:Ggrep! "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 " nnoremap <Leader>G :Ggrep! "\b<C-R><C-W>\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 nnoremap <Leader>G :Ggrep! "\b<C-R><C-W>\b" .<CR><CR>:copen<CR>
 
-" window movements
+" window movements & splits
 nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 nnoremap <C-p> <C-W>p
+nnoremap <Leader>h <C-W>h
+nnoremap <Leader>j <C-W>j
+nnoremap <Leader>k <C-W>k
+nnoremap <Leader>l <C-W>l
+nnoremap <Leader>\ :vsplit<CR>
+nnoremap <Leader>- :split<CR>
 
 " misc
 nnoremap <silent> <Leader>cd :cd %:p:h<CR>
@@ -151,7 +159,7 @@ nnoremap <silent> <Leader>d :bd!<CR>
 nnoremap <silent> <Leader>x :w\|bd!<CR>
 nnoremap <silent> <Leader>q :q<CR>
 nnoremap <silent> <Leader>Q :bunload!<CR>
-nnoremap <silent> <Leader>h :nohlsearch<CR>
+nnoremap <silent> <Leader>/ :nohlsearch<CR>
 nnoremap <silent> <Leader>w :w<CR>
 nnoremap <silent> <Leader>z :only<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
@@ -243,9 +251,8 @@ let g:pymode_rope_generate_package_bind=',rp'
 let g:pymode_rope_change_signature_bind=',rs'
 let g:pymode_rope_use_function_bind=',ru'
 
-" complete
-inoremap <C-a>j <C-n>
-inoremap <C-a>k <C-p>
+" python-syntax
+let g:python_highlight_all = 1
 
 nnoremap <C-a><Space> <Space>
 inoremap <C-a><Space> <Space>
@@ -258,23 +265,27 @@ cabbrev te <C-R>=getcmdpos() == 1 && getcmdtype()==':' ? "tabedit" : "te"<CR>
 
 """""""""" Variables """"""""""
 " airline plugin
-let g:airline_powerline_fonts = 1
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
-let g:airline#extensions#buftabs#enabled = 1
+let g:airline#extensions#disable_rtp_load = 1
+let g:airline_extensions = ['branch', 'bufferline']
+let g:airline_theme='custom'
 let g:airline_theme_patch_func = 'AirlineThemePatch'
 function! AirlineThemePatch(palette)
-  let a:palette.accents.black = [ '#000000' , '' , 232, '' ]
+    call airline#highlighter#add_accent('blue')
+    call airline#highlighter#add_accent('white')
 endfunction
 
-" buftab
-let g:buftabs_only_basename=1
-let g:buftabs_active_highlight_group="airline_c_black"
-let g:buftabs_inactive_highlight_group="airline_c"
-let g:buftabs_separator=":"
-let g:buftabs_marker_start="<"
-let g:buftabs_marker_end=">"
-let g:buftabs_winwidth_offset=22
+" bufferline
+let g:airline#extensions#bufferline#overwrite_variables = 0
+let g:bufferline_echo = 0
+let g:bufferline_inactive_highlight = 'airline_c'
+let g:bufferline_active_highlight = 'bufferline_selected'
+let g:bufferline_active_buffer_left = ''
+let g:bufferline_active_buffer_right = ''
+let g:bufferline_separator = ' '
+highlight link bufferline_selected airline_c_white
+highlight link bufferline_selected_inactive airline_c_inactive
+autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}' . bufferline#get_status_string()
+autocmd VimEnter * highlight! bufferline_selected_inactive ctermfg=250 ctermbg=236
 
 " tmux + vim integrated movement
 if !has('gui_running') && $TERM =~# '^\%(screen\|tmux\)' && empty(&t_ts)
@@ -304,9 +315,9 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(-1)':       ['<c-n>'],
   \ 'PrtHistory(1)':        ['<c-p>'],
   \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-  \ 'AcceptSelection("h")': ['<c-a>o', '<c-cr>', '<c-s>'],
-  \ 'AcceptSelection("t")': ['<c-a>t'],
-  \ 'AcceptSelection("v")': ['<c-a>O', '<RightMouse>', '<c-a>\|', '<c-a>\\'],
+  \ 'AcceptSelection("h")': ['<M-h>', '<c-cr>'],
+  \ 'AcceptSelection("t")': ['<M-t>'],
+  \ 'AcceptSelection("v")': ['<M-v>', '<RightMouse>', '<c-a>\|', '<c-a>\\'],
   \ 'ToggleFocus()':        ['<s-tab>'],
   \ 'ToggleRegex()':        ['<c-r>'],
   \ 'ToggleByFname()':      ['<c-d>'],
@@ -348,8 +359,12 @@ nnoremap mT :TestFile<CR>
 nnoremap ml :TestLast<CR>
 
 " tabular
-vnoremap t= :Tabularize /=/<CR>
-vnoremap t: :Tabularize /.*:/<CR>
+" vnoremap t= :Tabularize /=/<CR>
+" vnoremap t, :Tabularize /,\zs/<CR>
+" vnoremap t: :Tabularize /:\zs/<CR>
+
+" EasyAlign
+vmap A <Plug>(EasyAlign)
 
 " IndentGuide
 let g:indentLine_char            = '│'
