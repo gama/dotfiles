@@ -112,22 +112,22 @@ nnoremap <C-L> :redraw!<CR>
 inoremap <C-L> :redraw!<CR>
 
 " fixed window vertical scrolling
-nnoremap <C-a>k   1<C-U>
-nnoremap <C-a>j   1<C-D>
-vnoremap <C-a>k   1<C-U>
-vnoremap <C-a>j   1<C-D>
-nnoremap <C-a>K   <C-U>
-nnoremap <C-a>J   <C-D>
-vnoremap <C-a>K   <C-U>
-vnoremap <C-a>J   <C-D>
-inoremap <C-a>K   <C-O><C-U>
-inoremap <C-a>J   <C-O><C-D>
+nnoremap <M-k>  1<C-U>
+nnoremap <M-j>  1<C-D>
+vnoremap <M-k>  1<C-U>
+vnoremap <M-j>  1<C-D>
+nnoremap <M-K>  <C-U>
+nnoremap <M-J>  <C-D>
+vnoremap <M-K>  <C-U>
+vnoremap <M-J>  <C-D>
+inoremap <M-K>  <C-O><C-U>
+inoremap <M-J>  <C-O><C-D>
 
 " horizontal scrolling
-nnoremap <C-a>h   zhh
-nnoremap <C-a>l   zll
-vnoremap <C-a>h   zhh
-vnoremap <C-a>l   zll
+nnoremap <M-h>  zhh
+nnoremap <M-l>  zll
+vnoremap <M-h>  zhh
+vnoremap <M-l>  zll
 
 " search for visually selected text
 vnoremap * y/<C-R>"<CR>
@@ -182,11 +182,11 @@ nnoremap <silent> <Leader>9 9gt
 nnoremap <silent> <Leader>t :tabnew<CR>
 
 " buffer navigation
-nnoremap <C-a>n :bnext<CR>
-nnoremap <C-a>p :bprev<CR>
-nnoremap <C-a>] g<C-]>
-nnoremap <C-a>[ <C-T>
-vnoremap <C-a>] g<C-]>
+nnoremap <M-n> :bnext<CR>
+nnoremap <M-p> :bprev<CR>
+nnoremap <M-]> g<C-]>
+nnoremap <M-[> <C-T>
+vnoremap <M-]> g<C-]>
 
 " grepping
 nnoremap gr :grep <cword> *<CR>
@@ -198,8 +198,8 @@ nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
 let g:netrw_silent=1
 
 " comments
-nnoremap <C-a>/ :Commentary<CR>j
-vnoremap <C-a>/ :Commentary<CR>
+nnoremap <M-/> :Commentary<CR>j
+vnoremap <M-/> :Commentary<CR>
 
 " multicursor
 let g:multi_cursor_use_default_mapping=0
@@ -254,9 +254,9 @@ let g:pymode_rope_use_function_bind=',ru'
 " python-syntax
 let g:python_highlight_all = 1
 
-nnoremap <C-a><Space> <Space>
-inoremap <C-a><Space> <Space>
-vnoremap <C-a><Space> <Space>
+" complete
+inoremap <M-j>  <C-n>
+inoremap <M-k>  <C-p>
 
 """""""""" Abbreviations """"""""""
 cabbrev bx silent w\|bunload
@@ -312,8 +312,8 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtDelete()':          ['<del>'],
   \ 'PrtDeleteWord()':      ['<c-w>'],
   \ 'PrtClear()':           ['<c-u>'],
-  \ 'PrtSelectMove("j")':   ['<c-a>j', '<down>'],
-  \ 'PrtSelectMove("k")':   ['<c-a>k', '<up>'],
+  \ 'PrtSelectMove("j")':   ['<M-j>', '<down>'],
+  \ 'PrtSelectMove("k")':   ['<M-k>', '<up>'],
   \ 'PrtSelectMove("t")':   ['<Home>', '<kHome>'],
   \ 'PrtSelectMove("b")':   ['<End>', '<kEnd>'],
   \ 'PrtSelectMove("u")':   ['<PageUp>', '<kPageUp>'],
@@ -321,9 +321,9 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(-1)':       ['<c-n>'],
   \ 'PrtHistory(1)':        ['<c-p>'],
   \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-  \ 'AcceptSelection("h")': ['<M-h>', '<c-cr>'],
+  \ 'AcceptSelection("h")': ['<M-o>', '<c-cr>'],
   \ 'AcceptSelection("t")': ['<M-t>'],
-  \ 'AcceptSelection("v")': ['<M-v>', '<RightMouse>', '<c-a>\|', '<c-a>\\'],
+  \ 'AcceptSelection("v")': ['<M-O>', '<RightMouse>'],
   \ 'ToggleFocus()':        ['<s-tab>'],
   \ 'ToggleRegex()':        ['<c-r>'],
   \ 'ToggleByFname()':      ['<c-d>'],

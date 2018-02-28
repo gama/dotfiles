@@ -1,6 +1,6 @@
 set input-meta on
 set output-meta on
-set convert-meta off
+set convert-meta on
 set bell-style none
 set match-hidden-files off
 set completion-ignore-case on
@@ -30,10 +30,14 @@ set keymap vi-command
 "ù": yank-last-arg
 "ð": reverse-search-history
 "î": forward-search-history
-"y": yank-last-arg
-"p": reverse-search-history
-"n": forward-search-history
-"l": clear-screen
+"\M-y": yank-last-arg
+"\M-p": reverse-search-history
+"\M-n": forward-search-history
+"\M-l": clear-screen
+# "y": yank-last-arg
+# "p": reverse-search-history
+# "n": forward-search-history
+# "l": clear-screen
 
 set keymap vi-insert
 "\C-a": beginning-of-line
@@ -55,7 +59,11 @@ set keymap vi-insert
 "ù": yank-last-arg
 "ð": reverse-search-history
 "î": forward-search-history
-"y": yank-last-arg
-"p": reverse-search-history
-"o": forward-search-history
-"l": clear-screen
+"\M-y": yank-last-arg
+"\M-p": reverse-search-history
+"\M-n": forward-search-history
+"\M-l": clear-screen
+# "y": yank-last-arg
+# "p": reverse-search-history
+# "o": forward-search-history
+# "l": clear-screen
