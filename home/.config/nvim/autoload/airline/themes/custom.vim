@@ -41,9 +41,10 @@ let g:airline#themes#custom#palette.inactive_modified = {
       \ }
 
 let g:airline#themes#custom#palette.accents = {
-      \ 'red':   [ '#ff0000' , '' , 160 , ''  ] ,
-      \ 'blue':  [ '#0000ff' , '' ,  45 , ''  ] ,
-      \ 'white': [ '#ffffff' , '' , 231 , ''  ]
+      \ 'red':   [ '#ff0000' , '' ,   160  , ''  ] ,
+      \ 'blue':  [ '#0000ff' , '' ,    45  , ''  ] ,
+      \ 'white': [ '#ffffff' , '' ,   231  , ''  ] ,
+      \ 'blank': [ ''        , '' , 'None' , ''  ]
       \ }
 
 if get(g:, 'loaded_ctrlp', 0)

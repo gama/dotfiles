@@ -272,20 +272,26 @@ let g:airline_theme_patch_func = 'AirlineThemePatch'
 function! AirlineThemePatch(palette)
     call airline#highlighter#add_accent('blue')
     call airline#highlighter#add_accent('white')
+    call airline#highlighter#add_accent('blank')
 endfunction
 
 " bufferline
 let g:airline#extensions#bufferline#overwrite_variables = 0
 let g:bufferline_echo = 0
+let g:bufferline_rotate = 1
 let g:bufferline_inactive_highlight = 'airline_c'
 let g:bufferline_active_highlight = 'bufferline_selected'
 let g:bufferline_active_buffer_left = ''
 let g:bufferline_active_buffer_right = ''
 let g:bufferline_separator = ' '
-highlight link bufferline_selected airline_c_white
-highlight link bufferline_selected_inactive airline_c_inactive
-autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}' . bufferline#get_status_string()
-autocmd VimEnter * highlight! bufferline_selected_inactive ctermfg=250 ctermbg=236
+autocmd VimEnter * call ConfigBufferline()
+function ConfigBufferline()
+    let &statusline='%{bufferline#refresh_status()}' . bufferline#get_status_string()
+    highlight! bufferline_selected_inactive ctermfg=250 ctermbg=236
+    highlight link bufferline_selected airline_c_white
+    highlight link bufferline_selected_inactive airline_c_blank
+    highlight! link StatusLineNC airline_c_blank
+endfunction
 
 " tmux + vim integrated movement
 if !has('gui_running') && $TERM =~# '^\%(screen\|tmux\)' && empty(&t_ts)
