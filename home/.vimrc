@@ -4,8 +4,8 @@ set runtimepath+=~/.config/nvim/bundle/Vundle.vim
 filetype off
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'bling/vim-airline'
-Plugin 'bling/vim-bufferline'
+Plugin 'itchyny/lightline.vim'
+Plugin 'mgee/lightline-bufferline'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'christoomey/vim-tmux-navigator'
@@ -167,18 +167,6 @@ nnoremap <silent> <Leader>] :CtrlPTag<CR>
 nnoremap <silent> <Leader>o :CtrlP<CR>
 nnoremap <silent> QQ        :qa!<CR>
 
-" tab navigation
-nnoremap <silent> <Leader>1 1gt
-nnoremap <silent> <Leader>2 2gt
-nnoremap <silent> <Leader>3 3gt
-nnoremap <silent> <Leader>4 4gt
-nnoremap <silent> <Leader>5 5gt
-nnoremap <silent> <Leader>6 6gt
-nnoremap <silent> <Leader>7 7gt
-nnoremap <silent> <Leader>8 8gt
-nnoremap <silent> <Leader>9 9gt
-nnoremap <silent> <Leader>t :tabnew<CR>
-
 " buffer navigation
 nnoremap <M-n> :bnext<CR>
 nnoremap <M-p> :bprev<CR>
@@ -234,34 +222,39 @@ cabbrev do diffoff \| set nowrap
 cabbrev te <C-R>=getcmdpos() == 1 && getcmdtype()==':' ? "tabedit" : "te"<CR>
 
 """""""""" Variables """"""""""
-" airline plugin
-let g:airline#extensions#disable_rtp_load = 1
-let g:airline_extensions = ['branch', 'bufferline']
-let g:airline_theme='custom'
-let g:airline_theme_patch_func = 'AirlineThemePatch'
-function! AirlineThemePatch(palette)
-    call airline#highlighter#add_accent('blue')
-    call airline#highlighter#add_accent('white')
-    call airline#highlighter#add_accent('blank')
-endfunction
-
-" bufferline
-let g:airline#extensions#bufferline#overwrite_variables = 0
-let g:bufferline_echo = 0
-let g:bufferline_rotate = 1
-let g:bufferline_inactive_highlight = 'airline_c'
-let g:bufferline_active_highlight = 'bufferline_selected'
-let g:bufferline_active_buffer_left = ''
-let g:bufferline_active_buffer_right = ''
-let g:bufferline_separator = ' '
-autocmd VimEnter * call ConfigBufferline()
-function ConfigBufferline()
-    let &statusline='%{bufferline#refresh_status()}' . bufferline#get_status_string()
-    highlight! bufferline_selected_inactive ctermfg=250 ctermbg=236
-    highlight link bufferline_selected airline_c_white
-    highlight link bufferline_selected_inactive airline_c_blank
-    highlight! link StatusLineNC airline_c_blank
-endfunction
+" lightlight
+let g:lightline = {
+    \   'colorscheme':        'custom',
+    \   'subseparator':       { 'left': '', 'right': '' },
+    \   'component_expand':   { 'buffers': 'lightline#bufferline#buffers' },
+    \   'component_type':     { 'buffers': 'tabsel' },
+    \   'component_function': { 'gitbranch': 'fugitive#head' },
+    \   'active':             {
+    \       'left':  [[ 'mode', 'paste' ], ['gitbranch', 'readonly', 'modified'], ['buffers']],
+    \       'right': [[ 'lineinfo', 'percent'], ['filetype' ]]
+    \   },
+    \   'inactive':           {
+    \       'left':  [[ 'filename' ]],
+    \       'right': [[ 'lineinfo' ], [ 'percent' ]]
+    \   }
+    \ }
+let g:lightline#bufferline#show_number       = 2
+let g:lightline#bufferline#shorten_path      = 0
+let g:lightline#bufferline#filename_modifier = ':t'
+let g:lightline#bufferline#unicode_symbols   = 1
+let g:lightline#bufferline#read_only         = ''
+let g:lightline#bufferline#number_map        = { 0:'⁰', 1:'¹', 2:'²', 3:'³', 4:'⁴', 5:'⁵', 6:'⁶', 7:'⁷', 8:'⁸', 9:'⁹'}
+autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 
 " tmux + vim integrated movement
 if !has('gui_running') && $TERM =~# '^\%(screen\|tmux\)' && empty(&t_ts)
