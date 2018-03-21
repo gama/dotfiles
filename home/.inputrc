@@ -8,7 +8,13 @@ set completion-map-case on
 set editing-mode vi
 set keyseq-timeout 0
 set echo-control-characters Off
-# set isearch-terminators "\C-j "
+set isearch-terminators "\C-j "
+
+set colored-stats on                 # color files by types
+set visible-stats on                 # append char to indicate type
+set mark-symlinked-directories on    # mark symlinked directories
+set colored-completion-prefix on     # color the common prefix
+set menu-complete-display-prefix on  # color the common prefix in menu-complete
 
 set keymap vi-command
 "\C-a": beginning-of-line
@@ -27,17 +33,10 @@ set keymap vi-command
 "\C-y": yank
 "\t": complete
 "\C-d": self-insert
-"ù": yank-last-arg
-"ð": reverse-search-history
-"î": forward-search-history
 "\M-y": yank-last-arg
 "\M-p": reverse-search-history
 "\M-n": forward-search-history
 "\M-l": clear-screen
-# "y": yank-last-arg
-# "p": reverse-search-history
-# "n": forward-search-history
-# "l": clear-screen
 
 set keymap vi-insert
 "\C-a": beginning-of-line
@@ -56,14 +55,7 @@ set keymap vi-insert
 "\C-y": yank
 "\t": complete
 "\C-d": self-insert
-"ù": yank-last-arg
-"ð": reverse-search-history
-"î": forward-search-history
 "\M-y": yank-last-arg
 "\M-p": reverse-search-history
 "\M-n": forward-search-history
 "\M-l": clear-screen
-# "y": yank-last-arg
-# "p": reverse-search-history
-# "o": forward-search-history
-# "l": clear-screen
