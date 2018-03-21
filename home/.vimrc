@@ -23,6 +23,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'elzr/vim-json'
 Plugin 'vim-python/python-syntax'
+Plugin 'lambdalisue/vim-cython-syntax'
 call vundle#end()
 filetype plugin indent on
 
