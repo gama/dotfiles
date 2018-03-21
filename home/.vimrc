@@ -70,7 +70,7 @@ set shortmess=atI
 set statusline=%=%m%r%w%y\ %8.(%l,%c%)\ %P
 set showcmd
 set showmatch
-set showmode
+set noshowmode
 set smarttab
 set splitright
 set softtabstop=4
@@ -135,9 +135,6 @@ vnoremap * y/<C-R>"<CR>
 vnoremap # y?<C-R>"<CR>
 vnoremap <Leader>g y:grep! -r "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 nnoremap <Leader>g :grep! -r "\b<C-R><C-W>\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
-vnoremap <Leader>G y:Ggrep! "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
-" nnoremap <Leader>G :Ggrep! "\b<C-R><C-W>\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
-nnoremap <Leader>G :Ggrep! "\b<C-R><C-W>\b" .<CR><CR>:copen<CR>
 
 " window movements & splits
 nnoremap <C-h> <C-W>h
@@ -202,6 +199,10 @@ let g:netrw_silent=1
 nnoremap <M-/> :Commentary<CR>j
 vnoremap <M-/> :Commentary<CR>
 
+" fugitive
+autocmd User Fugitive vnoremap <Leader>g y:Ggrep! "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
+autocmd User Fugitive nnoremap <Leader>g :Ggrep! "\b<C-R><C-W>\b" .<CR><CR>:copen<CR>
+
 " multicursor
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_start_key='<Leader>m'
@@ -219,38 +220,6 @@ nnoremap mm :SyntasticCheck<CR>
 nnoremap mn :lnext<CR>
 nnoremap mp :lprev<CR>
 nnoremap mc :lclose<CR>
-
-" pymode
-let g:pymode_python='python'
-let g:pymode_options_max_line_length=999
-let g:pymode_lint_options_pep8={ 'max_line_length': g:pymode_options_max_line_length }
-let g:pymode_folding=0
-let g:pymode_lint_on_write=1
-let g:pymode_lint_checkers=['pyflakes', 'pep8']
-let g:pymode_breakpoint_cmd='import ipdb; ipdb.set_trace()  # noqa; FIXME: remove breakpoing'
-let g:pymode_doc_bind='K'
-let g:pymode_run_bind=',ru'
-let g:pymode_breakpoint_bind=',rb'
-let g:pymode_rope=0
-let g:pymode_rope_autoimport=0
-let g:pymode_rope_autoimport_bind=',ra'
-let g:pymode_rope_completion_bind='<C-n>'
-let g:pymode_rope_goto_definition_bind='<C-a>b'
-let g:pymode_rope_show_doc_bind=',d'
-let g:pymode_rope_find_it_bind=',f'
-let g:pymode_rope_organize_imports_bind=',ro'
-let g:pymode_rope_rename_bind=',rn'
-let g:pymode_rope_rename_module_bind=',r1r'
-let g:pymode_rope_module_to_package_bind=',r1p'
-let g:pymode_rope_extract_method_bind=',rm'
-let g:pymode_rope_extract_variable_bind=',rv'
-let g:pymode_rope_inline_bind=',ri'
-let g:pymode_rope_move_bind=',rl'
-let g:pymode_rope_generate_function_bind=',rf'
-let g:pymode_rope_generate_class_bind=',rc'
-let g:pymode_rope_generate_package_bind=',rp'
-let g:pymode_rope_change_signature_bind=',rs'
-let g:pymode_rope_use_function_bind=',ru'
 
 " python-syntax
 let g:python_highlight_all = 1
@@ -322,9 +291,9 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(-1)':       ['<c-n>'],
   \ 'PrtHistory(1)':        ['<c-p>'],
   \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-  \ 'AcceptSelection("h")': ['<M-o>', '<c-cr>'],
+  \ 'AcceptSelection("h")': ['<M-S-k>', '<M-o>', '<c-cr>'],
   \ 'AcceptSelection("t")': ['<M-t>'],
-  \ 'AcceptSelection("v")': ['<M-O>', '<RightMouse>'],
+  \ 'AcceptSelection("v")': ['<M-S-l>', '<M-S-o>', '<RightMouse>'],
   \ 'ToggleFocus()':        ['<s-tab>'],
   \ 'ToggleRegex()':        ['<c-r>'],
   \ 'ToggleByFname()':      ['<c-d>'],
