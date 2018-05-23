@@ -336,11 +336,8 @@ nnoremap ml :TestLast<CR>
 vmap A <Plug>(EasyAlign)
 
 " IndentGuide
-let g:indentLine_char            = '│'
-let g:indentLine_color_term      = 254
-let g:indentLine_color_gui       = '#A4E57E'
-let g:indentLine_color_tty_light = 7
-let g:indentLine_color_dark      = 1
+let g:indentLine_char      = '│'
+let g:indentLine_setColors = 0
 
 """""""""" Autocommands """"""""""
 command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")

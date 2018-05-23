@@ -1,4 +1,3 @@
-
 " Vim color file
 " Maintainer:	Bram Moolenaar <Bram@vim.org>
 " Last Change:	2001 Jul 23
@@ -53,4 +52,5 @@ hi CursorLine               cterm=None              ctermbg=231
 hi Folded                              ctermfg=None ctermbg=253
 hi LineNr                              ctermfg=169  ctermbg=255
 hi SignColumn                          ctermfg=1    ctermbg=255
+hi Conceal                             ctermfg=255  ctermbg=None          guifg=#A4E57E
 " vim: sw=2
