@@ -24,6 +24,7 @@ Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'elzr/vim-json'
 Plugin 'vim-python/python-syntax'
 Plugin 'lambdalisue/vim-cython-syntax'
+Plugin 'zenbro/mirror.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -158,7 +159,7 @@ nnoremap <silent> <Leader>x :w\|bd!<CR>
 nnoremap <silent> <Leader>q :q<CR>
 nnoremap <silent> <Leader>Q :bunload!<CR>
 nnoremap <silent> <Leader>/ :nohlsearch<CR>
-nnoremap <silent> <Leader>w :w<CR>
+nnoremap <silent> <Leader>w :call WriteToMirror()<CR>
 nnoremap <silent> <Leader>z :only<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <C-a>e    :CtrlPBuffer<CR>
@@ -212,6 +213,9 @@ nnoremap mc :lclose<CR>
 " python-syntax
 let g:python_highlight_all = 1
 
+" mirror
+let g:mirror#config_path = "~/.config/mirrors.yaml"
+
 " complete
 inoremap <M-j>  <C-n>
 inoremap <M-k>  <C-p>
@@ -244,7 +248,8 @@ let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#unicode_symbols   = 1
 let g:lightline#bufferline#read_only         = ''
 let g:lightline#bufferline#number_map        = { 0:'⁰', 1:'¹', 2:'²', 3:'³', 4:'⁴', 5:'⁵', 6:'⁶', 7:'⁷', 8:'⁸', 9:'⁹'}
-autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+" autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+autocmd BufWritePost * call lightline#update()
 nmap <Leader>1 <Plug>lightline#bufferline#go(1)
 nmap <Leader>2 <Plug>lightline#bufferline#go(2)
 nmap <Leader>3 <Plug>lightline#bufferline#go(3)
@@ -284,9 +289,9 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(-1)':       ['<c-n>'],
   \ 'PrtHistory(1)':        ['<c-p>'],
   \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-  \ 'AcceptSelection("h")': ['<M-S-k>', '<M-o>', '<c-cr>'],
+  \ 'AcceptSelection("h")': ['<M-O>', '<c-cr>'],
   \ 'AcceptSelection("t")': ['<M-t>'],
-  \ 'AcceptSelection("v")': ['<M-S-l>', '<M-S-o>', '<RightMouse>'],
+  \ 'AcceptSelection("v")': ['<M-o>', '<RightMouse>'],
   \ 'ToggleFocus()':        ['<s-tab>'],
   \ 'ToggleRegex()':        ['<c-r>'],
   \ 'ToggleByFname()':      ['<c-d>'],
@@ -314,11 +319,11 @@ let g:NERDTreeIgnore = ['\.o$', '\.lo$', '\.class$', '\.pyc$']
 
 " vim-test
 function! TmuxWindowStrategy(cmd)
-    call jobstart('tmux send-keys -t! "l'.a:cmd.' -s -v" Enter')
+    call jobstart('tmux send-keys -t! Escape "A'.a:cmd.' -s -v" Enter')
     call jobstart('tmux select-window -t!')
 endfunction
 function! TmuxPaneStrategy(cmd)
-    call jobstart('tmux send-keys -t.! "l'.a:cmd.' -s -v" Enter')
+    call jobstart('tmux send-keys -t.! Escape "A'.a:cmd.' -s -v" Enter')
 endfunction
 let g:test#custom_strategies = {'tmux_window': function('TmuxWindowStrategy'), 'tmux_pane': function('TmuxPaneStrategy')}
 let g:test#strategy          = 'tmux_pane'
@@ -352,6 +357,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> o <CR><C-W><C-W>
 """""""""" Others """"""""""
 filetype plugin indent on
 syntax on
+
 if (&term =~ 'xterm.*') || (&term =~ 'screen.*') || (&term == 'tmux.*') || (&term =~ 'rxvt.*') || (&term == 'nvim')
     set t_Co=256
     colorscheme light
@@ -366,4 +372,14 @@ function! Bgrep(param)
     grepadd! something %
     catch /E480:/
     endtry
+endfunction
+
+function! WriteToMirror()
+    " if exists("b:project_with_mirror") &&
+    " \  exists("g:mirror#local_default_environments") &&
+    " \  has_key(g:mirror#local_default_environments, b:project_with_mirror)
+    "    echo "pushing to mirror"
+    "    execute "MirrorPush"
+   " endif
+   write
 endfunction
