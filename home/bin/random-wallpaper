@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+wallpaper_dir="/mnt/c/Users/Gustavo/Pictures/Wallpapers"
+page=$(( RANDOM % 275 ))
+image_path=$(curl -A randomstring https://interfacelift.com/wallpaper/downloads/date/wide_16:9/1920x1080/index${page}.html | grep button_download | sed -e 's/.*href="\([^"]*\)".*/\1/' | shuf | head -n 1)
+image_filename=$(basename "${image_path}")
+rm -f "${wallpaper_dir}/"*
+curl -L -A testagent -o "${wallpaper_dir}/${image_filename}" "https://interfacelift.com${image_path}"

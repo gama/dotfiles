@@ -1,0 +1,73 @@
+#!/usr/bin/env python2.7
+
+import re
+import sys
+import os
+import subprocess as sp
+
+airline_bg_regex     = re.compile(u'\x1b\[38;5;\d{1,3};48;5;\d{1,3}m(.*?)(\x1b\[39;49m|$)')
+ansi_codes_regex     = re.compile(u'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
+horizontal_line_mark = u'\u2500'
+
+
+def replace_bg(match):
+    return len(ansi_codes_regex.sub('', match.group(1))) * horizontal_line_mark
+
+
+def process_line(line):
+    line = line.rstrip("\r\n").decode('utf-8')
+    line = airline_bg_regex.sub(replace_bg, line)
+    line = ansi_codes_regex.sub('', line)
+    return line
+
+
+def is_left_most_vim_window(x, y, screen):
+    return u'\u2502' not in screen[y][:x]
+
+
+def is_right_most_vim_window(x, y, screen):
+    return u'\u2502' not in screen[y][x+1:]
+
+
+def is_top_most_vim_window(x, y, screen):
+    return len([None for line in screen[:y] if len(line) > x and line[x] == horizontal_line_mark]) == 0
+
+
+def is_bottom_most_vim_window(x, y, screen):
+    return len([None for line in screen[y:] if len(line) > x and line[x] == horizontal_line_mark]) <= 1
+
+
+def get_data_from_tmux(pane_id):
+    x, y   = sp.check_output(['tmux', 'display-message', '-p',  '-t'+pane_id, '#{cursor_x}:#{cursor_y}']).strip().split(':')
+    screen = sp.check_output(['tmux', 'capture-pane',    '-ep', '-t'+pane_id])
+    screen = [process_line(line) for line in screen.split('\n')]
+    return (int(x), int(y), screen,)
+
+
+def is_pane_running_vim(pane_id, pane_title):
+    if not pane_title:
+        pane_title = sp.check_output(['tmux', 'display-message', '-p',  '-t'+pane_id, '#{pane_title}']).strip()
+    return pane_title.endswith(' - VIM')
+
+
+if __name__ == '__main__':
+    if len(sys.argv) not in [3, 4]:
+        print sys.argv
+        print 'Usage: {} PANE DIRECTION [PANE_TITLE]'.format(os.path.basename(__file__))
+        sys.exit()
+
+    pane_id    = sys.argv[1]
+    direction  = sys.argv[2]
+    pane_title = sys.argv[3] if len(sys.argv) == 4 else None
+
+    if not is_pane_running_vim(pane_id, pane_title):
+        print 'tmux'
+    else:
+        x, y, screen   = get_data_from_tmux(pane_id)
+        method_name    = 'is_{}_most_vim_window'.format(direction)
+        is_on_vim_edge = globals()[method_name](x, y, screen)
+        print 'tmux' if is_on_vim_edge else 'vim'
+    # print 'is leftmost:   {}'.format(is_left_most_vim_window(x, y, screen))
+    # print 'is rightmost:  {}'.format(is_right_most_vim_window(x, y, screen))
+    # print 'is topmost:    {}'.format(is_top_most_vim_window(x, y, screen))
+    # print 'is bottommost: {}'.format(is_bottom_most_vim_window(x, y, screen))
