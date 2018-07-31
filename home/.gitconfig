@@ -24,6 +24,7 @@
 	autocrlf = input
 	whitespace = -blank-at-eof,blank-at-eol,space-before-tab,tabwidth=4,tab-in-indent
 	quotepath = false
+	excludesfile = ~/.config/gitignore-global
 
 [diff]
 	tool = vimdiff2
@@ -31,5 +32,6 @@
 
 [push]
 	default = simple
+
 [merge]
 	tool = vimdiff
