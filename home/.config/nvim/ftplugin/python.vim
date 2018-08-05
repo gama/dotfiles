@@ -7,7 +7,7 @@ setlocal number
 setlocal formatprg=autopep8\ --max-line-length=9999\ -
 setlocal foldlevel=9999
 setlocal regexpengine=1
-nnoremap mm :SyntasticCheck<CR>
-nnoremap mn :lnext<CR>
-nnoremap mp :lprev<CR>
-nnoremap mc :lclose<CR>
+nnoremap <buffer> mm :SyntasticCheck<CR>
+nnoremap <buffer> mn :lnext<CR>
+nnoremap <buffer> mp :lprev<CR>
+nnoremap <buffer> mc :lclose<CR>
