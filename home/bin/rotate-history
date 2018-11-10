@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd "$HOME" && \
+logrotate --verbose --state ~/.cache/logrotate.state ~/.bash/history-rotate
