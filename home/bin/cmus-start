@@ -2,9 +2,9 @@
 
 export TERM=xterm-256color
 
-tmux -L tmux.cmus -q has-session -t cmus && {
+tmux -L tmux.cmus has-session -t cmus 2>/dev/null && {
 	exec tmux -2 -L tmux.cmus attach-session -t cmus
 } || {
-	sh -c "sleep 3; cmus-remote -C 'source ${HOME}/.cmus/current_track'" &
-	exec tmux -2 -L tmux.cmus new-session -s cmus 'echo -e "\033]2;cmus\007" && exec /usr/bin/cmus' \; source-file ~/.cmus/tmux.conf
+	# sh -c "sleep 3; cmus-remote -C 'source ${HOME}/.config/cmus/current_track'" &
+	exec tmux -2 -L tmux.cmus new-session -s cmus 'echo -e "\033]2;cmus\007" && exec /usr/bin/cmus' \; source-file ~/.config/cmus/tmux.conf
 }
