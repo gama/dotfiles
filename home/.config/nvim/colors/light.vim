@@ -20,7 +20,7 @@ endif
 
 let g:colors_name = "light"
 
-hi Normal                                                                 guifg=#444444
+" hi Normal
 hi Identifier                          ctermfg=0
 hi Visual                              ctermfg=None ctermbg=254
 hi Comment                             ctermfg=247
@@ -52,5 +52,5 @@ hi CursorLine               cterm=None              ctermbg=231
 hi Folded                              ctermfg=None ctermbg=253
 hi LineNr                              ctermfg=169  ctermbg=255
 hi SignColumn                          ctermfg=1    ctermbg=255
-hi Conceal                             ctermfg=255  ctermbg=None          guifg=#A4E57E
+hi Conceal                             ctermfg=254  ctermbg=None          guifg=#A4E57E
 " vim: sw=2

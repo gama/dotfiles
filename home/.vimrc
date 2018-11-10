@@ -4,41 +4,51 @@ set runtimepath+=~/.config/nvim/bundle/Vundle.vim
 filetype off
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+
+" look & feel
+Plugin 'morhetz/gruvbox'
 Plugin 'itchyny/lightline.vim'
 Plugin 'mgee/lightline-bufferline'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Yggdroot/indentLine'
+
+" navigation, buffer and file management
+Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdTree'
+Plugin 'tpope/vim-surround'
+Plugin 'terryma/vim-multiple-cursors'
+
+" development
 Plugin 'janko-m/vim-test'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
-Plugin 'Yggdroot/indentLine'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'zenbro/mirror.vim'
+Plugin 'whiteinge/diffconflicts'
+
+" syntax & filetypes
 Plugin 'petRUShka/vim-opencl'
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'elzr/vim-json'
 Plugin 'vim-python/python-syntax'
 Plugin 'lambdalisue/vim-cython-syntax'
-Plugin 'zenbro/mirror.vim'
 call vundle#end()
 filetype plugin indent on
 
 """ Global Settings
 set autoindent
 set noautowrite
-set background=light
+" set background=dark
+set background&
 set backspace=2
 set nobackup
 set nocompatible
 set comments=b:#,:%,fb:-,n:>,n:)
 set complete=.,w,b,u,t
 set completeopt=menuone,menu,longest
-"set cursorline
+set cursorline
 set nodigraph
 set noerrorbells
 set expandtab
@@ -56,6 +66,7 @@ set noinsertmode
 set iskeyword=@,48-57,_,192-255,-
 set nojoinspaces
 set laststatus=2
+" set lazyredraw
 set magic
 "set matchpairs+=<:>
 set mouse=""
@@ -69,7 +80,7 @@ set shell=sh
 set shiftwidth=4
 set shortmess=atI
 set statusline=%=%m%r%w%y\ %8.(%l,%c%)\ %P
-set showcmd
+set noshowcmd
 set showmatch
 set noshowmode
 set smarttab
@@ -79,6 +90,7 @@ set suffixes=.bak,.swp,~,CVS,.o,.class,.pyc,.lo,.la
 set nostartofline
 set tabstop=4
 set tags='tags,.tags,.git/tags'
+set termguicolors
 set textwidth=999999
 set t_vb=
 set timeout
@@ -110,26 +122,28 @@ set nomore
 let mapleader = " "
 
 " force screen redraw
-nnoremap <C-L> :redraw!<CR>
-inoremap <C-L> :redraw!<CR>
+nnoremap <M-b> :redraw!<CR>
+inoremap <M-b> :redraw!<CR>
 
 " fixed window vertical scrolling
-nnoremap <M-k>  1<C-U>
-nnoremap <M-j>  1<C-D>
-vnoremap <M-k>  1<C-U>
-vnoremap <M-j>  1<C-D>
-nnoremap <M-K>  <C-U>
-nnoremap <M-J>  <C-D>
-vnoremap <M-K>  <C-U>
-vnoremap <M-J>  <C-D>
-inoremap <M-K>  <C-O><C-U>
-inoremap <M-J>  <C-O><C-D>
+nnoremap K  1<C-U>
+nnoremap J  1<C-D>
+vnoremap K  1<C-U>
+vnoremap J  1<C-D>
 
 " horizontal scrolling
-nnoremap <M-h>  zhh
-nnoremap <M-l>  zll
-vnoremap <M-h>  zhh
-vnoremap <M-l>  zll
+nnoremap H  5zh
+nnoremap L  5zl
+vnoremap H  5zh
+vnoremap L  5zl
+
+" window movement and management
+noremap <silent> <M-l>   :TmuxNavigateRight<CR>
+noremap <silent> <M-h>   :TmuxNavigateLeft<CR>
+noremap <silent> <M-k>   :TmuxNavigateUp<CR>
+noremap <silent> <M-j>   :TmuxNavigateDown<CR>
+noremap <silent> [SPC]w\ <C-W>v<C-W>w
+noremap <silent> [SPC]w- <C-W>s<C-W>w
 
 " search for visually selected text
 vnoremap * y/<C-R>"<CR>
@@ -138,35 +152,50 @@ vnoremap <Leader>g y:grep! -r "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 nnoremap <Leader>g :grep! -r "\b<C-R><C-W>\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 
 " window movements & splits
-nnoremap <C-h> <C-W>h
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-l> <C-W>l
-nnoremap <C-p> <C-W>p
-nnoremap <Leader>h <C-W>h
-nnoremap <Leader>j <C-W>j
-nnoremap <Leader>k <C-W>k
-nnoremap <Leader>l <C-W>l
-nnoremap <Leader>\ :vsplit<CR>
-nnoremap <Leader>- :split<CR>
+nnoremap <silent> <M-w>     :<C-U>w<CR>
+nnoremap <silent> <Space>qq :q<CR>
+nnoremap <silent> <Space>qQ :qa<CR>
+nnoremap <silent> <Space>/  :<C-U>nohlsearch<CR>
+nnoremap <silent> <Space>bd :<C-U>bd!<CR>
+nnoremap <silent> <Space>ff :<C-U>NERDTreeFind<CR>
+nnoremap <silent> <Space>oo :<C-U>Files<CR>
+nnoremap <silent> <Space>op :<C-U>execute "Files " . expand("%:h")<CR>
+nnoremap <silent> <Space>oe :<C-U>Buffers<CR>
+nnoremap <silent> <Space>oh :<C-U>Helptags<CR>
+nnoremap <silent> <Space>fa :<C-U>wall<CR>
+nnoremap <silent> <Space>fs :<C-U>w<CR>
+nnoremap <silent> <Space>fS :<C-U>w !sudo tee "%" > /dev/null
+nnoremap <silent> <Space>tn :<C-U>call ToggleNumbers()<CR>
+nnoremap <silent> <Space>tb :<C-U>call ToggleBG()<CR>
+nnoremap <silent> <Space>tu :<C-U>call UpdateBG()<CR>
+nnoremap <silent> <Space>w\ <C-W>v
+nnoremap <silent> <Space>w- <C-W>s
+nnoremap <silent> <Space>wm <C-W>o
+nnoremap <silent> <Space>wd <C-W>q
+nnoremap <silent> <Space>wl <C-W>l
+nnoremap <silent> <Space>wh <C-W>h
+nnoremap <silent> <Space>wj <C-W>j
+nnoremap <silent> <Space>wk <C-W>k
+nnoremap <silent> <M-e>     :<C-U>Buffers<CR>
+nnoremap <silent> <M-f>     :<C-U>execute "Files " . expand("%:h")<CR>
+nnoremap <silent> <M-]>     :<C-U>Tags<CR>
+nnoremap <silent> <M-o>     :<C-U>Files<CR>
+nnoremap <silent> <M-?>     :<C-U>Helptags<CR>
+nnoremap <silent> <M-q>     :<C-U>qa!<CR>
+nnoremap <silent> <M-n>     :<C-U>bnext<CR>
+nnoremap <silent> <M-p>     :<C-U>bprev<CR>
 
-" misc
-nnoremap <silent> <Leader>cd :cd %:p:h<CR>
-nnoremap <silent> <Leader>e :NERDTreeToggle<CR>
-nnoremap <silent> <Leader>s :NERDTreeFind<CR>
-nnoremap <silent> <Leader>d :bd!<CR>
-nnoremap <silent> <Leader>x :w\|bd!<CR>
-nnoremap <silent> <Leader>q :q<CR>
-nnoremap <silent> <Leader>Q :bunload!<CR>
-nnoremap <silent> <Leader>/ :nohlsearch<CR>
-nnoremap <silent> <Leader>w :call WriteToMirror()<CR>
-nnoremap <silent> <Leader>z :only<CR>
-nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
-nnoremap <silent> <C-a>e    :CtrlPBuffer<CR>
-nnoremap <silent> <Leader>p :CtrlPCurFile<CR>
-nnoremap <silent> <Leader>] :CtrlPTag<CR>
-nnoremap <silent> <Leader>o :CtrlP<CR>
-nnoremap <silent> QQ        :qa!<CR>
+nnoremap <silent> [q        :cprev<CR>
+nnoremap <silent> ]q        :cnext<CR>
+nnoremap <silent> [j        <C-o>
+nnoremap <silent> ]j        <C-i>
+nnoremap <silent> [a        <C-b>
+nnoremap <silent> ]a        <C-f>
+nnoremap <silent> <         <<
+nnoremap <silent> >         >>
+vnoremap <silent> <         <<
+vnoremap <silent> >         >>
+nnoremap          <Space><Space> :
 
 " buffer navigation
 nnoremap <M-n> :bnext<CR>
@@ -181,8 +210,17 @@ nnoremap Gr :grep <cword> %:p:h/*<CR>
 nnoremap gR :grep '\b<cword>\b' *<CR>
 nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
 
+" ----------- plugin specific configuration ---------
+
 " netrw
 let g:netrw_silent=1
+
+" fzf
+let g:fzf_action = {
+  \ 'alt-t': 'tab split',
+  \ 'alt-p': 'vsplit',
+  \ 'alt-o': 'split' }
+
 
 " comments
 nnoremap <M-/> :Commentary<CR>j
@@ -194,11 +232,11 @@ autocmd User Fugitive nnoremap <Leader>g :Ggrep! "\b<C-R><C-W>\b" .<CR><CR>:cope
 
 " multicursor
 let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_start_key='<Leader>m'
-let g:multi_cursor_next_key='n'
-let g:multi_cursor_prev_key='p'
-let g:multi_cursor_skip_key='x'
-let g:multi_cursor_quit_key='<Esc>'
+" let g:multi_cursor_start_key='<Leader>m'
+" let g:multi_cursor_next_key='n'
+" let g:multi_cursor_prev_key='p'
+" let g:multi_cursor_skip_key='x'
+" let g:multi_cursor_quit_key='<Esc>'
 
 " syntastic
 let g:syntastic_auto_loc_list = 1
@@ -213,8 +251,16 @@ nnoremap mc :lclose<CR>
 " python-syntax
 let g:python_highlight_all = 1
 
-" mirror
-let g:mirror#config_path = "~/.config/mirrors.yaml"
+" mirror.vim
+let g:mirror#config_path = expand("~/.config/mirrors.yaml")
+autocmd BufWritePost * call WriteToMirror()
+function! WriteToMirror()
+    if  exists('b:project_with_mirror') &&
+    \   exists('g:mirror#local_default_environments') &&
+    \   has_key(g:mirror#local_default_environments, b:project_with_mirror)
+        silent MirrorPush
+    endif
+endfunction
 
 " complete
 inoremap <M-j>  <C-n>
@@ -228,7 +274,7 @@ cabbrev te <C-R>=getcmdpos() == 1 && getcmdtype()==':' ? "tabedit" : "te"<CR>
 """""""""" Variables """"""""""
 " lightlight
 let g:lightline = {
-    \   'colorscheme':        'custom',
+    \   'colorscheme':        'gruvbox',
     \   'subseparator':       { 'left': '', 'right': '' },
     \   'component_expand':   { 'buffers': 'lightline#bufferline#buffers' },
     \   'component_type':     { 'buffers': 'tabsel' },
@@ -268,54 +314,10 @@ if !has('gui_running') && $TERM =~# '^\%(screen\|tmux\)' && empty(&t_ts)
     let &t_fs = "\007"
 endif
 
-" ctrlp
-let g:ctrlp_map = ''
-" let g:ctrlp_match_window_bottom = 0
-" let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|vendor|venv|virtualenv|env)|(\.(swp|ico|git|svn|pyc|class))$'
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:30'
-let g:ctrlp_root_markers = ['pom.xml']
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtBS()':              ['<bs>', '<c-]>'],
-  \ 'PrtDelete()':          ['<del>'],
-  \ 'PrtDeleteWord()':      ['<c-w>'],
-  \ 'PrtClear()':           ['<c-u>'],
-  \ 'PrtSelectMove("j")':   ['<M-j>', '<down>'],
-  \ 'PrtSelectMove("k")':   ['<M-k>', '<up>'],
-  \ 'PrtSelectMove("t")':   ['<Home>', '<kHome>'],
-  \ 'PrtSelectMove("b")':   ['<End>', '<kEnd>'],
-  \ 'PrtSelectMove("u")':   ['<PageUp>', '<kPageUp>'],
-  \ 'PrtSelectMove("d")':   ['<PageDown>', '<kPageDown>'],
-  \ 'PrtHistory(-1)':       ['<c-n>'],
-  \ 'PrtHistory(1)':        ['<c-p>'],
-  \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-  \ 'AcceptSelection("h")': ['<M-O>', '<c-cr>'],
-  \ 'AcceptSelection("t")': ['<M-t>'],
-  \ 'AcceptSelection("v")': ['<M-o>', '<RightMouse>'],
-  \ 'ToggleFocus()':        ['<s-tab>'],
-  \ 'ToggleRegex()':        ['<c-r>'],
-  \ 'ToggleByFname()':      ['<c-d>'],
-  \ 'ToggleType(1)':        ['<c-f>', '<c-up>'],
-  \ 'ToggleType(-1)':       ['<c-b>', '<c-down>'],
-  \ 'PrtExpandDir()':       ['<tab>'],
-  \ 'PrtInsert("c")':       ['<MiddleMouse>', '<insert>'],
-  \ 'PrtInsert()':          ['<c-\>'],
-  \ 'PrtCurStart()':        ['<c-a>'],
-  \ 'PrtCurEnd()':          ['<c-e>'],
-  \ 'PrtCurLeft()':         ['<c-h>', '<left>', '<c-^>'],
-  \ 'PrtCurRight()':        ['<c-l>', '<right>'],
-  \ 'PrtClearCache()':      [''],
-  \ 'PrtDeleteEnt()':       [''],
-  \ 'CreateNewFile()':      ['<c-y>'],
-  \ 'MarkToOpen()':         ['<c-z>'],
-  \ 'OpenMulti()':          ['<c-o>'],
-  \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
-  \ }
 
 " NERDTree
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeIgnore = ['\.o$', '\.lo$', '\.class$', '\.pyc$']
-
 
 " vim-test
 function! TmuxWindowStrategy(cmd)
@@ -329,8 +331,9 @@ let g:test#custom_strategies = {'tmux_window': function('TmuxWindowStrategy'), '
 let g:test#strategy          = 'tmux_pane'
 let g:test#python#runner     = 'pytest'
 nnoremap mt :TestNearest<CR>
+nnoremap md :TestNearest --pdb -x<CR>
 nnoremap mT :TestFile<CR>
-nnoremap ml :TestLast<CR>
+nnoremap ml :TestLast --pdb -x<CR>
 
 " tabular
 " vnoremap t= :Tabularize /=/<CR>
@@ -340,46 +343,26 @@ nnoremap ml :TestLast<CR>
 " EasyAlign
 vmap A <Plug>(EasyAlign)
 
-" IndentGuide
+" IndentLine
 let g:indentLine_char      = '│'
 let g:indentLine_setColors = 0
 
+
+" gruvbox
+let g:gruvbox_contrast_light='medium'
+let g:gruvbox_contrast_dark='medium'
+
+
+" pseudo-detect terminal color
+execute "set background=" . readfile(expand("~/.cache/termbg"))[0]
+
+
 """""""""" Autocommands """"""""""
-command! -nargs=1 -complete=custom,CompleteLoadPlugins LoadPlugin call LoadPluginFunc("<args>")
-autocmd BufNewFile,BufReadPost *.ejs setfiletype ejs
-autocmd BufNewFile,BufReadPost /etc/nginx/*,/etc/nginx/conf.d/*,nginx.conf if &ft == '' | setfiletype nginx | endif
-autocmd BufNewFile,BufReadPost .git/COMMIT_EDITMSG set tw=72
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-autocmd FileType * if (expand("<amatch>") != 'html') || (getfsize(expand("<afile>")) < 10240) | runtime macros/matchit.vim | end
-autocmd GUIEnter * set guifont=Monospace\ 14
+autocmd BufReadPost *        if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 autocmd BufReadPost quickfix nnoremap <buffer> o <CR><C-W><C-W>
 
 """""""""" Others """"""""""
 filetype plugin indent on
 syntax on
-
-if (&term =~ 'xterm.*') || (&term =~ 'screen.*') || (&term == 'tmux.*') || (&term =~ 'rxvt.*') || (&term == 'nvim')
-    set t_Co=256
-    colorscheme light
-elseif (has('gui'))
-    colorscheme light
-else
-    colorscheme default
-endif
-
-function! Bgrep(param)
-    silent argdo try
-    grepadd! something %
-    catch /E480:/
-    endtry
-endfunction
-
-function! WriteToMirror()
-    " if exists("b:project_with_mirror") &&
-    " \  exists("g:mirror#local_default_environments") &&
-    " \  has_key(g:mirror#local_default_environments, b:project_with_mirror)
-    "    echo "pushing to mirror"
-    "    execute "MirrorPush"
-   " endif
-   write
-endfunction
+set t_Co=256
+colorscheme gruvboxcustom
