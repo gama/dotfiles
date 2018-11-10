@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# set -o xtrace
+
+# customize some settings based to terminal application
+[ -n "$MLTERM" ] && nchars=25 || nchars=24
+prefix="\033]"
+suffix="\007"
+[ -n "$TMUX" -o -n "$LC_TMUX" ] && {
+	prefix="\033Ptmux;\033${prefix}"
+	suffix="${suffix}\033\\\\"
+	tmux unbind-key    "M-\\"
+	tmux unbind-key -n "M-\\"
+}
+
+# send special OSC sequence and read the terminal output
+settings=$(stty -g)
+stty -echo -icanon
+echo -ne "${prefix}11;?${suffix}"
+resp=$(dd bs=1 count=$nchars 2>/dev/null)
+# echo $resp | od -c -w64 -An
+stty "$settings"
+
+# restore tmux bindings
+[ -n "$TMUX" -o -n "$LC_TMUX" ] && {
+	IFS=$'\n'
+	for binding in $(\grep 'M-\\' ~/.tmux.conf | sed -e 's/\\/\\\\/g'); do
+		eval "tmux $binding"
+	done
+}
+
+r=$((0x$(echo $resp | cut -c10-11)))
+g=$((0x$(echo $resp | cut -c15-16)))
+b=$((0x$(echo $resp | cut -c20-21)))
+luminance=$(bc <<< "(($r * 0.3 + $g * 0.45 + $b * 0.25) + 0.5) / 1")
+# echo "r:$r, g:$g, b:$b, lum:$luminance"
+([ $luminance -gt 128 ] && echo 'light' || echo 'dark') > ~/.cache/termbg

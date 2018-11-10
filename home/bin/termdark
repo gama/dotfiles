@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+prefix="\033]5379;"
+suffix="\007"
+[ -n "$TMUX" ] && {
+	prefix="\033Ptmux;\033${prefix}"
+	suffix="${suffix}\033\\\\"
+}
+
+# hard contrast: bg="bg_color=#1d2021"
+# soft contrast: bg="bg_color=#32302f"
+bg="${prefix}bg_color=#282828${suffix}"
+fg="${prefix}fg_color=#ddccbb${suffix}"
+bd="${prefix}bd_color=#ffffff${suffix}"
+black="${prefix}color:black=#282828${suffix}"
+hl_black="${prefix}color:hl_black=#928374${suffix}"
+red="${prefix}color:red=#cc241d${suffix}"
+hl_red="${prefix}color:hl_red=#fb4934${suffix}"
+green="${prefix}color:green=#98971a${suffix}"
+hl_green="${prefix}color:hl_green=#b8bb26${suffix}"
+yellow="${prefix}color:yellow=#d79921${suffix}"
+hl_yellow="${prefix}color:hl_yellow=#fabd2f${suffix}"
+blue="${prefix}color:blue=#458588${suffix}"
+hl_blue="${prefix}color:hl_blue=#83a598${suffix}"
+magenta="${prefix}color:magenta=#b16286${suffix}"
+hl_magenta="${prefix}color:hl_magenta=#d3869b${suffix}"
+cyan="${prefix}color:cyan=#689d6a${suffix}"
+hl_cyan="${prefix}color:hl_cyan=#8ec07c${suffix}"
+white="${prefix}color:white=#a89984${suffix}"
+hl_white="${prefix}color:hl_white=#ebdbb2${suffix}"
+
+echo -ne \
+"${bg}${fg}${bd}"\
+"${black}${red}${green}${yellow}${blue}${magenta}${cyan}${white}"\
+"${hl_black}${hl_red}${hl_green}${hl_yellow}${hl_blue}${hl_magenta}${hl_cyan}${hl_white}"
+
+export TERM_THEME=dark
+echo dark >| ~/.cache/termbg
+
+[ -n "$TMUX" ] && {
+	tmux set-option -g window-style                'bg=colour237'
+	tmux set-option -g window-active-style         'bg=colour235'
+	tmux set-option -g pane-border-style           'bg=colour237,fg=colour237'
+	tmux set-option -g pane-active-border-style    'bg=colour235,fg=colour235'
+	tmux set-option -g status-style                'bg=colour244,fg=colour252'
+	tmux set-option -g window-status-style                      'fg=colour232'
+	tmux set-option -g window-status-current-style 'bg=colour248'
+	tmux set-option -g mode-style                  'bg=colour238,fg=colour253'
+}
+
+export TERM_THEME=dark

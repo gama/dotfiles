@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# set -o xtrace
+
+prefix="\033]5379;"
+suffix="\007"
+[ -n "$TMUX" ] && {
+	prefix="\033Ptmux;\033${prefix}"
+	suffix="${suffix}\033\\\\"
+}
+
+# hard/medium/soft contrast: bg=#f9f5d7 / bg=#fbf1c7 / bg=#f2e5bc
+# fg="${prefix}fg_color=#3c3836${suffix}"
+bg="${prefix}bg_color=#efe7e2${suffix}${prefix}color:230=#efe7e2${suffix}"
+fg="${prefix}fg_color=#6c6856${suffix}"
+bd="${prefix}bd_color=#000000${suffix}"
+black="${prefix}color:black=#fdf4c1${suffix}"
+hl_black="${prefix}color:hl_black=#928374${suffix}"
+red="${prefix}color:red=#cc241d${suffix}"
+hl_red="${prefix}color:hl_red=#9d0006${suffix}"
+green="${prefix}color:green=#98971a${suffix}"
+hl_green="${prefix}color:hl_green=#79740e${suffix}"
+yellow="${prefix}color:yellow=#d79921${suffix}"
+hl_yellow="${prefix}color:hl_yellow=#b57614${suffix}"
+blue="${prefix}color:blue=#458598${suffix}"
+hl_blue="${prefix}color:hl_blue=#0766b8${suffix}"
+# blue="${prefix}color:blue=#458588${suffix}"
+# hl_blue="${prefix}color:hl_blue=#076678${suffix}"
+magenta="${prefix}color:magenta=#b16286${suffix}"
+hl_magenta="${prefix}color:hl_magenta=#8f3f71${suffix}"
+cyan="${prefix}color:cyan=#689d6a${suffix}"
+hl_cyan="${prefix}color:hl_cyan=#427b58${suffix}"
+white="${prefix}color:white=#7c6f64${suffix}"
+hl_white="${prefix}color:hl_white=#3c3836${suffix}"
+
+echo -ne \
+"${bg}${fg}${bd}"\
+"${black}${red}${green}${yellow}${blue}${magenta}${cyan}${white}"\
+"${hl_black}${hl_red}${hl_green}${hl_yellow}${hl_blue}${hl_magenta}${hl_cyan}${hl_white}"
+
+export TERM_THEME=light
+echo light >| ~/.cache/termbg
+
+[ -n "$TMUX" ] && {
+	tmux set-option -g window-style                'bg=colour253'
+	tmux set-option -g window-active-style         'bg=colour230'
+	tmux set-option -g pane-border-style           'bg=colour253,fg=colour253'
+	tmux set-option -g pane-active-border-style    'bg=colour230,fg=colour230'
+	tmux set-option -g status-style                'bg=colour250,fg=colour232'
+	tmux set-option -g window-status-style                      'fg=colour234'
+	tmux set-option -g window-status-current-style 'bg=colour248'
+	tmux set-option -g mode-style                  'bg=colour229,fg=colour242'
+}
+
