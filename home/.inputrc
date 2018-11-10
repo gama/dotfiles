@@ -1,13 +1,12 @@
 set input-meta on
 set output-meta on
-set convert-meta on
 set bell-style none
 set match-hidden-files off
 set completion-ignore-case on
 set completion-map-case on
 set editing-mode vi
 set keyseq-timeout 0
-set echo-control-characters Off
+set echo-control-characters off
 set isearch-terminators "\C-j "
 
 set colored-stats on                 # color files by types
@@ -16,6 +15,11 @@ set mark-symlinked-directories on    # mark symlinked directories
 set colored-completion-prefix on     # color the common prefix
 set menu-complete-display-prefix on  # color the common prefix in menu-complete
 
+set show-mode-in-prompt on
+set vi-ins-mode-string \1\033]12;grey30\033\\\2
+set vi-cmd-mode-string \1\033]12;grey70\033\\\2
+
+set convert-meta on
 set keymap vi-command
 "\C-a": beginning-of-line
 "\C-?": backward-delete-char
@@ -36,7 +40,7 @@ set keymap vi-command
 "\M-y": yank-last-arg
 "\M-p": reverse-search-history
 "\M-n": forward-search-history
-"\M-l": clear-screen
+"\M-b": clear-screen
 
 set keymap vi-insert
 "\C-a": beginning-of-line
@@ -58,4 +62,5 @@ set keymap vi-insert
 "\M-y": yank-last-arg
 "\M-p": reverse-search-history
 "\M-n": forward-search-history
-"\M-l": clear-screen
+"\M-b": clear-screen
+set convert-meta off
