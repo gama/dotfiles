@@ -1,0 +1,31 @@
+alias ga='git add'
+alias gb='git branch'
+alias gs='git status'
+alias gsb='git show-branch'
+alias gsbm='git show-branch --current origin/master'
+alias gsbc='git show-branch --current'
+alias gl='git log'
+alias gf='git fetch'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gcu='git commit -u'
+alias gcu!='git commit -u --amend'
+alias gcp='git cherry-pick'
+alias ggrh='git reset --hard origin/$(current_branch)'
+alias grbc='git rebase --continue'
+alias gsta='git stash --continue'
+alias gstp='git stash pop'
+
+gfr() { 
+    git reset @~ "$@" && git commit --amend --no-edit 
+}
+grbi() {
+	git rebase --interactive HEAD~"$1"
+}
+
+current_branch() {
+	ref=$(git rev-parse --symbolic-full-name HEAD)
+	echo ${ref#refs/heads/}
+}
+
+# vim:set ft=sh:

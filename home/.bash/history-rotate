@@ -1,0 +1,5 @@
+".bash_history" {
+    rotate 99999
+    size 100k
+    olddir .bash/
+}

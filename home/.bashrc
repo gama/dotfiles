@@ -1,7 +1,7 @@
 # .bashrc
 
 # environment variables
-export LS_OPTIONS='-F --group-directories-first -I CVS -I .svn -I \*.lo -I \*.o -I \*.la -I CMakeFiles -I cmake_install.cmake -I CMakeCache.txt -I \*.pyc --color=auto'
+export LS_OPTIONS='-F --group-directories-first -I CVS -I .svn -I \*.lo -I \*.o -I \*.la -I CMakeFiles -I cmake_install.cmake -I CMakeCache.txt -I \*.pyc --color=auto --quoting-style=literal'
 export LS_COLORS='di=01;34:ex=00;32:ln=00;36:mi=01;41'
 export GREP_COLOR='01;32'
 export LESSCHARSET='utf-8'
@@ -12,17 +12,14 @@ export GLOBIGNORE='.o:.lo:.bak:.bkp:~:.class:CVS:.svn'
 export HISTSIZE=5000
 export HISTFILESIZE=999999
 export HISTCONTROL=ignorespace:ignoredups
+export PYTEST_ADDOPTS='--pdbcls=IPython.terminal.debugger:Pdb'
 export TZ=:/etc/localtime
-which npm > /dev/null && {
-	export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-${HOME}/.config}/npm/config"
-	export NODE_PATH="$(npm root -g)"
-}
 
 # aliases
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
-alias tsh='gvfs-trash'
+alias trash='gio trash'
 alias pwd='echo ${PWD}'
 alias h='history'
 alias ls="ls ${LS_OPTIONS}"
@@ -32,25 +29,35 @@ alias lh='ls -AClh'
 alias lla='ls -ACl'
 alias lld='ls -dCl'
 alias l='ls -CF'
+alias kk='kill %'
+alias kkk='kill -9 %'
 alias yes='echo yes'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 alias grep='grep --color=auto --binary-files=without-match --directories=skip'
 alias make='nice -n 19 make'
 alias lynx='lynx -vikeys'
-alias vim=nvim
 alias jj='jq -C -S .'
 alias jjp='jq -C -S . | less'
-alias activenv='source venv/bin/activate'
-alias senv='source env.sh'
+alias vst='vim -c "Gstatus | wincmd j | hide" .'
+
+# customization of optional components
+which git  > /dev/null && source $HOME/.bash/git
+which npm  > /dev/null && source $HOME/.bash/nodejs
+which nvim > /dev/null && source $HOME/.bash/neovim
+which bat  > /dev/null && source $HOME/.bash/bat
+which rg   > /dev/null && source $HOME/.bash/ripgrep
+which sk   > /dev/null && source $HOME/.bash/skim
+which fzf  > /dev/null && source $HOME/.bash/fzf
 
 # functions
 psg() {
 	first_letter=${1:0:1}
 	rest=${1:1}
-	ps auxwww | grep -E ^USER.\*$\|\[$first_letter\]$rest
+	ps auxwww | egrep ^USER.\*$\|\[$first_letter\]$rest
 }
 psgc() {
 	psg $@ | cut -c -$COLUMNS
@@ -59,13 +66,10 @@ envg() {
 	env | grep -i "$@"
 }
 bhg() {
-	grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history"*) | tail
+	\grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history" "${HOME}/.bash/.bash_history"*) | tail
 }
 bhga() {
-	grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history"*)
-}
-vims() {
-	vim -S "${HOME}/.vim/sessions/$1";
+	\grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history" "${HOME}/.bash/.bash_history"*)
 }
 mdstdout() {
 	pandoc -s -f markdown -t html5 --css "file://$HOME/tmp/github-markdown.css" "${1}" | sed -e 's/^<body>$/<body class="markdown-body" style="margin: 0 auto; max-width: 50em">/'
@@ -87,20 +91,12 @@ mdbrowser() {
 mdman() {
 	pandoc -s -f markdown -t man "${1}" | groff -T utf8 -man | less
 }
-findg() {
-	cmd="find . -name '$1' -exec grep -H -n '$2' {} \;";
-	eval $cmd;
-}
-# find in parent dirs
 findp() {
 	d="${PWD}"
 	while [[ ! -f "${d}/${1}" && "${d}" != "/" ]]; do
 		d=$(dirname "${d}")
 	done
 	echo "${d}/${1}"
-}
-trash() {
-	gvfs-trash "$@"
 }
 bci() {
 	perl -e 'print(eval(shift(@ARGV)), "\n");' "$1"
@@ -113,9 +109,6 @@ upcase() {
 }
 wtitle() {
 	echo -e -n "\033]0;$1\007"
-}
-detach() {
-	"$@" </dev/null >${HOME}/.detach.log 2>&1 &
 }
 n() {
 	nice -n 19 "$@"
@@ -135,12 +128,24 @@ vimpager() {
 njp() {
 	nj "$@" | vimpager -c "setfiletype json" -
 }
+activenv() {
+	for dir in '.venv' 'venv' '.virtualenv' 'virtualenv' '../.venv' '../venv' '../.virtualenv' '../virtualenv'; do
+		activate_script="${dir}/bin/activate"
+		if [ -d "${dir}" -a -f "${activate_script}" ]; then
+			echo "loading virtualenv from ${dir}"
+			source "${activate_script}"
+			break
+		fi
+	done
+}
+indocker() {
+	[ -f "/.dockerenv" ] && echo -e ':\e[0;37mdocker\e[0;00m'
+}
 
 # set $PATH
 source "${HOME}/.bash/utils"
 add_to_path "${HOME}/bin"
 add_to_path "${HOME}/.local/bin"
-add_to_path "${HOME}/.cache/npm/bin"
 
 if [ -n "$PS1" ]; then
 	# colored manpages
@@ -160,22 +165,32 @@ if [ -n "$PS1" ]; then
 	# shopt -s nullglob
 	# shopt -s failglob
 
+	source "$HOME/local/bin/git-sh-prompt"
+	export GIT_PS1_SHOWCOLORHINTS=1
+	export GIT_PS1_SHOWDIRTYSTATE=1
+	fancyprompt() {
+		history -a
+		PS1="${PS1/»*/}"
+		PS1="${PS1/ \(*\$\{__git_ps1*/}"
+		panetitle "${USER}@${HOST}:$(basename ${PWD})"
+		__git_ps1 "$PS1" "\[\e[0;1m\]»\[\e[0;00m\] "
+	}
+
 	# format prompt
 	case "$TERM" in
-		xterm*)
-			export PS1='\[\e[0;1m\][\u@\h]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
+		xterm*|rxvt*|stterm*|mlterm*)
+			export PS1='\[\e[0;1m\][\u@\h$(indocker)]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
 			export PROMPT_COMMAND='history -a; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
 			;;
-		screen*)
+		screen*|tmux*)
 			wtitle() {
 				printf '\033k'"$@"'\033\\'
 			}
 			panetitle() {
 				printf '\033]2;'"$@"'\033\\'
 			}
-			export PS1='\[\e[0;1m\][\u@\h]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
-			# export PROMPT_COMMAND='history -a; DIR=$([ "$PWD" == "$HOME" ] && echo \~ || basename "$PWD"); echo -n -e "\ek${USER}@${HOST}:${DIR}\e\\\\"; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
-			export PROMPT_COMMAND='history -a; DIR=$([ "$PWD" == "$HOME" ] && echo \~ || basename "$PWD"); panetitle "${USER}@${HOST}:${DIR}"; wtitle "${USER} @ ${HOST} : ${PWD}"'
+			export PS1='\[\e[0;1m\]\u@\h$(indocker)\[\e[0;00m\]:\[\e[0;31m\]\w\[\e[0;00m\] (${__git_ps1_branch_name}) (%s)"}» '
+			export PROMPT_COMMAND='fancyprompt'
 			;;
 		*)
 			export PS1='[\u@\h]:\W» '
@@ -189,7 +204,10 @@ if [ -n "$PS1" ]; then
 	done
 
 	# display "message of the day" if the session is iteractive
-	[ -n "$PS1" ] && [ -f ${HOME}/.motd ] && cat ${HOME}/.motd
+	[ -n "$PS1" ] && [ -f "${HOME}/.motd" ] && \cat "${HOME}/.motd"
+
+    # set black cursor
+	# echo -ne "\033]12;grey10\007"
 fi
 
 # load per host settings

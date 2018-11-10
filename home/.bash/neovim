@@ -1,0 +1,4 @@
+export EDITOR=nvim
+alias vim="printf '\033]12;\007' ; \\nvim -u ~/.SpaceVim/vimrc"
+alias nvim="printf '\033]12;\007' ; \\nvim"
+alias vimf='vim $(fzf)'

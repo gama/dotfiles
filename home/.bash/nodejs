@@ -1,0 +1,2 @@
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-${HOME}/.config}/npm/config"
+export NODE_PATH="$(npm root -g)"
