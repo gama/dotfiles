@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 
-wallpaper_dir="/mnt/c/Users/Gustavo/Pictures/Wallpapers"
+# set -o xtrace
+
+[ -z "${DBUS_SESSION_BUS_ADDRESS}" ] && {
+	dbus_address_str=$(xargs --null --max-args=1 </proc/$(pgrep -x -u $(whoami) gnome-shell)/environ | grep DBUS_SESSION_BUS_ADDRESS)
+	eval "export ${dbus_address_str}"
+}
+
+wallpaper_dir="/home/gama/.cache/wallpaper"
 page=$(( RANDOM % 275 ))
-image_path=$(curl -A randomstring https://interfacelift.com/wallpaper/downloads/date/wide_16:9/1920x1080/index${page}.html | grep button_download | sed -e 's/.*href="\([^"]*\)".*/\1/' | shuf | head -n 1)
+# image_path=$(curl -A randomstring https://interfacelift.com/wallpaper/downloads/date/wide_16:9/1920x1080/index${page}.html | grep button_download | sed -e 's/.*href="\([^"]*\)".*/\1/' | shuf | head -n 1)
+image_path=$(curl -s -A randomstring https://interfacelift.com/wallpaper/downloads/random/wide_16:9/1920x1080/ | grep button_download | sed -e 's/.*href="\([^"]*\)".*/\1/' | shuf | head -n 1)
 image_filename=$(basename "${image_path}")
 rm -f "${wallpaper_dir}/"*
-curl -L -A testagent -o "${wallpaper_dir}/${image_filename}" "https://interfacelift.com${image_path}"
+curl -s -L -A testagent -o "${wallpaper_dir}/${image_filename}" "https://interfacelift.com${image_path}"
+gsettings set org.gnome.desktop.background  picture-uri "file://${wallpaper_dir}/${image_filename}"
+gsettings set org.gnome.desktop.screensaver picture-uri "file://${wallpaper_dir}/${image_filename}"
