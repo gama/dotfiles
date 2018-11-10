@@ -1,10 +1,10 @@
 XTerm*visualBell:        true
-XTerm*faceName:          Consolas
+XTerm*faceName:          Consolas NF
 XTerm*faceSize:          14
 XTerm*backarrowKey:      false
 XTerm*background:        #f2f2e7
 XTerm*foreground:        #5f5f5f
-XTerm*cursorColor:       #000000
+! XTerm*cursorColor:       #000000
 XTerm*eightBitInput:     true
 XTerm*eightBitOutput:    false
 XTerm*metaSendsEscape:   true
@@ -13,211 +13,82 @@ XTerm*loginShell:        true
 XTerm*borderWidth:       0
 XTerm*selectToClipboard: true
 
-*VT100*colorBDMode:     on
-*VT100*colorBD:         black
-*VT100*colorMode:       on
-*VT100*boldColors:      on
-*VT100*dynamicColors:   on
-*VT100*scrollBar:       false
-*VT100*utf8:            1
+*VT100*colorBDMode:      on
+*VT100*colorBD:          black
+*VT100*colorMode:        on
+*VT100*boldColors:       on
+*VT100*dynamicColors:    on
+*VT100*scrollBar:        false
+*VT100*utf8:             1
 
-! --- optimized for light background terminals
-*VT100*color0:          #000000
-*VT100*color1:          #af0000
-*VT100*color2:          #00af00
-*VT100*color3:          #afaf00
-*VT100*color4:          #0000af
-*VT100*color5:          #af00af
-*VT100*color6:          #00afaf
-*VT100*color7:          #7f7f7f
-*VT100*color8:          #2f2f2f
-*VT100*color9:          #bf5f5f
-*VT100*color10:         #5fbf5f
-*VT100*color11:         #5f5f00
-*VT100*color12:         #5f5fbf
-*VT100*color13:         #bf5fbf
-*VT100*color14:         #5fbfbf
-*VT100*color15:         #f2f2e7
+*VT100*color0:           #000000
+*VT100*color1:           #af0000
+*VT100*color2:           #00af00
+*VT100*color3:           #afaf00
+*VT100*color4:           #0000af
+*VT100*color5:           #af00af
+*VT100*color6:           #00afaf
+*VT100*color7:           #7f7f7f
+*VT100*color8:           #2f2f2f
+*VT100*color9:           #bf5f5f
+*VT100*color10:          #5fbf5f
+*VT100*color11:          #5f5f00
+*VT100*color12:          #5f5fff
+*VT100*color13:          #bf5fbf
+*VT100*color14:          #5fbfbf
+*VT100*color15:          #f2f2e7
 
 !Unicode decls
-*fontMenu.Label:        Unicode Fonts
+*fontMenu.Label:         Unicode Fonts
 
-*VT100*font:            -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
-*VT100*font2:           -misc-fixed-medium-r-normal--8-80-75-75-c-50-iso10646-1
-*VT100*font3:           -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
-*VT100*font4:           -misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1
-*VT100*font5:           -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
-*VT100*font6:           -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
+*VT100*font:             -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
+*VT100*font2:            -misc-fixed-medium-r-normal--8-80-75-75-c-50-iso10646-1
+*VT100*font3:            -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
+*VT100*font4:            -misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1
+*VT100*font5:            -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
+*VT100*font6:            -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
 
-Xft.autohint:           0
-Xft.dpi:                96
+Xft.lcdfilter:           lcddefault
+Xft.antialias:           1
+Xft.hinting:             1
+Xft.autohint:            1
+Xft.hintstyle:           hintfull
+Xft.rgba:                rgb
+Xft.dpi:                 96
 
-*VT100.translations: #override \n\
-    Alt ~Shift ~Ctrl <Key> v: insert-selection(CLIPBOARD) \n\
-    Alt ~Shift ~Ctrl <Key> c: copy-selection(CLIPBOARD) \n\
-    Alt  Shift <Key> a: string(0x01) string("A") \n\
-    Alt  Shift <Key> b: string(0x01) string("B") \n\
-    Alt  Shift <Key> c: string(0x01) string("C") \n\
-    Alt  Shift <Key> d: string(0x01) string("D") \n\
-    Alt  Shift <Key> e: string(0x01) string("E") \n\
-    Alt  Shift <Key> f: string(0x01) string("F") \n\
-    Alt  Shift <Key> g: string(0x01) string("G") \n\
-    Alt  Shift <Key> h: string(0x01) string("H") \n\
-    Alt  Shift <Key> i: string(0x01) string("I") \n\
-    Alt  Shift <Key> j: string(0x01) string("J") \n\
-    Alt  Shift <Key> k: string(0x01) string("K") \n\
-    Alt  Shift <Key> l: string(0x01) string("L") \n\
-    Alt  Shift <Key> m: string(0x01) string("M") \n\
-    Alt  Shift <Key> n: string(0x01) string("N") \n\
-    Alt  Shift <Key> o: string(0x01) string("O") \n\
-    Alt  Shift <Key> p: string(0x01) string("P") \n\
-    Alt  Shift <Key> q: string(0x01) string("Q") \n\
-    Alt  Shift <Key> r: string(0x01) string("R") \n\
-    Alt  Shift <Key> s: string(0x01) string("S") \n\
-    Alt  Shift <Key> t: string(0x01) string("T") \n\
-    Alt  Shift <Key> u: string(0x01) string("U") \n\
-    Alt  Shift <Key> v: string(0x01) string("V") \n\
-    Alt  Shift <Key> w: string(0x01) string("W") \n\
-    Alt  Shift <Key> x: string(0x01) string("X") \n\
-    Alt  Shift <Key> y: string(0x01) string("Y") \n\
-    Alt  Shift <Key> z: string(0x01) string("Z") \n\
-    Alt ~Shift <Key> a: string(0x01) string("a") \n\
-    Alt ~Shift <Key> b: string(0x01) string("b") \n\
-!   Alt ~Shift <Key> c: string(0x01) string("c") \n\
-    Alt ~Shift <Key> d: string(0x01) string("d") \n\
-    Alt ~Shift <Key> e: string(0x01) string("e") \n\
-    Alt ~Shift <Key> f: string(0x01) string("f") \n\
-    Alt ~Shift <Key> g: string(0x01) string("g") \n\
-    Alt ~Shift <Key> h: string(0x01) string("h") \n\
-    Alt ~Shift <Key> i: string(0x01) string("i") \n\
-    Alt ~Shift <Key> j: string(0x01) string("j") \n\
-    Alt ~Shift <Key> k: string(0x01) string("k") \n\
-    Alt ~Shift <Key> l: string(0x01) string("l") \n\
-    Alt ~Shift <Key> m: string(0x01) string("m") \n\
-    Alt ~Shift <Key> n: string(0x01) string("n") \n\
-    Alt ~Shift <Key> o: string(0x01) string("o") \n\
-    Alt ~Shift <Key> p: string(0x01) string("p") \n\
-    Alt ~Shift <Key> q: string(0x01) string("q") \n\
-    Alt ~Shift <Key> r: string(0x01) string("r") \n\
-    Alt ~Shift <Key> s: string(0x01) string("s") \n\
-    Alt ~Shift <Key> t: string(0x01) string("t") \n\
-    Alt ~Shift <Key> u: string(0x01) string("u") \n\
-!   Alt ~Shift <Key> v: string(0x01) string("v") \n\
-    Alt ~Shift <Key> w: string(0x01) string("w") \n\
-    Alt ~Shift <Key> x: string(0x01) string("x") \n\
-    Alt ~Shift <Key> y: string(0x01) string("y") \n\
-    Alt ~Shift <Key> z: string(0x01) string("z") \n\
-    Alt ~Shift <Key> 1: string(0x01) string("1") \n\
-    Alt ~Shift <Key> 2: string(0x01) string("2") \n\
-    Alt ~Shift <Key> 3: string(0x01) string("3") \n\
-    Alt ~Shift <Key> 4: string(0x01) string("4") \n\
-    Alt ~Shift <Key> 5: string(0x01) string("5") \n\
-    Alt ~Shift <Key> 6: string(0x01) string("6") \n\
-    Alt ~Shift <Key> 7: string(0x01) string("7") \n\
-    Alt ~Shift <Key> 8: string(0x01) string("8") \n\
-    Alt ~Shift <Key> 9: string(0x01) string("9") \n\
-    Alt ~Shift <Key> 0: string(0x01) string("0") \n\
-    Alt ~Shift <Key> ;: string(0x01) string(";") \n\
-    Alt  Shift <Key> ;: string(0x01) string(":") \n\
-    Alt ~Shift <Key> -: string(0x01) string("-") \n\
-    Alt  Shift <Key> _: string(0x01) string("_") \n\
-    Alt ~Shift <Key> [: string(0x01) string("[") \n\
-    Alt ~Shift <Key> ]: string(0x01) string("]") \n\
-    Alt  Shift <Key> [: string(0x01) string("{") \n\
-    Alt  Shift <Key> ]: string(0x01) string("}") \n\
-    Alt ~Shift <Key> =: string(0x01) string("=") \n\
-    Alt  Shift <Key> =: string(0x01) string("+") \n\
-    Alt ~Shift <Key> slash: string(0x01) string("/") \n\
-    Alt  Shift <Key> slash: string(0x01) string("?") \n\
-    Alt ~Shift <Key> backslash: string(0x01) string(0x5c) \n\
-    Alt  Shift <Key> backslash: string(0x01) string("|") \n\
-    Alt  Shift <Key> F11: string("original keymap") \n\
-    Alt ~Shift <Key> F12: string("changing keymap") keymap(other)
+!*VT100.translations: #override \n\
+! Alt ~Shift ~Ctrl <Key> v: insert-selection(CLIPBOARD)
 
-*VT100.otherKeymap.translations: #override \
-    Alt  Shift <Key> a: string(0x1b) string("A") \n\
-    Alt  Shift <Key> b: string(0x1b) string("B") \n\
-    Alt  Shift <Key> c: string(0x1b) string("C") \n\
-    Alt  Shift <Key> d: string(0x1b) string("D") \n\
-    Alt  Shift <Key> e: string(0x1b) string("E") \n\
-    Alt  Shift <Key> f: string(0x1b) string("F") \n\
-    Alt  Shift <Key> g: string(0x1b) string("G") \n\
-    Alt  Shift <Key> h: string(0x1b) string("H") \n\
-    Alt  Shift <Key> i: string(0x1b) string("I") \n\
-    Alt  Shift <Key> j: string(0x1b) string("J") \n\
-    Alt  Shift <Key> k: string(0x1b) string("K") \n\
-    Alt  Shift <Key> l: string(0x1b) string("L") \n\
-    Alt  Shift <Key> m: string(0x1b) string("M") \n\
-    Alt  Shift <Key> n: string(0x1b) string("N") \n\
-    Alt  Shift <Key> o: string(0x1b) string("O") \n\
-    Alt  Shift <Key> p: string(0x1b) string("P") \n\
-    Alt  Shift <Key> q: string(0x1b) string("Q") \n\
-    Alt  Shift <Key> r: string(0x1b) string("R") \n\
-    Alt  Shift <Key> s: string(0x1b) string("S") \n\
-    Alt  Shift <Key> t: string(0x1b) string("T") \n\
-    Alt  Shift <Key> u: string(0x1b) string("U") \n\
-    Alt  Shift <Key> v: string(0x1b) string("V") \n\
-    Alt  Shift <Key> w: string(0x1b) string("W") \n\
-    Alt  Shift <Key> x: string(0x1b) string("X") \n\
-    Alt  Shift <Key> y: string(0x1b) string("Y") \n\
-    Alt  Shift <Key> z: string(0x1b) string("Z") \n\
-    Alt ~Shift <Key> a: string(0x1b) string("a") \n\
-    Alt ~Shift <Key> b: string(0x1b) string("b") \n\
-    Alt ~Shift <Key> c: string(0x1b) string("c") \n\
-    Alt ~Shift <Key> d: string(0x1b) string("d") \n\
-    Alt ~Shift <Key> e: string(0x1b) string("e") \n\
-    Alt ~Shift <Key> f: string(0x1b) string("f") \n\
-    Alt ~Shift <Key> g: string(0x1b) string("g") \n\
-    Alt ~Shift <Key> h: string(0x1b) string("h") \n\
-    Alt ~Shift <Key> i: string(0x1b) string("i") \n\
-    Alt ~Shift <Key> j: string(0x1b) string("j") \n\
-    Alt ~Shift <Key> k: string(0x1b) string("k") \n\
-    Alt ~Shift <Key> l: string(0x1b) string("l") \n\
-    Alt ~Shift <Key> m: string(0x1b) string("m") \n\
-    Alt ~Shift <Key> n: string(0x1b) string("n") \n\
-    Alt ~Shift <Key> o: string(0x1b) string("o") \n\
-    Alt ~Shift <Key> p: string(0x1b) string("p") \n\
-    Alt ~Shift <Key> q: string(0x1b) string("q") \n\
-    Alt ~Shift <Key> r: string(0x1b) string("r") \n\
-    Alt ~Shift <Key> s: string(0x1b) string("s") \n\
-    Alt ~Shift <Key> t: string(0x1b) string("t") \n\
-    Alt ~Shift <Key> u: string(0x1b) string("u") \n\
-    Alt ~Shift <Key> v: string(0x1b) string("v") \n\
-    Alt ~Shift <Key> w: string(0x1b) string("w") \n\
-    Alt ~Shift <Key> x: string(0x1b) string("x") \n\
-    Alt ~Shift <Key> y: string(0x1b) string("y") \n\
-    Alt ~Shift <Key> z: string(0x1b) string("z") \n\
-    Alt ~Shift <Key> 1: string(0x1b) string("1") \n\
-    Alt ~Shift <Key> 2: string(0x1b) string("2") \n\
-    Alt ~Shift <Key> 3: string(0x1b) string("3") \n\
-    Alt ~Shift <Key> 4: string(0x1b) string("4") \n\
-    Alt ~Shift <Key> 5: string(0x1b) string("5") \n\
-    Alt ~Shift <Key> 6: string(0x1b) string("6") \n\
-    Alt ~Shift <Key> 7: string(0x1b) string("7") \n\
-    Alt ~Shift <Key> 8: string(0x1b) string("8") \n\
-    Alt ~Shift <Key> 9: string(0x1b) string("9") \n\
-    Alt ~Shift <Key> 0: string(0x1b) string("0") \n\
-    Alt ~Shift <Key> ;: string(0x1b) string(";") \n\
-    Alt  Shift <Key> ;: string(0x1b) string(":") \n\
-    Alt ~Shift <Key> -: string(0x1b) string("-") \n\
-    Alt  Shift <Key> _: string(0x1b) string("_") \n\
-    Alt ~Shift <Key> [: string(0x1b) string("[") \n\
-    Alt ~Shift <Key> ]: string(0x1b) string("]") \n\
-    Alt  Shift <Key> [: string(0x1b) string("{") \n\
-    Alt  Shift <Key> ]: string(0x1b) string("}") \n\
-    Alt ~Shift <Key> =: string(0x1b) string("=") \n\
-    Alt  Shift <Key> =: string(0x1b) string("+") \n\
-    Alt ~Shift <Key> slash: string(0x1b) string("/") \n\
-    Alt  Shift <Key> slash: string(0x1b) string("?") \n\
-    Alt ~Shift <Key> backslash: string(0x1b) string(0x5c) \n\
-    Alt  Shift <Key> backslash: string(0x1b) string("|") \n\
-    Alt  Shift <Key> F11: string("other keymap") \n\
-    Alt ~Shift <Key> F12: string("changing keymap") keymap(None)
+! --------------------- URxvt  -----------------
 
-URxvt*font:            xft:Consolas:size=14
-URxvt*letterSpace:     -2
-URxvt*lineSpace:       -15
-URxvt*background:      #f7f7ef
-URxvt*foreground:      #5f5f5f
-URxvt*cursorColor:     #000000
-URxvt*scrollBar:       false
+URxvt*font:              xft:Consolas NF:pixelsize=19,xft:Segoe UI Symbol:pixelsize=14
+URxvt*boldFont:          xft:Consolas NF:pixelsize=19,xft:Segoe UI Symbol:pixelsize=18
+URxvt*intensityStyles:   true
+URxvt*colorBD:           black
+URxvt*colorIT:           blue
+URxvt*colorUL:           red
+URxvt*colorRV:           green
+URxvt*letterSpace:       -2
+! URxvt*lineSpace:       -15
+URxvt*background:        #f2f2e7
+URxvt*foreground:        #5f5f5f
+! URxvt*cursorColor:       #000000
+URxvt*scrollBar:         false
+URxvt.perl-ext-common:   selection-to-clipboard
+
+URxvt*color0:            #000000
+URxvt*color1:            #af0000
+URxvt*color2:            #00af00
+URxvt*color3:            #afaf00
+URxvt*color4:            #0000af
+URxvt*color5:            #af00af
+URxvt*color6:            #00afaf
+URxvt*color7:            #7f7f7f
+URxvt*color8:            #2f2f2f
+URxvt*color9:            #bf5f5f
+URxvt*color10:           #5fbf5f
+URxvt*color11:           #5f5f00
+URxvt*color12:           #5f5fff
+URxvt*color13:           #bf5fbf
+URxvt*color14:           #5fbfbf
+URxvt*color15:           #f2f2e7
