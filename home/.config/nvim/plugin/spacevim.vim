@@ -22,6 +22,7 @@ function! ToggleBG()
     else
         set background=dark
     endif
+    call writefile([&background], expand("~/.cache/termbg"))
 endfunction
 
 function! UpdateBG()
