@@ -55,9 +55,12 @@ let g:colors_name = "gruvboxcustom"
 
 hi! Normal ctermbg=None guibg=None
 if (&background == "light")
-    highlight Conceal  guifg=#ebdbb2 ctermfg=223  guibg=None    ctermbg=None
-    highlight NormalNC guifg=None    ctermfg=None guibg=#ebdbb2 ctermbg=223
+    highlight Conceal   guifg=#ebdbb2 ctermfg=223  guibg=None    ctermbg=None
+    highlight WildMenu  guifg=#4585a8 ctermfg=66   guibg=#d5c4a1 ctermbg=250
+    highlight NormalNC  guifg=None    ctermfg=None guibg=#ebdbb2 ctermbg=223
+    highlight VertSplit guifg=#eddbb2 ctermfg=223  guibg=#eddbb2 ctermfg=223
 else
-    highlight Conceal  guifg=#3c3836 ctermfg=237  guibg=None    ctermbg=None
-    highlight NormalNC guifg=None    ctermfg=None guibg=#3c3836 ctermbg=237
+    highlight Conceal   guifg=#3c3836 ctermfg=237  guibg=None    ctermbg=None
+    highlight NormalNC  guifg=None    ctermfg=None guibg=#3c3836 ctermbg=237
+    highlight VertSplit guifg=#3c3836 ctermfg=237  guibg=#3c3836 ctermfg=237
 end
