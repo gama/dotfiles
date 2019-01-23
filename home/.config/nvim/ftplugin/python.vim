@@ -4,7 +4,11 @@ setlocal number
 setlocal formatprg=autopep8\ --max-line-length=9999\ -
 setlocal regexpengine=1
 
-nnoremap <buffer> mm      :SyntasticCheck<CR>
+if g:loaded_neomake
+    nnoremap <buffer> mm :Neomake<CR>
+else
+    nnoremap <buffer> mm :SyntasticCheck<CR>
+endif
 nnoremap <buffer> mn      :lnext<CR>
 nnoremap <buffer> mp      :lprev<CR>
 nnoremap <buffer> mc      :lclose<CR>
