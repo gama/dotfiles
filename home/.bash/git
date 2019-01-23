@@ -4,7 +4,6 @@ alias gs='git status'
 alias gsb='git show-branch'
 alias gsbm='git show-branch --current origin/master'
 alias gsbc='git show-branch --current'
-alias gl='git log'
 alias gf='git fetch'
 alias gd='git diff'
 alias gdc='git diff --cached'
@@ -12,8 +11,9 @@ alias gcu='git commit -u'
 alias gcu!='git commit -u --amend'
 alias gcp='git cherry-pick'
 alias ggrh='git reset --hard origin/$(current_branch)'
+alias grb='git rebase'
 alias grbc='git rebase --continue'
-alias gsta='git stash --continue'
+alias gsta='git stash'
 alias gstp='git stash pop'
 
 gfr() { 
@@ -22,10 +22,42 @@ gfr() {
 grbi() {
 	git rebase --interactive HEAD~"$1"
 }
+gl() {
+	local ncommits
+	if [[ $1 =~ ^[0-9]+$ ]]; then
+		ncommits="-${1}"
+		shift
+	fi
+	git log $ncommits "$@"
+}
+glp() {
+	local ncommits
+	if [[ $1 =~ ^[0-9]+$ ]]; then
+		ncommits="-${1}"
+		shift
+	fi
+	echo git log -p $ncommits "$@"
+	git log -p $ncommits "$@"
+}
 
 current_branch() {
 	ref=$(git rev-parse --symbolic-full-name HEAD)
 	echo ${ref#refs/heads/}
+}
+
+complete -F _complete_alias ga
+complete -F _complete_alias gb
+complete -F _complete_alias gsb
+complete -F _complete_alias gsbm
+complete -F _complete_alias gsbc
+complete -F _complete_alias gf
+complete -F _complete_alias gd
+complete -F _complete_alias gdc
+complete -F _complete_alias gcp
+[ -f "/usr/share/bash-completion/completions/git" ] && {
+	source "/usr/share/bash-completion/completions/git"
+	__git_complete gl _git_log
+	__git_complete glp _git_log
 }
 
 # vim:set ft=sh:
