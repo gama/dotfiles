@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
 
-cd "$HOME" && \
-logrotate --verbose --state ~/.cache/logrotate.state ~/.bash/history-rotate
+set -o errexit
+set -o xtrace
+
+cd "$HOME"
+
+for i in $(seq 9 -1 1); do
+	n=$((i + 1))
+	[ -f ".bash/.bash_history.${i}" ] && mv ".bash/.bash_history.${i}" ".bash/.bash_history.${n}"
+done
+mv ".bash_history" ".bash/.bash_history~"
+head -n -5000 ".bash/.bash_history~" > ".bash/.bash_history.1"
+tail -n  5000 ".bash/.bash_history~" > ".bash_history"
