@@ -1,4 +1,12 @@
-export EDITOR=nvim
-alias vim="printf '\033]12;\007' ; \\nvim -u ~/.SpaceVim/vimrc"
-alias nvim="printf '\033]12;\007' ; \\nvim"
+vim() {
+    printf '\033]12;\007'
+    nvim -u ~/.SpaceVim/vimrc "$@"
+}
+nvim() {
+    printf '\033]12;\007'
+    command nvim "$@"
+}
 alias vimf='vim $(fzf)'
+export EDITOR=nvim
+
+# vim:set ft=sh:
