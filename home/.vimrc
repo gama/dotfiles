@@ -153,6 +153,7 @@ nnoremap <Leader>g :grep! -r "\b<C-R><C-W>\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 
 " window movements & splits
 nnoremap <silent> <M-w>     :<C-U>w<CR>
+nnoremap <silent> q         :<C-U>call SmartClose()<CR>
 nnoremap <silent> <Space>qq :q<CR>
 nnoremap <silent> <Space>qQ :qa<CR>
 nnoremap <silent> <Space>/  :<C-U>nohlsearch<CR>
