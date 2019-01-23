@@ -1,2 +1,2 @@
-alias bat='grep -q "dark" ~/.cache/termbg && theme=zenburn || theme=GitHub ; bat --theme=${theme}'
+alias bat='grep -q "dark" ~/.cache/termbg && theme=zenburn || theme=GitHub ; bat --tabs=4 --theme=${theme}'
 alias cat='bat'
