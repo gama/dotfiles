@@ -21,7 +21,7 @@ hl_green="${prefix}color:hl_green=#b8bb26${suffix}"
 yellow="${prefix}color:yellow=#d79921${suffix}"
 hl_yellow="${prefix}color:hl_yellow=#fabd2f${suffix}"
 blue="${prefix}color:blue=#458588${suffix}"
-hl_blue="${prefix}color:hl_blue=#83a598${suffix}"
+hl_blue="${prefix}color:hl_blue=#83a5bf${suffix}"
 magenta="${prefix}color:magenta=#b16286${suffix}"
 hl_magenta="${prefix}color:hl_magenta=#d3869b${suffix}"
 cyan="${prefix}color:cyan=#689d6a${suffix}"
@@ -37,15 +37,4 @@ echo -ne \
 export TERM_THEME=dark
 echo dark >| ~/.cache/termbg
 
-[ -n "$TMUX" ] && {
-	tmux set-option -g window-style                'bg=colour237'
-	tmux set-option -g window-active-style         'bg=colour235'
-	tmux set-option -g pane-border-style           'bg=colour237,fg=colour237'
-	tmux set-option -g pane-active-border-style    'bg=colour235,fg=colour235'
-	tmux set-option -g status-style                'bg=colour244,fg=colour252'
-	tmux set-option -g window-status-style                      'fg=colour232'
-	tmux set-option -g window-status-current-style 'bg=colour248'
-	tmux set-option -g mode-style                  'bg=colour238,fg=colour253'
-}
-
-export TERM_THEME=dark
+[ -n "$TMUX" ] && tmux source ~/.tmux/darkbg.conf
