@@ -77,7 +77,7 @@ set path=.
 set report=1
 set ruler
 set scrolloff=1
-set shell=sh
+set shell=bash
 set shiftwidth=4
 set shortmess=atI
 set statusline=%=%m%r%w%y\ %8.(%l,%c%)\ %P
@@ -139,12 +139,16 @@ vnoremap H  5zh
 vnoremap L  5zl
 
 " window movement and management
-noremap <silent> <M-l>   :TmuxNavigateRight<CR>
-noremap <silent> <M-h>   :TmuxNavigateLeft<CR>
-noremap <silent> <M-k>   :TmuxNavigateUp<CR>
-noremap <silent> <M-j>   :TmuxNavigateDown<CR>
-noremap <silent> [SPC]w\ <C-W>v<C-W>w
-noremap <silent> [SPC]w- <C-W>s<C-W>w
+nnoremap <silent> <M-l>   :TmuxNavigateRight<CR>
+nnoremap <silent> <M-h>   :TmuxNavigateLeft<CR>
+nnoremap <silent> <M-k>   :TmuxNavigateUp<CR>
+nnoremap <silent> <M-j>   :TmuxNavigateDown<CR>
+tnoremap <silent> <M-l>   <C-\><C-n>:TmuxNavigateRight<CR>
+tnoremap <silent> <M-h>   <C-\><C-n>:TmuxNavigateLeft<CR>
+tnoremap <silent> <M-k>   <C-\><C-n>:TmuxNavigateUp<CR>
+tnoremap <silent> <M-j>   <C-\><C-n>:TmuxNavigateDown<CR>
+nnoremap <silent> [SPC]w\ <C-W>v<C-W>w
+nnoremap <silent> [SPC]w- <C-W>s<C-W>w
 
 " search for visually selected text
 vnoremap * y/<C-R>"<CR>
@@ -211,6 +215,13 @@ nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
 nnoremap gR :grep '\b<cword>\b' *<CR>
 nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
+
+" neovim terminal customizations
+if has("nvim")
+    autocmd TermOpen  * startinsert
+    autocmd TermClose * call feedkeys('<cr>')
+    tnoremap <Esc><Esc> <C-\><C-n>
+endif
 
 " ----------- plugin specific configuration ---------
 
