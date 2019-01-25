@@ -1,5 +1,7 @@
 # .bashrc
 
+source "${HOME}/.bash/utils"
+
 # environment variables
 export LS_OPTIONS='-F --group-directories-first -I CVS -I .svn -I \*.lo -I \*.o -I \*.la -I CMakeFiles -I cmake_install.cmake -I CMakeCache.txt -I \*.pyc --color=auto --quoting-style=literal'
 export LS_COLORS='di=01;34:ex=00;32:ln=00;36:mi=01;41:ow=01;04;32'
@@ -153,7 +155,6 @@ activenv() {
 }
 
 # set $PATH
-source "${HOME}/.bash/utils"
 add_to_path "${HOME}/bin"
 add_to_path "${HOME}/.local/bin"
 
