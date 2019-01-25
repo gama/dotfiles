@@ -6,6 +6,7 @@ export LS_COLORS='di=01;34:ex=00;32:ln=00;36:mi=01;41'
 export GREP_COLOR='01;32'
 export LESSCHARSET='utf-8'
 export LESS='-F -R -X -g -i -S -j .5 -x 4'
+export PAGER=pager
 export PS_FORMAT='user,pid,pcpu,pmem,vsz,rss,sz,tty,stat,start,time,cmd'
 export FIGNORE='.o:.lo:.bak:.bkp:~:.class:.pyc:CVS:.svn:make_install.cmake:MakeFiles'
 export GLOBIGNORE='.o:.lo:.bak:.bkp:~:.class:CVS:.svn'
@@ -148,15 +149,6 @@ add_to_path "${HOME}/bin"
 add_to_path "${HOME}/.local/bin"
 
 if [ -n "$PS1" ]; then
-	# colored manpages
-	export LESS_TERMCAP_mb=$'\E[5m'    # start blink
-	export LESS_TERMCAP_md=$'\E[1m'    # start bold
-	export LESS_TERMCAP_mr=$'\E[3m'    # start reverse
-	export LESS_TERMCAP_so=$'\E[1;43m' # start standout
-	export LESS_TERMCAP_us=$'\E[34m'   # start underline
-	export LESS_TERMCAP_me=$'\E[0m'    # end   all modes
-	export LESS_TERMCAP_se=$'\E[0m'    # end   standout
-	export LESS_TERMCAP_ue=$'\E[0m'    # end   underline
 
 	# modifiers
 	set -C
