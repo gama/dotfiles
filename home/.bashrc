@@ -84,6 +84,9 @@ mdterm() {
 	sleep 1
 	rm -f "${tmpfile}"
 }
+htmlterm() {
+	pandoc -s -f html -t man "${1}" | man -l -
+}
 mdbrowser() {
 	tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
 	mdstdout "${1}" >| "${tmpfile}"
