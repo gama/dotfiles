@@ -2,7 +2,7 @@
 
 # environment variables
 export LS_OPTIONS='-F --group-directories-first -I CVS -I .svn -I \*.lo -I \*.o -I \*.la -I CMakeFiles -I cmake_install.cmake -I CMakeCache.txt -I \*.pyc --color=auto --quoting-style=literal'
-export LS_COLORS='di=01;34:ex=00;32:ln=00;36:mi=01;41'
+export LS_COLORS='di=01;34:ex=00;32:ln=00;36:mi=01;41:ow=01;04;32'
 export GREP_COLOR='01;32'
 export LESSCHARSET='utf-8'
 export LESS='-F -R -X -g -i -S -j .5 -x 4'
