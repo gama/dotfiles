@@ -48,6 +48,7 @@ alias vst='vim -c "Gstatus | wincmd j | hide" .'
 # customization of optional components
 which git  > /dev/null && source $HOME/.bash/git
 which npm  > /dev/null && source $HOME/.bash/nodejs
+which go   > /dev/null && source $HOME/.bash/go
 which nvim > /dev/null && source $HOME/.bash/neovim
 which bat  > /dev/null && source $HOME/.bash/bat
 which rg   > /dev/null && source $HOME/.bash/ripgrep
