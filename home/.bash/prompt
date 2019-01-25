@@ -1,0 +1,33 @@
+source "$HOME/.bash/.gitprompt"
+export PROMPT_COMMAND='_prompt_command'
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+_username() { echo -e "\[\e[1m\]\u\[\e[0m\]"; }
+_hostname() { echo -e "\[\e[1m\]\h\[\e[0m\]"; }
+_path()     { echo -n "\[\e[31m\]\w\[\e[0m\]"; }
+_arrow()    { echo -e "\[\e[1m\]»\[\e[0m\]"; }
+_indocker() {
+	[ -f "/.dockerenv" ] && echo -e ":\[\e[1;36m\]docker\[\e[0m\]"
+}
+_venv_label() {
+	[ -n "${VIRTUAL_ENV}" ] && {
+		# [ -z "${_VIRTUALENV_LABEL}" ] && _VIRTUALENV_LABEL=$(sed -Ene '/"x/s/.*"x(.*)".*/\1/p' "${VIRTUAL_ENV}/bin/activate")
+		[ -z "${_VIRTUALENV_LABEL}" ] && _VIRTUALENV_LABEL=$(sed -E -n -e 's/.*"x([^ "]*) *".*/\1/gp' "${VIRTUAL_ENV}/bin/activate")
+		[ -z "${_VIRTUALENV_LABEL}" ] && _VIRTUALENV_LABEL='('$(basename "${VIRTUAL_ENV}")')'
+		echo -e "\[\e[1;35m\]${_VIRTUALENV_LABEL}\[\e[0m\]";
+	} || {
+		[ -n "${VIRTUALENV_LABEL}" ] && unset VIRTUALENV_LABEL
+	}
+}
+_prompt_command() {
+	history -a
+	__git_ps1 "$(_username)@$(_hostname)$(_venv_label)$(_indocker):$(_path)" "$(_arrow) "
+	[ -n "$TMUX" ] && panetitle "${USER}@${HOST}:$(basename "${PWD}")"
+}
+
+# load homeshick
+for file in "$HOME/.homesick/repos/homeshick/homeshick.sh" "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"; do
+	[ -f "$file" ] && source "$file";
+done
+
+# vim:set ft=sh:

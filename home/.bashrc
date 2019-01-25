@@ -114,7 +114,14 @@ upcase() {
 	for n in $1; do mv $n `echo $n | tr '[:lower:]' '[:upper:]'`; done
 }
 wtitle() {
-	echo -e -n "\033]0;$1\007"
+	[ -n "$TMUX" ] && {
+		echo -e -n "\033]0;$1\007"
+	} || {
+		printf '\033k'"$@"'\033\\'
+	}
+}
+panetitle() {
+	printf '\033]2;'"$@"'\033\\'
 }
 n() {
 	nice -n 19 "$@"
@@ -138,14 +145,11 @@ activenv() {
 	for dir in '.venv' 'venv' '.virtualenv' 'virtualenv' '../.venv' '../venv' '../.virtualenv' '../virtualenv'; do
 		activate_script="${dir}/bin/activate"
 		if [ -d "${dir}" -a -f "${activate_script}" ]; then
-			echo "loading virtualenv from ${dir}"
+			echo -e "\e[32mloading virtualenv from \e[1m\"${dir}\"\e[0m"
 			source "${activate_script}"
 			break
 		fi
 	done
-}
-indocker() {
-	[ -f "/.dockerenv" ] && echo -e ':\e[0;37mdocker\e[0;00m'
 }
 
 # set $PATH
@@ -162,48 +166,13 @@ if [ -n "$PS1" ]; then
 	# shopt -s nullglob
 	# shopt -s failglob
 
-	source "$HOME/local/bin/git-sh-prompt"
-	export GIT_PS1_SHOWCOLORHINTS=1
-	export GIT_PS1_SHOWDIRTYSTATE=1
-	fancyprompt() {
-		history -a
-		PS1="${PS1/»*/}"
-		PS1="${PS1/ \(*\$\{__git_ps1*/}"
-		panetitle "${USER}@${HOST}:$(basename ${PWD})"
-		__git_ps1 "$PS1" "\[\e[0;1m\]»\[\e[0;00m\] "
-	}
-
 	# format prompt
-	case "$TERM" in
-		xterm*|rxvt*|stterm*|mlterm*)
-			export PS1='\[\e[0;1m\][\u@\h$(indocker)]:\[\e[0;31m\]\W\[\e[0;01m\]»\[\e[0;00m\] '
-			export PROMPT_COMMAND='history -a; echo -n -e "\e]0;${USER}@${HOST}:${PWD/${HOME}/~}\007"'
-			;;
-		screen*|tmux*)
-			wtitle() {
-				printf '\033k'"$@"'\033\\'
-			}
-			panetitle() {
-				printf '\033]2;'"$@"'\033\\'
-			}
-			export PS1='\[\e[0;1m\]\u@\h$(indocker)\[\e[0;00m\]:\[\e[0;31m\]\w\[\e[0;00m\] (${__git_ps1_branch_name}) (%s)"}» '
-			export PROMPT_COMMAND='fancyprompt'
-			;;
-		*)
-			export PS1='[\u@\h]:\W» '
-			export PROMPT_COMMAND='history -a'
-			;;
-	esac
+	source "$HOME/.bash/prompt"
 
-	# load homeshick
-	for file in "$HOME/.homesick/repos/homeshick/homeshick.sh" "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"; do
-		[ -f "$file" ] && source "$file";
-	done
+	# "message of the day" if any
+	[ -f "${HOME}/.motd" ] && \cat "${HOME}/.motd"
 
-	# display "message of the day" if the session is iteractive
-	[ -n "$PS1" ] && [ -f "${HOME}/.motd" ] && \cat "${HOME}/.motd"
-
-    # set black cursor
+	# set black cursor
 	# echo -ne "\033]12;grey10\007"
 fi
 
