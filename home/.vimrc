@@ -26,6 +26,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 Plugin 'zenbro/mirror.vim'
 Plugin 'whiteinge/diffconflicts'
+Plugin 'fatih/vim-go'
 
 " syntax & filetypes
 Plugin 'petRUShka/vim-opencl'
