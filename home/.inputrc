@@ -9,15 +9,17 @@ set keyseq-timeout 0
 set echo-control-characters off
 set isearch-terminators "\C-j "
 
-set colored-stats on                 # color files by types
-set visible-stats on                 # append char to indicate type
-set mark-symlinked-directories on    # mark symlinked directories
-set colored-completion-prefix on     # color the common prefix
-set menu-complete-display-prefix on  # color the common prefix in menu-complete
+$if Bash
+    set colored-stats on
+    set visible-stats on
+    set mark-symlinked-directories on
+    set colored-completion-prefix on
+    set menu-complete-display-prefix on
 
-set show-mode-in-prompt on
-set vi-ins-mode-string \1\033]12;grey30\033\\\2
-set vi-cmd-mode-string \1\033]12;grey70\033\\\2
+    set show-mode-in-prompt on
+    set vi-ins-mode-string \1\033]12;grey30\033\\\2
+    set vi-cmd-mode-string \1\033]12;grey70\033\\\2
+$endif
 
 set convert-meta on
 set keymap vi-command
