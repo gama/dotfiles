@@ -77,12 +77,12 @@ bhga() {
 	\grep -a -h "${1}" $(\ls -tr "${HOME}/.bash_history" "${HOME}/.bash/.bash_history"*)
 }
 mdstdout() {
-	pandoc -s -f markdown -t html5 --css "file://$HOME/tmp/github-markdown.css" "${1}" | sed -e 's/^<body>$/<body class="markdown-body" style="margin: 0 auto; max-width: 50em">/'
+	pandoc -s -f markdown_github -t html5 --css "file://$HOME/tmp/github-markdown.css" "${1}" | sed -e 's/^<body>$/<body class="markdown-body" style="margin: 0 auto; max-width: 50em">/'
 }
 mdterm() {
 	tmpfile=$(mktemp /tmp/markdown.XXXXXX.html)
 	mdstdout "${1}" >| "${tmpfile}"
-	elinks "file://${tmpfile}"
+	w3m "file://${tmpfile}"
 	sleep 1
 	rm -f "${tmpfile}"
 }
@@ -97,7 +97,7 @@ mdbrowser() {
 	rm -f "${tmpfile}"
 }
 mdman() {
-	pandoc -s -f markdown -t man "${1}" | groff -T utf8 -man | less
+	pandoc -s -f markdown_github -t man "${1}" | groff -Dutf-8 -Tutf8 -man | less
 }
 findp() {
 	d="${PWD}"
