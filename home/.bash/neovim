@@ -6,7 +6,8 @@ nvim() {
     printf '\033]12;\007'
     command nvim "$@"
 }
-alias vimf='vim $(fzf)'
+alias vimf='nvim $(fzf)'
+alias vimv='nvim ~/.config/nvim/init.vim -c NERDTreeToggle\ ~/.config/nvim/ -c wincmd\ p'
 export EDITOR=nvim
 
 # vim:set ft=sh:
