@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# set -o xtrace
+
+ellapsed_time=$(ps -C cmus --no-headers -o etime | tr -d ' ')
+[ "${ellapsed_time:0:4}" == "00:0" ] && exit 0
+
+notification_timeout=5000
+
+while [ -n "$1" ]; do
+	case "$1" in
+		status)      status="$2"  && shift ;;
+		file)        file="$2"    && shift ;;
+		artist)      artist="$2"  && shift ;;
+		album)       album="$2"   && shift ;;
+		title)       title="$2"   && shift ;;
+		stream)      stream="$2"  && shift ;;
+		tracknumber) tracknr="$2" && shift ;;
+	esac
+	shift
+done
+
+[ -n "${status}" ] && {
+	# save playlist and queue
+	# cmus-remote -C 'save -p ~/.cmus/current_playlist.pl'
+	cmus-remote -C 'save -p ~/.cmus/playlist.pl'
+	cmus-remote -C 'save -q ~/.cmus/queue.pl'
+
+	[ "${status}" == "playing" ] && {
+		file_index=$(grep -n "${file}" ~/.cmus/playlist.pl | cut -d : -f 1 )
+		if [ -n "${file_index}" ]; then
+			echo "view playlist" >| ~/.cmus/current_track
+			for i in $(seq 2 ${file_index}); do
+				echo "win-down" >> ~/.cmus/current_track
+			done
+			echo "win-activate" >> ~/.cmus/current_track
+		fi
+	}
+	[ "${status}" == "stopped" ] && {
+		echo -n "" >| ~/.cmus/current_track
+	}
+}
+
+[ -z "$title" ] && {
+	# unable to extract metadata from command line parameters; use 'cmus-remote' instead
+	IFS=$'\n'
+	cmus_info=($(cmus-remote -Q))
+	[ $? -ne 0 ] && exit 1
+	i=0; while [ $i -lt ${#cmus_info[@]} ]; do
+		[ ${cmus_info[$i]:0:11} == 'tag artist '      ] && artist="${cmus_info[$i]#tag artist }"
+		[ ${cmus_info[$i]:0:10} == 'tag title '       ] && title="${cmus_info[$i]#tag title }"
+		[ ${cmus_info[$i]:0:10} == 'tag album '       ] && album="${cmus_info[$i]#tag album }"
+		[ ${cmus_info[$i]:0:16} == 'tag tracknumber ' ] && tracknr="${cmus_info[$i]#tag tracknumber }"
+		[ ${cmus_info[$i]:0:7}  == 'stream '          ] && stream="${cmus_info[$i]#stream }"
+
+		i=$((i + 1))
+	done
+	# use a shorter timeout when we're being manually invoked
+	notification_timeout=3000
+}
+
+[ -z "$tracknr" ] && summary="${title}" || summary="${tracknr} - \"${title}\""
+[ -z "$album"   ] && body="\nby ${artist}" || body="\n\"${album}\" by ${artist}"
+[ -n "$stream"  ] && body="\n${stream}"
+
+echo "${HOME}/bin/py-notify-send" -n cmus -i emblem-sound -t $notification_timeout "${summary}" "${body}"
+exec "${HOME}/bin/py-notify-send" -n cmus -i emblem-sound -t $notification_timeout "${summary}" "${body}"
