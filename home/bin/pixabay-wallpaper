@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -o xtrace
+
+per_page=3
+page=$(( $RANDOM % 50 ))
+offset=$(( $RANDOM % $per_page ))
+api_key="$(<"${HOME}/.config/pixabay/apikey")"
+search_term="landscape"
+search_url="https://pixabay.com/api/?key=${api_key}&q=${search_term}&image_type=photo&min_height=1080&min_width=1920&order=latest&page=${page}&per_page=${per_page}"
+wallpaper_dir="${HOME}/.cache/wallpaper"
+
+image_url=$(curl -sv "${search_url}" | jq -r ".hits[${offset}].largeImageURL")
+rm -f "${wallpaper_dir}/"*
+(cd "${wallpaper_dir}" && curl -s -L -A testagent -O "${image_url}")
+wallpaper_file="${wallpaper_dir}/$(ls -1 "${wallpaper_dir}" | head -n 1)"
+
+gsettings set org.gnome.desktop.background  picture-uri "file://${wallpaper_file}"
+gsettings set org.gnome.desktop.screensaver picture-uri "file://${wallpaper_file}"
+xrandr --auto && autorandr --change && sleep 1 && autorandr --change
