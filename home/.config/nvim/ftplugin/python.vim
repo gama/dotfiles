@@ -9,10 +9,12 @@ if g:loaded_neomake
 else
     nnoremap <buffer> mm :SyntasticCheck<CR>
 endif
-nnoremap <buffer> mn      :lnext<CR>
-nnoremap <buffer> mp      :lprev<CR>
-nnoremap <buffer> mc      :lclose<CR>
-nnoremap <buffer> mz      :g/\(log\.\\|logger\.\\|raise \).*(.*[^)]\s*$/normal zf%<CR>
+nnoremap <buffer> mn      :<C-u>lnext<CR>
+nnoremap <buffer> mp      :<C-u>lprev<CR>
+nnoremap <buffer> mc      :<C-u>lclose<CR>
+nnoremap <buffer> mz      :<C-u>g/\(log\.\\|logger\.\\|raise \).*(.*[^)]\s*$/normal zf%<CR>
+nnoremap <buffer> md      :<C-u>TestNearest --pdb -x<CR>
+nnoremap <buffer> ml      :<C-u>TestLast --pdb -x<CR>
 nnoremap <buffer> [SPC]tW :call ToggleWrap()<CR>
 nnoremap <buffer> [SPC]ib Ofrom IPython.terminal.debugger import set_trace; set_trace()  # noqa; TODO: remove breakpoint<Esc>
 nnoremap <buffer> [SPC]iB ofrom IPython.terminal.debugger import set_trace; set_trace()  # noqa; TODO: remove breakpoint<Esc>
