@@ -1,8 +1,0 @@
-" autocmd LocationChange .* :js modes.passAllKeys = /mail\.google\.com|www\.google\.com\/reader\/view/.test(buffer.URL)
-noremap <A-S-H> :tabprev<CR>
-noremap <A-S-L> :tabnext<CR>
-
-autocmd LocationChange .* :fmapc
-autocmd LocationChange 'mail\.google\.com/mail' :fmap c / n p j,<Down> k,<Up> N P o u e x s r a # [ ] z ? gi gs gt gd ga gc gl gk, gK,<S-Esc> <Esc> <Space> <S-Space>
-autocmd LocationChange 'www\.google\.com/reader' :fmap! -vkey j,<Down> k,<Up> J,j K,k o n p m s v u A r S N P X O gh ga gs gt gu gF / ? <S-Space>
-" autocmd LocationChange 'www\.google\.com/reader' :fmap -depth 1 <Space> <S-Space>
