@@ -1,0 +1,55 @@
+black      = #000000
+red        = #af0000
+green      = #00af00
+yellow     = #afaf00
+blue       = #0000af
+magenta    = #af00af
+cyan       = #00afaf
+white      = #7f7f7f
+hl_black   = #2f2f2f
+hl_red     = #bf5f5f
+hl_green   = #5fbf5f
+hl_yellow  = #5f5f00
+hl_blue    = #5f5fff
+hl_magenta = #bf5fbf
+hl_cyan    = #5fbfbf
+hl_white   = #f2ebd7
+230        = #efe7e2
+
+# gruvbox
+236        = #32302f
+234        = #1d2021
+
+235        = #282828
+237        = #3c3836
+239        = #504945
+241        = #665c54
+243        = #7c6f64
+
+244        = #928374
+245        = #928374
+
+228        = #f2e5bc
+# 230      = #f9f5d7
+
+229        = #fbf1c7
+223        = #ebdbb2
+250        = #d5c4a1
+248        = #bdae93
+246        = #a89984
+
+167        = #fb4934
+142        = #b8bb26
+214        = #fabd2f
+109        = #83a598
+175        = #d3869b
+108        = #8ec07c
+208        = #fe8019
+
+88         = #9d0006
+100        = #79740e
+136        = #b57614
+24         = #076678
+96         = #8f3f71
+66         = #427b58
+130        = #af3a03
