@@ -1,5 +1,6 @@
 source "$HOME/.bash/.gitprompt"
 export PROMPT_COMMAND='_prompt_command'
+export PROMPT_DIRTRIM=2
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 _username() { echo -e "\[\e[1m\]\u\[\e[0m\]"; }
