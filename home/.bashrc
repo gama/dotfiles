@@ -30,6 +30,7 @@ alias ls="ls ${LS_OPTIONS}"
 alias ll='ls -l'
 alias la='ls -AC'
 alias lh='ls -AClh'
+alias lt='ls -AClhtr'
 alias lla='ls -ACl'
 alias lld='ls -dCl'
 alias l='ls -CF'
