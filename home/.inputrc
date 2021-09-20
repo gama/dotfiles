@@ -7,7 +7,8 @@ set completion-map-case on
 set editing-mode vi
 set keyseq-timeout 0
 set echo-control-characters off
-set isearch-terminators "\C-j "
+set isearch-terminators "\C-j "
+set enable-bracketed-paste on
 
 $if Bash
     set colored-stats on
@@ -65,4 +66,5 @@ set keymap vi-insert
 "\M-p": reverse-search-history
 "\M-n": forward-search-history
 "\M-b": clear-screen
+"\M-m": alias-expand-line
 set convert-meta off
