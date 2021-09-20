@@ -1,10 +1,18 @@
-XTerm*visualBell:        true
+XTerm*visualBell:        false
+XTerm*termName:          xterm-256color
 XTerm*faceName:          Consolas NF
 XTerm*faceSize:          14
+XTerm*faceSize0:         12
+XTerm*faceSize1:         14
+XTerm*faceSize2:         15
+XTerm*faceSize3:         16
+XTerm*faceSize4:         18
+XTerm*faceSize5:         20
+XTerm*faceSize6:         22
 XTerm*backarrowKey:      false
-XTerm*background:        #f2f2e7
-XTerm*foreground:        #5f5f5f
-! XTerm*cursorColor:       #000000
+XTerm*background:        #f5f2e5
+XTerm*foreground:        #504945
+XTerm*cursorColor:       #000000
 XTerm*eightBitInput:     true
 XTerm*eightBitOutput:    false
 XTerm*metaSendsEscape:   true
@@ -14,40 +22,15 @@ XTerm*borderWidth:       0
 XTerm*selectToClipboard: true
 
 *VT100*colorBDMode:      on
-*VT100*colorBD:          black
+*VT100*colorBD:          #000000
 *VT100*colorMode:        on
 *VT100*boldColors:       on
 *VT100*dynamicColors:    on
 *VT100*scrollBar:        false
 *VT100*utf8:             1
 
-*VT100*color0:           #000000
-*VT100*color1:           #af0000
-*VT100*color2:           #00af00
-*VT100*color3:           #afaf00
-*VT100*color4:           #0000af
-*VT100*color5:           #af00af
-*VT100*color6:           #00afaf
-*VT100*color7:           #7f7f7f
-*VT100*color8:           #2f2f2f
-*VT100*color9:           #bf5f5f
-*VT100*color10:          #5fbf5f
-*VT100*color11:          #5f5f00
-*VT100*color12:          #5f5fff
-*VT100*color13:          #bf5fbf
-*VT100*color14:          #5fbfbf
-*VT100*color15:          #f2f2e7
-
 !Unicode decls
 *fontMenu.Label:         Unicode Fonts
-
-*VT100*font:             -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
-*VT100*font2:            -misc-fixed-medium-r-normal--8-80-75-75-c-50-iso10646-1
-*VT100*font3:            -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
-*VT100*font4:            -misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1
-*VT100*font5:            -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
-*VT100*font6:            -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
-
 Xft.lcdfilter:           lcddefault
 Xft.antialias:           1
 Xft.hinting:             1
@@ -55,6 +38,141 @@ Xft.autohint:            1
 Xft.hintstyle:           hintfull
 Xft.rgba:                rgb
 Xft.dpi:                 96
+
+
+! -----------------------------------------------------------------------------
+! File: gruvbox-light.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+! hard contrast: *background: #f9f5d7
+!*background: #fbf1c7
+! soft contrast: *background: #f2e5bc
+!*foreground: #3c3836
+*VT100*color0:  #fdf4c1
+*VT100*color8:  #928374
+*VT100*color1:  #cc241d
+*VT100*color9:  #9d0006
+*VT100*color2:  #98971a
+*VT100*color10: #79740e
+*VT100*color3:  #d79921
+*VT100*color11: #b57614
+*VT100*color4:  #458588
+*VT100*color12: #076678
+*VT100*color5:  #b16286
+*VT100*color13: #8f3f71
+*VT100*color6:  #689d6a
+*VT100*color14: #427b58
+*VT100*color7:  #7c6f64
+*VT100*color15: #3c3836
+
+XTerm.VT100.translations: #override \n\
+    Ctrl Shift <Key> =: larger-vt-font() \n\
+    Ctrl Shift <Key> -: smaller-vt-font() \n\
+    Meta Shift <Key>B: exec-selectable("/home/gama/bin/termlight skip-osc", none) \
+                       exec-selectable("/home/gama/bin/termlight skip-osc", all) \
+                       interpret("\033]10;#504945;#f5f2e5;#000000\007") \
+                       interpret("\033]10;#0000cc;#f5f2e5;#000000\007") \
+                       interpret("\033]4;256;#000000\007") \
+                       interpret("\033]4;0;#fdf4c1\007") \
+                       interpret("\033]4;1;#cc241d\007") \
+                       interpret("\033]4;2;#98971a\007") \
+                       interpret("\033]4;3;#d79921\007") \
+                       interpret("\033]4;4;#458598\007") \
+                       interpret("\033]4;5;#b16286\007") \
+                       interpret("\033]4;6;#689d6a\007") \
+                       interpret("\033]4;7;#7c6f64\007") \
+                       interpret("\033]4;7;#a89984\007") \
+                       interpret("\033]4;8;#928374\007") \
+                       interpret("\033]4;9;#9d0006\007") \
+                       interpret("\033]4;10;#79740e\007") \
+                       interpret("\033]4;11;#b57614\007") \
+                       interpret("\033]4;12;#0766a8\007") \
+                       interpret("\033]4;13;#8f3f71\007") \
+                       interpret("\033]4;14;#427b58\007") \
+                       interpret("\033]4;15;#3c3836\007") \
+                       interpret("\033]4;24;#076678\007") \
+                       interpret("\033]4;66;#427b58\007") \
+                       interpret("\033]4;88;#9d0006\007") \
+                       interpret("\033]4;96;#8f3f71\007") \
+                       interpret("\033]4;100;#79740e\007") \
+                       interpret("\033]4;108;#8ec07c\007") \
+                       interpret("\033]4;109;#83a598\007") \
+                       interpret("\033]4;130;#af3a03\007") \
+                       interpret("\033]4;136;#b57614\007") \
+                       interpret("\033]4;142;#b8bb26\007") \
+                       interpret("\033]4;167;#fb4934\007") \
+                       interpret("\033]4;175;#d3869b\007") \
+                       interpret("\033]4;208;#fe8019\007") \
+                       interpret("\033]4;214;#fabd2f\007") \
+                       interpret("\033]4;223;#ebe7df\007") \
+                       interpret("\033]4;228;#f2e5bc\007") \
+                       interpret("\033]4;229;#f5f2e5\007") \
+                       interpret("\033]4;230;#f9f5e7\007") \
+                       interpret("\033]4;234;#1d2021\007") \
+                       interpret("\033]4;235;#282828\007") \
+                       interpret("\033]4;236;#32302f\007") \
+                       interpret("\033]4;237;#3c3836\007") \
+                       interpret("\033]4;239;#504945\007") \
+                       interpret("\033]4;241;#665c54\007") \
+                       interpret("\033]4;243;#7c6f64\007") \
+                       interpret("\033]4;244;#928374\007") \
+                       interpret("\033]4;245;#928374\007") \
+                       interpret("\033]4;246;#a89984\007") \
+                       interpret("\033]4;248;#bdae93\007") \
+                       interpret("\033]4;250;#d5c4a1\007") \n\
+    Meta Shift <Key>N: exec-selectable("/home/gama/bin/termdark skip-osc", none) \
+                       exec-selectable("/home/gama/bin/termdark skip-osc", all) \
+                       interpret("\033]10;#d5c4a1;#282828;#ffffff\007") \
+                       interpret("\033]4;256;#ffffff\007") \
+                       interpret("\033]4;0;#282828;\007") \
+                       interpret("\033]4;1;#cc241d;\007") \
+                       interpret("\033]4;2;#98971a\007") \
+                       interpret("\033]4;3;#d79921\007") \
+                       interpret("\033]4;4;#458598\007") \
+                       interpret("\033]4;5;#b16286\007") \
+                       interpret("\033]4;6;#689d6a\007") \
+                       interpret("\033]4;7;#a89984\007") \
+                       interpret("\033]4;8;#928374\007") \
+                       interpret("\033]4;9;#fb4934\007") \
+                       interpret("\033]4;10;#b8bb26\007") \
+                       interpret("\033]4;11;#fabd2f\007") \
+                       interpret("\033]4;12;#83a5b8\007") \
+                       interpret("\033]4;13;#d3869b\007") \
+                       interpret("\033]4;14;#8ec07c\007") \
+                       interpret("\033]4;15;#ebdbb2\007") \
+                       interpret("\033]4;24;#076678\007") \
+                       interpret("\033]4;66;#427b58\007") \
+                       interpret("\033]4;88;#9d0006\007") \
+                       interpret("\033]4;96;#8f3f71\007") \
+                       interpret("\033]4;100;#79740e\007") \
+                       interpret("\033]4;108;#8ec07c\007") \
+                       interpret("\033]4;109;#83a598\007") \
+                       interpret("\033]4;130;#af3a03\007") \
+                       interpret("\033]4;136;#b57614\007") \
+                       interpret("\033]4;142;#b8bb26\007") \
+                       interpret("\033]4;167;#fb4934\007") \
+                       interpret("\033]4;175;#d3869b\007") \
+                       interpret("\033]4;208;#fe8019\007") \
+                       interpret("\033]4;214;#fabd2f\007") \
+                       interpret("\033]4;223;#ebe7df\007") \
+                       interpret("\033]4;228;#f2e5bc\007") \
+                       interpret("\033]4;229;#f5f2e5\007") \
+                       interpret("\033]4;230;#f9f5e7\007") \
+                       interpret("\033]4;234;#1d2021\007") \
+                       interpret("\033]4;235;#282828\007") \
+                       interpret("\033]4;236;#32302f\007") \
+                       interpret("\033]4;237;#3c3836\007") \
+                       interpret("\033]4;239;#504945\007") \
+                       interpret("\033]4;241;#665c54\007") \
+                       interpret("\033]4;243;#7c6f64\007") \
+                       interpret("\033]4;244;#928374\007") \
+                       interpret("\033]4;245;#928374\007") \
+                       interpret("\033]4;246;#a89984\007") \
+                       interpret("\033]4;248;#bdae93\007") \
+                       interpret("\033]4;250;#d5c4a1\007")
 
 !*VT100.translations: #override \n\
 ! Alt ~Shift ~Ctrl <Key> v: insert-selection(CLIPBOARD)
@@ -70,25 +188,25 @@ URxvt*colorUL:           red
 URxvt*colorRV:           green
 URxvt*letterSpace:       -2
 ! URxvt*lineSpace:       -15
-URxvt*background:        #f2f2e7
+URxvt*background:        #f5f2e5
 URxvt*foreground:        #5f5f5f
 ! URxvt*cursorColor:       #000000
 URxvt*scrollBar:         false
 URxvt.perl-ext-common:   selection-to-clipboard
 
-URxvt*color0:            #000000
-URxvt*color1:            #af0000
-URxvt*color2:            #00af00
-URxvt*color3:            #afaf00
-URxvt*color4:            #0000af
-URxvt*color5:            #af00af
-URxvt*color6:            #00afaf
-URxvt*color7:            #7f7f7f
-URxvt*color8:            #2f2f2f
-URxvt*color9:            #bf5f5f
-URxvt*color10:           #5fbf5f
-URxvt*color11:           #5f5f00
-URxvt*color12:           #5f5fff
-URxvt*color13:           #bf5fbf
-URxvt*color14:           #5fbfbf
-URxvt*color15:           #f2f2e7
+/* URxvt*color0:            #000000 */
+/* URxvt*color1:            #af0000 */
+/* URxvt*color2:            #00af00 */
+/* URxvt*color3:            #afaf00 */
+/* URxvt*color4:            #0000af */
+/* URxvt*color5:            #af00af */
+/* URxvt*color6:            #00afaf */
+/* URxvt*color7:            #7f7f7f */
+/* URxvt*color8:            #2f2f2f */
+/* URxvt*color9:            #bf5f5f */
+/* URxvt*color10:           #5fbf5f */
+/* URxvt*color11:           #5f5f00 */
+/* URxvt*color12:           #5f5fff */
+/* URxvt*color13:           #bf5fbf */
+/* URxvt*color14:           #5fbfbf */
+/* URxvt*color15:           #f2f2e7 */
