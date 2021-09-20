@@ -1,6 +1,5 @@
 setlocal shiftwidth=2 tabstop=2 expandtab
 let b:ale_fixers = ['tslint']
-let g:deoplete#enabled_at_startup = 1
 let g:nvim_typescript#diagnostics_enable=0
 autocmd BufWrite *.ts,*.tsx TSGetDiagnostics
 

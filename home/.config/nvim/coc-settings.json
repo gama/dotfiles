@@ -1,0 +1,124 @@
+{
+    "diagnostic.messageTarget": "echo",
+    "tsserver.log": "normal",
+
+    "suggest.enablePreview": true,
+    "suggest.enablePreselect": false,
+
+    "explorer.openAction.strategy": "sourceWindow",
+    "explorer.icon.enableNerdfont": true,
+    "explorer.previewAction.onHover": false,
+    "explorer.keyMappings.global": {
+        "l":    ["wait", "expandable?", "expand", "normal:l"],
+        "h":    ["wait", "expandable?", "collapse", "normal:h"],
+        "o":    ["wait", "expanded?", "collapse", "expand"],
+        "<cr>": ["wait", "expandable?", "cd", "open"]
+    },
+
+    "clangd.path": "clangd-7",
+
+    "javascript.suggestionActions.enabled": false,
+
+    "python.jediEnabled": false,
+
+    "jedi.enable": true,
+    "jedi.startupMessage": true,
+    "jedi.markupKindPreferred": "plaintext",
+    "jedi.trace.server": "verbose",
+    "jedi.jediSettings.autoImportModules": [],
+    "jedi.executable.command": "~/.local/bin/jedi-language-server",
+    "jedi.executable.args": [],
+    "jedi.completion.disableSnippets": false,
+    "jedi.completion.resolveEagerly": false,
+    "jedi.diagnostics.enable": true,
+    "jedi.diagnostics.didOpen": true,
+    "jedi.diagnostics.didChange": true,
+    "jedi.diagnostics.didSave": true,
+    "jedi.workspace.extraPaths": [],
+
+    "diagnostic-languageserver.filetypes": {
+        "python": "pylint"
+    },
+    "diagnostic-languageserver.linters": {
+        "pylint": {
+            "sourceName": "pylint",
+            "command": "pylint",
+            "args": [
+                "--output-format",
+                "text",
+                "--score",
+                "no",
+                "--msg-template",
+                "'{line}:{column}:{category}:{msg} ({msg_id}:{symbol})'",
+                "%file"
+            ],
+            "formatPattern": [
+                "^(\\d+?):(\\d+?):([a-z]+?):(.*)$",
+                {
+                    "line": 1,
+                    "column": 2,
+                    "security": 3,
+                    "message": 4
+                }
+            ],
+            "rootPatterns": [".git", "setup.py"],
+            "securities": {
+                "informational": "hint",
+                "refactor": "info",
+                "convention": "info",
+                "warning": "warning",
+                "error": "error",
+                "fatal": "error"
+            },
+            "offsetColumn": 1,
+            "formatLines": 1
+        }
+    },
+
+    "languageserver": {
+        "ccls": {
+            "command":      "ccls",
+            "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".ccls/", ".vim/", ".git/", ".hg/"],
+            "filetypes":    ["c", "cpp", "objc", "objcpp"],
+            "args":         ["-log-file=~/.cache/ccls.log", "-v=2"],
+            "trace.server": "verbose",
+            "initializationOptions": {
+                "cache": {
+                    "directory": "~/.cache/ccls"
+                },
+                "client": {
+                    "snippetSupport": true
+                }
+            }
+        },
+        "python": {
+            "command": "pylsp",
+            "args": ["-vv", "--log-file", "~/.cache/python-language-server.log"],
+            "trace.server": "verbose",
+            "filetypes": ["python"],
+            "settings": {
+                "pylsp": {
+                    "enable": true,
+                    "trace": { "server": "verbose" },
+                    "commandPath": "",
+                    "configurationSources": [ "pycodestyle" ],
+                    "plugins": {
+                        "jedi_completion": { "enabled": true },
+                        "jedi_hover": { "enabled": true },
+                        "jedi_references": { "enabled": true },
+                        "jedi_signature_help": { "enabled": true },
+                        "jedi_symbols": { "enabled": true, "all_scopes": true },
+                        "mccabe": { "enabled": false, "threshold": 15 },
+                        "pylint": { "enabled": true },
+                        "preload": { "enabled": false },
+                        "pycodestyle": { "enabled": false },
+                        "pydocstyle": { "enabled": false, "match": "(?!test_).*\\.py", "matchDir": "[^\\.].*" },
+                        "pyflakes": { "enabled": false },
+                        "rope_completion": { "enabled": false },
+                        "yapf": { "enabled": false }
+                    }
+                }
+            }
+        }
+    }
+}

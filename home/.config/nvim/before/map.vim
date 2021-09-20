@@ -1,4 +1,7 @@
-let mapleader = " "
+let g:mapleader = " "
+if !exists("g:maplocalleader")
+    let g:maplocalleader = " "
+endif
 
 " force screen redraw
 nnoremap <M-b> :redraw!<CR>
@@ -17,34 +20,39 @@ vnoremap H  5zh
 vnoremap L  5zl
 nnoremap gj J
 
+" buffer navigation
+nnoremap <silent> <M-n>     :<C-U>bnext<CR>
+nnoremap <silent> <M-p>     :<C-U>bprev<CR>
+
+" jumps
+nnoremap <silent> <M-]>     g<C-]>
+nnoremap <silent> <M-[>     <C-T>
+vnoremap <silent> <M-]>     g<C-]>
+nnoremap <silent> [q        :<C-U>cprev<CR>
+nnoremap <silent> ]q        :<C-U>cnext<CR>
+nnoremap <silent> [j        <C-o>
+nnoremap <silent> ]j        <C-i>
+nnoremap <silent> <M-[>     <PageUp>
+nnoremap <silent> <M-]>     <PageDown>
+
 " search for visually selected text
 vnoremap * y/<C-R>"<CR>
 vnoremap # y?<C-R>"<CR>
 vnoremap <Leader>g y:grep! -r "\b<C-R>"\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 nnoremap <Leader>g :grep! -r "\b<C-R><C-W>\b" .<CR>:copen<CR><CR>/<C-R>"<CR>
 
+" grepping
+nnoremap gr :grep <cword> *<CR>
+nnoremap Gr :grep <cword> %:p:h/*<CR>
+nnoremap gR :grep '\b<cword>\b' *<CR>
+nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
+
 " window movements & splits
 nnoremap <silent> <M-w>     :<C-U>w<CR>
 nnoremap <silent> q         :<C-U>call SmartClose()<CR>
 nnoremap <silent> Q         q
-nnoremap <silent> <Space>qq :q<CR>
-nnoremap <silent> <Space>qQ :qa<CR>
-nnoremap <silent> <Space>/  :<C-U>nohlsearch<CR>
 nnoremap <silent> <Space>bd :<C-U>bd!<CR>
-nnoremap <silent> <Space>fv :<C-U>edit ~/.config/nvim/init.vim<CR>
-nnoremap <silent> <Space>ff :<C-U>NERDTreeFind<CR>
-nnoremap <silent> <Space>ft :<C-U>NERDTreeToggle<CR>
-nnoremap <silent> <Space>ot :<C-U>NERDTreeToggle<CR>
-nnoremap <silent> <Space>oo :<C-U>Files<CR>
-nnoremap <silent> <Space>of :<C-U>execute "Files " . expand("%:h")<CR>
-nnoremap <silent> <Space>oe :<C-U>Buffers<CR>
-nnoremap <silent> <Space>oh :<C-U>Helptags<CR>
-nnoremap <silent> <Space>fa :<C-U>wall<CR>
-nnoremap <silent> <Space>fs :<C-U>w<CR>
-nnoremap <silent> <Space>fS :<C-U>w !sudo tee "%" > /dev/null
-nnoremap <silent> <Space>tn :<C-U>call ToggleNumbers()<CR>
-nnoremap <silent> <Space>tb :<C-U>call ToggleBG()<CR>
-nnoremap <silent> <Space>tu :<C-U>call UpdateBG()<CR>
+nnoremap <silent> <Space>qq :q<CR>
 nnoremap <silent> <Space>w\ <C-W>v
 nnoremap <silent> <Space>w- <C-W>s
 nnoremap <silent> <Space>wm <C-W>o
@@ -54,45 +62,71 @@ nnoremap <silent> <Space>wh <C-W>h
 nnoremap <silent> <Space>wj <C-W>j
 nnoremap <silent> <Space>wk <C-W>k
 nnoremap <silent> <Tab>     <C-W><C-W>
-nnoremap <silent> <M-e>     :<C-U>Buffers<CR>
-nnoremap <silent> <M-f>     :<C-U>execute "Files " . expand("%:h")<CR>
-nnoremap <silent> <M-]>     :<C-U>Tags<CR>
-nnoremap <silent> <M-o>     :<C-U>Files<CR>
-nnoremap <silent> <M-?>     :<C-U>Helptags<CR>
-nnoremap <silent> <M-q>     :<C-U>qa!<CR>
-nnoremap <silent> <M-n>     :<C-U>bnext<CR>
-nnoremap <silent> <M-p>     :<C-U>bprev<CR>
 
-" nnoremap <silent> [q      :cprev<CR>
-" nnoremap <silent> ]q      :cnext<CR>
-nnoremap <silent> [j        <C-o>
-nnoremap <silent> ]j        <C-i>
-nnoremap <silent> <M-[>     <C-b>
-nnoremap <silent> <M-]>     <C-f>
+" toggles
+nnoremap <silent> <Space>tn :<C-U>call ToggleNumbers()<CR>
+nnoremap <silent> <Space>tb :<C-U>call ToggleBG()<CR>
+nnoremap <silent> <Space>tc :<C-U>call ToggleColorColumn()<CR>
+nnoremap <silent> <Space>tu :<C-U>call UpdateBG()<CR>
+nnoremap <silent> <Space>tW :<C-U>call ToggleWrap()<CR>
+
+" copy & paste
+nnoremap <silent> <Space>yy "+y
+vnoremap <silent> <Space>yy "+y
+nnoremap <silent> <Space>yp "+p
+vnoremap <silent> <Space>yp "+p
+nnoremap <silent> <Space>yP "+P
+
+" misc
+nnoremap <silent> <Space>/  :<C-U>nohlsearch<CR>
+nnoremap <silent> <Space>cd :lcd %:p:h<CR>
+nnoremap <silent> <Space>fv :<C-U>edit ~/.config/nvim/init.vim<CR>:vsplit ~/.config/nvim<CR>
+nnoremap <silent> <Space>os :<C-U>Startify<CR>
+nnoremap <silent> <Space>fa :<C-U>wall<CR>
+nnoremap <silent> <Space>fs :<C-U>w<CR>
+nnoremap <silent> <Space>fS :<C-U>w !sudo tee "%" > /dev/null
+nnoremap <silent> <M-q>     :<C-U>qa!<CR>
 nnoremap <silent> <         <<
 nnoremap <silent> >         >>
 vnoremap <silent> <         <<
 vnoremap <silent> >         >>
-nnoremap          <Space><Space> :
-
-" buffer navigation
-nnoremap <M-n> :bnext<CR>
-nnoremap <M-p> :bprev<CR>
-nnoremap <M-]> g<C-]>
-nnoremap <M-[> <C-T>
-vnoremap <M-]> g<C-]>
-
-" grepping
-nnoremap gr :grep <cword> *<CR>
-nnoremap Gr :grep <cword> %:p:h/*<CR>
-nnoremap gR :grep '\b<cword>\b' *<CR>
-nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
 
 " completion
 inoremap <expr><M-j> pumvisible() ? "\<C-n>" : "\<M-j>"
 inoremap <expr><M-k> pumvisible() ? "\<C-p>" : "\<M-k>"
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" neovim terminal customizations
-if has("nvim")
-endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" mhinz https://github.com/mhinz/vim-galore
+
+" Saner behavior of n and N
+nnoremap <expr> n  'Nn'[v:searchforward]
+xnoremap <expr> n  'Nn'[v:searchforward]
+onoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+xnoremap <expr> N  'nN'[v:searchforward]
+onoremap <expr> N  'nN'[v:searchforward]
+
+" Saner command-line history
+cnoremap <c-n>  <down>
+cnoremap <c-p>  <up>
+
+" Saner CTRL-L
+nnoremap <Space-/> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+" Quickly move current line
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
+
+" Quickly add empty lines
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
+" Quickly jump to header or source file
+autocmd BufLeave *.{c,cpp} mark C
+autocmd BufLeave *.h       mark H
+
+" Don't lose selection when shifting sidewards
+xnoremap <  <gv
+xnoremap >  >gv

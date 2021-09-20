@@ -1,0 +1,42 @@
+set completeopt=menuone,noselect
+
+let g:compe = {
+\   'enabled':          v:true,
+\   'autocomplete':     v:true,
+\   'debug':            v:false,
+\   'min_length':       2,
+\   'preselect':        'enable',
+\   'throttle_time':    80,
+\   'source_timeout':   200,
+\   'resolve_timeout':  800,
+\   'incomplete_delay': 400,
+\   'max_abbr_width':   100,
+\   'max_kind_width':   100,
+\   'max_menu_width':   100,
+\   'documentation':    v:true,
+\   'source':           {
+\       'path':      v:true,
+\       'buffer':    v:true,
+\       'calc':      v:true,
+\       'nvim_lsp':  v:true,
+\       'nvim_lua':  v:true,
+\       'vsnip':     v:true,
+\       'ultisnips': v:false,
+\       'luasnip':   v:false,
+\       'emoji':     v:false
+\   }
+\}
+
+inoremap <silent><expr> <C-Space> compe#complete()
+"inoremap <silent><expr> <CR>      compe#confirm({ 'keys': '<CR>', 'select': v:true })
+inoremap <silent><expr> <CR>      compe#confirm({ 'keys': '<CR>' })
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <A-j>     pumvisible() ? compe#scroll({ 'delta': +1 }) : "\<A-j>"
+inoremap <silent><expr> <A-k>     pumvisible() ? compe#scroll({ 'delta': -1 }) : "\<A-k>"
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+" inoremap <silent><expr> <A-j> pumvisible() ? "\<C-n>" : "\<A-j>"
+" inoremap <silent><expr> <A-k> pumvisible() ? "\<C-p>" : "\<A-k>"
+
+" vim:set ft=vim:

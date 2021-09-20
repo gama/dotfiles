@@ -1,6 +1,6 @@
 " =============================================================================
 " Filename: autoload/lightline/colorscheme/custom.vim
-" Author: ggama
+" Author: gama
 " License: MIT License
 " Last Change: 2018/03/03 15:54:41.
 " =============================================================================

@@ -3,8 +3,7 @@ if exists("syntax_on")
     syntax reset
 endif
 
-runtime colors/gruvbox.vim
-
+runtime colors/gruvbox-material.vim
 let g:colors_name = "gruvboxcustom"
 
 " color palette
@@ -53,14 +52,29 @@ let g:colors_name = "gruvboxcustom"
 " faded_aqua     = ['#427b58', 66]      " 66-123-88
 " faded_orange   = ['#af3a03', 130]     " 175-58-3
 
-hi! Normal ctermbg=None guibg=None
 if (&background == "light")
-    highlight Conceal   guifg=#ebdbb2 ctermfg=223  guibg=None    ctermbg=None
-    highlight WildMenu  guifg=#4585a8 ctermfg=66   guibg=#d5c4a1 ctermbg=250
-    highlight NormalNC  guifg=None    ctermfg=None guibg=#ebdbb2 ctermbg=223
-    highlight VertSplit guifg=#eddbb2 ctermfg=223  guibg=#eddbb2 ctermfg=223
+    highlight Conceal     guifg=#ebdbb2 ctermfg=223  guibg=NONE    ctermbg=NONE
+    highlight WildMenu    guifg=#4585a8 ctermfg=66   guibg=#d5c4a1 ctermbg=250
+    highlight Normal      guifg=NONE    ctermfg=NONE guibg=NONE    ctermbg=NONE
+    highlight NormalNC    guifg=NONE    ctermfg=NONE guibg=#ebdbb2 ctermbg=223
+    highlight ColorColumn guifg=NONE    ctermfg=NONE guibg=#f2eee2 ctermbg=237
+    highlight VertSplit   guifg=#eddbb2 ctermfg=223  guibg=#eddbb2 ctermbg=223
+    highlight CursorLine  guifg=NONE    ctermfg=NONE guibg=#fcf9ef ctermbg=223
+    highlight IndentBlanklineChar guifg=#e5e2d5
+    highlight! link EndOfBuffer Normal
 else
-    highlight Conceal   guifg=#3c3836 ctermfg=237  guibg=None    ctermbg=None
-    highlight NormalNC  guifg=None    ctermfg=None guibg=#3c3836 ctermbg=237
-    highlight VertSplit guifg=#3c3836 ctermfg=237  guibg=#3c3836 ctermfg=237
+    highlight Conceal     guifg=#3c3836 ctermfg=237  guibg=NONE    ctermbg=NONE
+    highlight Normal      guifg=NONE    ctermfg=NONE guibg=NONE    ctermbg=NONE
+    highlight NormalNC    guifg=NONE    ctermfg=NONE guibg=#2c2c2c ctermbg=237
+    highlight ColorColumn guifg=NONE    ctermfg=NONE guibg=#2c2c2c ctermbg=237
+    highlight VertSplit   guifg=#3c3836 ctermfg=237  guibg=#3c3836 ctermbg=237
+    highlight CursorLine  guifg=NONE    ctermfg=NONE guibg=#1c1c1c ctermbg=237
+    highlight IndentBlanklineChar guifg=#383838
+    highlight! link EndOfBuffer Normal
 end
+
+augroup CursorLineOnlyInActiveWindow
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END

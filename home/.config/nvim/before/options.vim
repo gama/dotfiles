@@ -1,49 +1,49 @@
 set autoindent
 set noautowrite
-" set background=dark
 set background&
 set backspace=2
 set nobackup
 set nocompatible
 set comments=b:#,:%,fb:-,n:>,n:)
 set complete=.,w,b,u,t
-set completeopt=menuone,menu,longest
+set completeopt=menuone,noselect  " nvim-compe's suggestion
 set cursorline
 set nodigraph
 set noerrorbells
 set expandtab
 set fillchars=stl:\ ,stlnc:\ ,vert:\│,fold:-,diff:-
 set formatoptions=tcqn
-set formatlistpat=^\\s*[0-9-\\*]\\+[\\.:]\\?\\s\\+
+set formatlistpat=^\\s*[\\[({]\\?\\([0-9]\\+\\\|[a-zA-Z]\\+\\)[\\]:.)}]\\s\\+\\\|^\\s*[-–+o*•]\\s\\+
 set helpheight=0
 set hidden
 set history=1000
 set hlsearch
 set noicon
-set noignorecase
+set ignorecase
 set noincsearch
 set noinsertmode
 set iskeyword=@,48-57,_,192-255,-
 set nojoinspaces
-set laststatus=2
-" set lazyredraw
+set laststatus=0
 set magic
-"set matchpairs+=<:>
 set nomore
 set mouse=""
 set number
 set nrformats="alpha,hex"
-set path=.
+set path=.,,
 set report=1
 set ruler
 set scrolloff=1
-set shell=bash
+set shell=zsh
 set shiftwidth=4
 set shortmess=atI
 set statusline=%=%m%r%w%y\ %8.(%l,%c%)\ %P
 set noshowcmd
-set showmatch
+set noshowmatch
+set showtabline=2
 set noshowmode
+set signcolumn=number
+set smartcase
 set smarttab
 set splitright
 set softtabstop=4
@@ -54,16 +54,15 @@ set tags='tags,.tags,.git/tags'
 set termguicolors
 set textwidth=999999
 set t_vb=
-set t_Co=256
 set timeout
 set timeoutlen=300
 set title
 set titlestring=%t%m\ -\ VIM
 set ttimeout
-set ttimeoutlen=50
+set ttimeoutlen=10
 " set esckeys
 set viminfo=f0,'50,\"100,:500,n~/.origviminfo
-set visualbell
+set novisualbell
 set undodir=~/.cache/nvim/undo
 set undofile
 set whichwrap=<,>
@@ -71,6 +70,7 @@ set wildchar=<TAB>
 set wildmenu
 set wildmode=longest:list,full
 set wildignore==*.o,*.obj,*.class
+set wildignorecase
 set winminheight=0
 set winminwidth=0
 set nowrap
