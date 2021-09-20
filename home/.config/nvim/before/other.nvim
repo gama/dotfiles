@@ -1,0 +1,15 @@
+augroup terminal_settings
+    autocmd!
+    autocmd TermOpen  * startinsert | setlocal nonumber | set filetype=terminal
+    autocmd BufWinEnter,BufEnter term://* startinsert
+    autocmd TermLeave * stopinsert
+
+    " Ignore various filetypes as those will close terminal automatically
+    " (i.e., fzf, ranger, coc)
+    autocmd TermClose term://*
+                \ if (expand('<afile>') !~ "fzf") && (expand('<afile>') !~ "ranger") && (expand('<afile>') !~ "coc") |
+                \   call nvim_input('<CR>')  |
+                \ endif
+augroup END
+
+" vim:ft=vim
