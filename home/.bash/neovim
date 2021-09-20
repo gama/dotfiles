@@ -1,11 +1,9 @@
-vim() {
-    printf '\033]12;\007'
-    nvim -u ~/.SpaceVim/vimrc "$@"
-}
 nvim() {
     printf '\033]12;\007'
     command nvim "$@"
 }
+alias nv='nvim'
+alias vim='nvim'
 alias vimf='nvim $(fzf)'
 alias vimv='nvim ~/.config/nvim/init.vim -c NERDTreeToggle\ ~/.config/nvim/ -c wincmd\ p'
 export EDITOR=nvim

@@ -1,40 +1,154 @@
 #!/usr/bin/env bash
 
-prefix="\033]5379;"
-suffix="\007"
-[ -n "$TMUX" ] && {
-	prefix="\033Ptmux;\033${prefix}"
-	suffix="${suffix}\033\\\\"
+# set -o xtrace
+
+change_term_colors() {
+	if [ "$skip_osc" == "1" ]; then
+		return
+	fi
+
+	prefix="\033]"
+	suffix="\007"
+	[ -n "$TMUX" ] && {
+		prefix="\033Ptmux;\033${prefix}"
+		suffix="${suffix}\033\\\\"
+	}
+
+    fg0="${prefix}11;#f5f2e7${suffix}"  # 229
+    fg1="${prefix}10;#ebe7df${suffix}"  # 223
+    fg2="${prefix}10;#d5c4a1${suffix}"  # 250
+    fg3="${prefix}10;#bdae93${suffix}"  # 248
+    fg4="${prefix}10;#928374${suffix}"  # 244
+	fg="${fg2}"
+	# fg="${prefix}10;#ddccbb${suffix}"
+
+    bg0="${prefix}11;#282828${suffix}"   # 235
+    bg1="${prefix}11;#3c3836${suffix}"   # 237
+    bg2="${prefix}11;#504945${suffix}"   # 239
+    bg3="${prefix}11;#665c54${suffix}"   # 241
+    bg4="${prefix}11;#7c6f64${suffix}"   # 243
+    bgh="${prefix}11;#1d2021${suffix}"   # 234
+    bgs="${prefix}11;#32302f${suffix}"   # 236
+	bg="${prefix}11;#282828${suffix}"
+
+	cu="${prefix}12;#ffffff${suffix}"
+	bd="${prefix}4;256;#ffffff${suffix}"
+
+    black="${prefix}4;0;#282828${suffix}"
+    hblack="${prefix}4;8;#928374${suffix}"
+    red="${prefix}4;1;#cc241d${suffix}"
+    hred="${prefix}4;9;#fb4934${suffix}"
+    green="${prefix}4;2;#98971a${suffix}"
+    hgreen="${prefix}4;10;#b8bb26${suffix}"
+    yellow="${prefix}4;3;#d79921${suffix}"
+    hyellow="${prefix}4;11;#fabd2f${suffix}"
+	# blue="${prefix}4;4;#458598${suffix}"
+    # hblue="${prefix}4;12;#83a5b8${suffix}"
+	blue="${prefix}4;4;#4575a8${suffix}"
+    hblue="${prefix}4;12;#8395c8${suffix}"
+    magenta="${prefix}4;5;#b16286${suffix}"
+    hmagenta="${prefix}4;13;#d3869b${suffix}"
+    cyan="${prefix}4;6;#689d6a${suffix}"
+    hcyan="${prefix}4;14;#8ec07c${suffix}"
+    white="${prefix}4;7;#a89984${suffix}"
+    hwhite="${prefix}4;15;#ebdbb2${suffix}"
+
+    palette="${prefix}4;24;#076678${suffix}"
+    palette+="${prefix}4;66;#427b58${suffix}"
+    palette+="${prefix}4;88;#9d0006${suffix}"
+    palette+="${prefix}4;96;#8f3f71${suffix}"
+    palette+="${prefix}4;100;#79740e${suffix}"
+    palette+="${prefix}4;108;#8ec07c${suffix}"
+    palette+="${prefix}4;109;#83a598${suffix}"
+    palette+="${prefix}4;130;#af3a03${suffix}"
+    palette+="${prefix}4;136;#b57614${suffix}"
+    palette+="${prefix}4;142;#b8bb26${suffix}"
+    palette+="${prefix}4;167;#fb4934${suffix}"
+    palette+="${prefix}4;175;#d3869b${suffix}"
+    palette+="${prefix}4;208;#fe8019${suffix}"
+    palette+="${prefix}4;214;#fabd2f${suffix}"
+    palette+="${prefix}4;223;#ebe7df${suffix}"
+    palette+="${prefix}4;228;#f2e5bc${suffix}"
+    palette+="${prefix}4;229;#f5f2e2${suffix}"
+    palette+="${prefix}4;230;#f9f5e7${suffix}"
+    palette+="${prefix}4;234;#1d2021${suffix}"
+    palette+="${prefix}4;235;#282828${suffix}"
+    palette+="${prefix}4;236;#32302f${suffix}"
+    palette+="${prefix}4;237;#3c3836${suffix}"
+    palette+="${prefix}4;239;#504945${suffix}"
+    palette+="${prefix}4;241;#665c54${suffix}"
+    palette+="${prefix}4;243;#7c6f64${suffix}"
+    palette+="${prefix}4;244;#928374${suffix}"
+    palette+="${prefix}4;245;#928374${suffix}"
+    palette+="${prefix}4;246;#a89984${suffix}"
+    palette+="${prefix}4;248;#bdae93${suffix}"
+    palette+="${prefix}4;250;#d5c4a1${suffix}"
+
+	echo -ne \
+	"${bg}${fg}${cu}${bd}" \
+	"${black}${red}${green}${yellow}${blue}${magenta}${cyan}${white}" \
+	"${hblack}${hred}${hgreen}${hyellow}${hblue}${hmagenta}${hcyan}${hwhite}" \
+	"${palette}"
 }
 
-# hard contrast: bg="bg_color=#1d2021"
-# soft contrast: bg="bg_color=#32302f"
-bg="${prefix}bg_color=#282828${suffix}"
-fg="${prefix}fg_color=#ddccbb${suffix}"
-bd="${prefix}bd_color=#ffffff${suffix}"
-black="${prefix}color:black=#282828${suffix}"
-hl_black="${prefix}color:hl_black=#928374${suffix}"
-red="${prefix}color:red=#cc241d${suffix}"
-hl_red="${prefix}color:hl_red=#fb4934${suffix}"
-green="${prefix}color:green=#98971a${suffix}"
-hl_green="${prefix}color:hl_green=#b8bb26${suffix}"
-yellow="${prefix}color:yellow=#d79921${suffix}"
-hl_yellow="${prefix}color:hl_yellow=#fabd2f${suffix}"
-blue="${prefix}color:blue=#458588${suffix}"
-hl_blue="${prefix}color:hl_blue=#83a5bf${suffix}"
-magenta="${prefix}color:magenta=#b16286${suffix}"
-hl_magenta="${prefix}color:hl_magenta=#d3869b${suffix}"
-cyan="${prefix}color:cyan=#689d6a${suffix}"
-hl_cyan="${prefix}color:hl_cyan=#8ec07c${suffix}"
-white="${prefix}color:white=#a89984${suffix}"
-hl_white="${prefix}color:hl_white=#ebdbb2${suffix}"
+change_mlterm_colors() {
+	if [ "$skip_osc" == "1" ]; then
+		return 0
+	fi
 
-echo -ne \
-"${bg}${fg}${bd}"\
-"${black}${red}${green}${yellow}${blue}${magenta}${cyan}${white}"\
-"${hl_black}${hl_red}${hl_green}${hl_yellow}${hl_blue}${hl_magenta}${hl_cyan}${hl_white}"
+	prefix="\033]5379;"
+	suffix="\007"
+	[ -n "$TMUX" ] && {
+		prefix="\033Ptmux;\033${prefix}"
+		suffix="${suffix}\033\\\\"
+	}
+
+	# hard contrast: bg="bg_color=#1d2021"
+	# soft contrast: bg="bg_color=#32302f"
+	bg="${prefix}bg_color=#282828${suffix}"
+	fg="${prefix}fg_color=#ddccbb${suffix}"
+	bd="${prefix}bd_color=#ffffff${suffix}"
+
+	black="${prefix}color:black=#282828${suffix}"
+	hl_black="${prefix}color:hl_black=#928374${suffix}"
+	# black="${prefix}color:black=#4f4f4f${suffix}"
+	# hl_black="${prefix}color:hl_black=#000000${suffix}"
+
+	red="${prefix}color:red=#cc241d${suffix}"
+	hl_red="${prefix}color:hl_red=#fb4934${suffix}"
+	green="${prefix}color:green=#98971a${suffix}"
+	hl_green="${prefix}color:hl_green=#b8bb26${suffix}"
+	yellow="${prefix}color:yellow=#d79921${suffix}"
+	hl_yellow="${prefix}color:hl_yellow=#fabd2f${suffix}"
+	blue="${prefix}color:blue=#458588${suffix}"
+	hl_blue="${prefix}color:hl_blue=#83a5bf${suffix}"
+	magenta="${prefix}color:magenta=#b16286${suffix}"
+	hl_magenta="${prefix}color:hl_magenta=#d3869b${suffix}"
+	cyan="${prefix}color:cyan=#689d6a${suffix}"
+	hl_cyan="${prefix}color:hl_cyan=#8ec07c${suffix}"
+
+	white="${prefix}color:white=#a89984${suffix}"
+	hl_white="${prefix}color:hl_white=#ebdbb2${suffix}"
+	# white="${prefix}color:white=#bfbfbf${suffix}"
+	# hl_white="${prefix}color:hl_white=#ffffff${suffix}"
+
+	echo -ne \
+	"${bg}${fg}${bd}"\
+	"${black}${red}${green}${yellow}${blue}${magenta}${cyan}${white}"\
+	"${hl_black}${hl_red}${hl_green}${hl_yellow}${hl_blue}${hl_magenta}${hl_cyan}${hl_white}"
+}
+
+
+# -------- main ---------
+if [ "$1" == "skip-osc" ]; then
+	skip_osc=1
+fi
 
 export TERM_THEME=dark
 echo dark >| ~/.cache/termbg
 
-[ -n "$TMUX" ] && tmux source ~/.tmux/darkbg.conf
+[ -n "$MLTERM" ] && change_mlterm_colors
+[ -n "$XTERM_VERSION" -o -n "$GNOME_TERMINAL_SCREEN" ] && change_term_colors
+fd -t s . /tmp/tmux-$(id -u) -x tmux -S "{}" source ~/.tmux/darkbg.conf 2>/dev/null
+sed -i -e 's/^colors: \*light$/colors: \*dark/' ~/.config/alacritty/alacritty.yml
+pgrep cmus && cmus-remote -C "colorscheme gruvbox"
