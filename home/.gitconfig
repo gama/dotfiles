@@ -1,3 +1,10 @@
+[core]
+    pager = delta
+	autocrlf = input
+	whitespace = -blank-at-eof,blank-at-eol,space-before-tab,tabwidth=4,tab-in-indent
+	quotepath = false
+	excludesfile = ~/.config/gitignore-global
+
 [color]
 	diff = auto
 	branch = auto
@@ -7,6 +14,7 @@
 [alias]
 	st = status
 	sb = show-branch
+    simple-status = status -sb
 	sbc = show-branch --current
 	sbm = show-branch --current origin/master
 	ll = log -p --stat
@@ -18,13 +26,8 @@
 	serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/ --enable=receive-pack
 	wdiff = diff --word-diff
 	cdiff = diff --ignore-all-space
-	overview = git log --all --since='2 weeks' --oneline --no-merges
-
-[core]
-	autocrlf = input
-	whitespace = -blank-at-eof,blank-at-eol,space-before-tab,tabwidth=4,tab-in-indent
-	quotepath = false
-	excludesfile = ~/.config/gitignore-global
+	overview = log --all --since='2 weeks' --oneline --no-merges
+    branch-by-date = branch --sort=committerdate --all
 
 [diff]
 	tool = vimdiff2
@@ -35,3 +38,16 @@
 
 [merge]
 	tool = vimdiff
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    syntax-theme = zenburn
+    features = decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
