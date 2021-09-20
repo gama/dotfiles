@@ -1,0 +1,6 @@
+HISTSIZE=50000
+SAVEHIST=10000
+
+unsetopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+alias history-reload="fc -RI"

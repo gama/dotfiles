@@ -1,0 +1,7 @@
+alias l='lsd --icon=never'
+alias ls=lsd
+alias ll='lsd -lF'
+alias la='lsd -aF'
+alias lla='lsd -alF'
+alias lh='lsd -lF'
+alias lt='lsd --tree'

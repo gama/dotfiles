@@ -1,0 +1,16 @@
+spacevim() {
+    printf '\033]12;\007'
+    nvim -u ~/.SpaceVim/vimrc "$@"
+}
+nvim() {
+    printf '\033]12;\007'
+    command nvim "$@"
+}
+alias nv='nvim'
+alias nvl='nvim -u ~/.config/nvim/init.lsp.vim'
+alias vim='nvim'
+alias vimf='nvim $(fzf)'
+alias vimv='nvim ~/.config/nvim/init.vim -c NERDTreeToggle\ ~/.config/nvim/ -c wincmd\ p'
+export EDITOR=nvim
+
+# vim:set ft=sh:

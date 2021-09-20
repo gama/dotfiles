@@ -1,0 +1,38 @@
+# zmodload zsh/zprof
+
+source_if_exists() {
+    if [[ -s "${1}" ]]; then
+        source "${1}"
+    fi
+}
+
+source_if_exists "${HOME}/.config/zprezto/init.zsh"
+source_if_exists "${ZDOTDIR}/history.zsh"
+source_if_exists "${ZDOTDIR}/aliases.zsh"
+source_if_exists "${ZDOTDIR}/environment.zsh"
+source_if_exists "${ZDOTDIR}/keybindings.zsh"
+source_if_exists "${ZDOTDIR}/style.zsh"
+source_if_exists "${HOME}/.homesick/repos/homeshick/homeshick.sh"
+
+# conditionally load tool-specific modules
+which git   > /dev/null && source "${ZDOTDIR}/modules/git"
+which npm   > /dev/null && source "${ZDOTDIR}/modules/nodejs"
+which go    > /dev/null && source "${ZDOTDIR}/modules/go"
+which nvim  > /dev/null && source "${ZDOTDIR}/modules/neovim"
+which bat   > /dev/null && source "${ZDOTDIR}/modules/bat"
+which rg    > /dev/null && source "${ZDOTDIR}/modules/ripgrep"
+which sk    > /dev/null && source "${ZDOTDIR}/modules/skim"
+which fzf   > /dev/null && source "${ZDOTDIR}/modules/fzf"
+which broot > /dev/null && source "${ZDOTDIR}/modules/broot"
+[ -d "${HOME}/.cargo" ] && source "${ZDOTDIR}/modules/rust"
+
+# conditionally load host-specific module
+[ -f ${HOME}/.bash/${HOST} ] && source ${ZDOTDIR}/modules/${HOST}
+
+unsetopt correct
+unsetopt correctall
+unsetopt BEEP
+DISABLE_CORRECTION="true"
+# prompt_newline=" %666v"
+
+# zprof

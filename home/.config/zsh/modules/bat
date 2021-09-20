@@ -1,0 +1,2 @@
+alias bat='grep -q "dark" ~/.cache/termbg && theme=gruvbox || theme=gruvbox-white ; bat --tabs=4 --theme=${theme}'
+alias cat='bat'
